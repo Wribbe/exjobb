@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+from exjobb import libexjobb
+
+if __name__ == "__main__":
+  libexjobb.run()
