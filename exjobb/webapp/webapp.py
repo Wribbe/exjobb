@@ -5,12 +5,19 @@ import flask
 import os
 
 from flask_weasyprint import render_pdf, HTML
-from flask import render_template
+#from flask import render_template
 import weasyprint
 
 app = flask.Flask(__name__)
 
-DIR_OUT = os.path.join("exjobb", "data", "images")
+DIR_OUT = os.path.join("exjobb", "out")
+
+def render_template(template, *data):
+  html = flask.render_template(template, *data)
+  name_out = os.path.join(*os.path.split(template))
+  name_out = name_out.replace(".html", ".pdf")
+  save_pdf(html, name_out)
+  return html
 
 def save_pdf(string_html, name):
   if not os.path.exists(DIR_OUT):
@@ -21,9 +28,7 @@ def save_pdf(string_html, name):
 
 @app.route("/")
 def index():
-  html = render_template("index.html", data=range(100))
-  save_pdf(html, "index.pdf")
-  return html
+  return render_template("main/00_title.html")
 
 def run():
   os.environ["FLASK_APP"] = __name__
