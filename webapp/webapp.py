@@ -2,8 +2,13 @@ import exjobb.config as cfg
 cfg.virt_load()
 
 import flask
+import os
 
-from xhtml2pdf import pisa
+from flask_weasyprint import render_pdf
+
+app = flask.Flask(__name__)
 
 def run():
-  print("HELLO")
+  os.environ["FLASK_APP"] = __name__
+  os.environ["FLASK_ENV"] = "development"
+  cfg.call("flask run")
