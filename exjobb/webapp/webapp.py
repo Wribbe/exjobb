@@ -16,19 +16,29 @@ def render_template(template, *data):
   html = flask.render_template(template, *data)
   name_out = os.path.join(*os.path.split(template))
   name_out = name_out.replace(".html", ".pdf")
-  save_pdf(html, name_out)
+  save_pdf(html, os.path.join(DIR_OUT, name_out))
   return html
 
-def save_pdf(string_html, name):
-  if not os.path.exists(DIR_OUT):
-    os.makedirs(DIR_OUT)
+def save_pdf(string_html, path):
+  path_dir = os.path.dirname(path)
+  if path_dir and not os.path.exists(path_dir):
+    os.makedirs(path_dir)
   obj_html = HTML(string=string_html)
-  with open(os.path.join(DIR_OUT, name), 'wb') as fh:
+  with open(path, 'wb') as fh:
     fh.write(obj_html.write_pdf())
 
 @app.route("/")
 def index():
   return render_template("main/00_title.html")
+
+@app.route("/main")
+def main():
+  html_final = []
+  for name in sorted(os.listdir('exjobb/webapp/templates/main')):
+    html_final.append(render_template(f"main/{name}"))
+  html_final = "<br>".join(html_final)
+  save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
+  return html_final
 
 def run():
   os.environ["FLASK_APP"] = __name__
