@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+
+from webapp import webapp
+webapp.run()
