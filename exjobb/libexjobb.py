@@ -18,6 +18,7 @@ def call(command):
 def virt_create():
   if not os.path.exists(DIR_VIRT):
     venv.create(DIR_VIRT, with_pip=True)
+    call(f"{PY} -m pip install --upgrade pip")
     call(f"{PY} -m pip install -r requirements.txt")
     shutil.copy(
       os.path.join("scripts", "activate_this.py"),
