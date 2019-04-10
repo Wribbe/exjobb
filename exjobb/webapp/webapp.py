@@ -12,16 +12,17 @@ app = flask.Flask(__name__)
 
 DIR_OUT = os.path.join("exjobb", "data", "images")
 
-def save_pdf(name_html, name):
+def save_pdf(string_html, name):
   if not os.path.exists(DIR_OUT):
     os.makedirs(DIR_OUT)
-  html = HTML(string=render_template(name_html))
-  html.write_pdf(os.path.join(DIR_OUT, name))
+  obj_html = HTML(string=string_html)
+  with open(os.path.join(DIR_OUT, name), 'wb') as fh:
+    fh.write(obj_html.write_pdf())
 
 @app.route("/")
 def hello():
-  html = render_template("test.html")
-  save_pdf("test.html", "test.pdf")
+  html = render_template("test.html", data=range(100))
+  save_pdf(html, "test.pdf")
   return html
 
 def run():
