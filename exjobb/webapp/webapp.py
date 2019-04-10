@@ -20,9 +20,9 @@ def save_pdf(string_html, name):
     fh.write(obj_html.write_pdf())
 
 @app.route("/")
-def hello():
-  html = render_template("test.html", data=range(100))
-  save_pdf(html, "test.pdf")
+def index():
+  html = render_template("index.html", data=range(100))
+  save_pdf(html, "index.pdf")
   return html
 
 def run():
