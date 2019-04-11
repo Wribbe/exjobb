@@ -43,4 +43,4 @@ def main():
 def run():
   os.environ["FLASK_APP"] = __name__
   os.environ["FLASK_ENV"] = "development"
-  cfg.call("flask run")
+  cfg.call("flask run --host=0.0.0.0 --port=8000")
