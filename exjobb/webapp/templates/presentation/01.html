@@ -2,4 +2,11 @@
 
 {% block content %}
   <h1>This is my presentation.</h1>
+  {% for i in range(100) %}
+    test{{ i }}</br>
+    {% if i==7 %}
+      <p style="break-after: always;"></p>
+      <p style="break-after: always;"></p>
+    {% endif %}
+  {% endfor %}
 {% endblock %}
