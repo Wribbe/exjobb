@@ -40,6 +40,10 @@ def main():
   save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
   return html_final
 
+@app.route("/presentation")
+def presentation():
+  return render_template("presentation/01.html")
+
 def run():
   os.environ["FLASK_APP"] = __name__
   os.environ["FLASK_ENV"] = "development"
