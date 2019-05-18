@@ -12,8 +12,8 @@ app = flask.Flask(__name__)
 
 DIR_OUT = os.path.join("exjobb", "out")
 
-def render_template(template, *data):
-  html = flask.render_template(template, *data)
+def render_template(template, **data):
+  html = flask.render_template(template, **data)
   name_out = os.path.join(*os.path.split(template))
   name_out = name_out.replace(".html", ".pdf")
   save_pdf(html, os.path.join(DIR_OUT, name_out))
@@ -42,7 +42,20 @@ def main():
 
 @app.route("/presentation")
 def presentation():
-  return render_template("presentation/01.html")
+  return render_template(
+    "presentation/01.html",
+    styles=["style_presentation.css"]
+  )
+
+@app.route("/presentation/slides")
+def presentation_slides():
+  return render_template(
+    "presentation/01.html",
+    styles=[
+      "style_presentation.css",
+      "style_presentation_slides.css",
+    ]
+  )
 
 def run():
   os.environ["FLASK_APP"] = __name__

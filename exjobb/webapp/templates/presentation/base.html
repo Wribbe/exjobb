@@ -1,3 +1,5 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='style_presentation.css') }}">
+{% for style in styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='%s'|format(style)) }}">
+{% endfor %}
 
 {% block content %}{% endblock %}
