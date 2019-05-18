@@ -12,6 +12,23 @@
   width: 80%;
 }
 
-blockquote {
+.titlepage {
   width: 100%;
+  text-align: center;
+}
+
+.titlepage h1 {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.titlepage p {
+  margin-top: -10px;
+  font-size: 20px;
+}
+
+
+blockquote footer {
+  margin-top: 10px;
+  margin-left: 10px;
 }
