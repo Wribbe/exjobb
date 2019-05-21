@@ -27,8 +27,13 @@
   font-size: 20px;
 }
 
-
 blockquote footer {
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.question {
+  text-align: center;
+  font-size: 30px;
+  color: grey;
 }
