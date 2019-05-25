@@ -2,47 +2,52 @@
 
 {% block content %}
 
+{% if not "style_presentation_slides.css" in styles %}
+  <a href="{{ url_for('presentation_slides') }}">Download as PDF slides.</a>
+{% endif %}
+
 <div class="slide">
   <div class="slide-content titlepage">
-    <h1>Diploma presentation pitch</h1>
-    <p>Presenting a new and improved basis for my master diploma work</p>
+    <h1>Avoiding stretching people too thin</h1>
+    <p>Presenting a new pitch for my master diploma work</p>
   </div>
 </div>
 
 <div class="slide">
   <div class="slide-content">
-    <h1>Current pitch</h1>
-    <blockquote>
-      I'll figure out the smallest possible design changes that will</br>
-      enable the users of the Shotgun desktop-client to use it more efficiently.
-      <footer>Bright eyed and idealistic Stefan of 2018.</footer>
-    </blockquote>
+    <h1>The problem</h1>
+    The Cinematic Producer wants a better way to see if any of his employees
+    assigned workload is greater than their work-capacity.
   </div>
 </div>
 
 <div class="slide">
   <div class="slide-content">
-    <h1>Problems with current angle</h1>
+    <h1>Pitch to solve the problem</h1>
+    First, gather and parse data related to work-schedules and estimated
+    project time from internal systems. Then, using well established
+    web-technologies and design principles; build a small to medium sized
+    web-application that display the data in such a way that
+    it is easily to see if anyone is assigned work over their limit.
+  </div>
+</div>
+
+<div class="slide">
+  <div class="slide-content question">
+    <h1>Why the change?</h1>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="slide-content">
+    <h1>Problems with previous angle</h1>
     <ul>
-      <li>Little to no ways of customizing the Shotgun-web/-desktop client.</li>
-      <li><b>None</b> of the modifications so far have been design related.</li>
-      <li>Boring questionnaires + poor answer rate ⟶  <em>demotivating</em>.</li>
-      <li>Excruciatingly long iteration loop.</li>
+      <li>Little to no way of customizing the Shotgun-web/-desktop client.</li>
+      <li>None of the modifications so far have been design related.</li>
+      <li>Very long iteration loop.</li>
       <li>Little to no real-world benefit or impact.</li>
       <li>Resulting knowledge is specific and very niche.</li>
     </ul>
-  </div>
-</div>
-
-<div class="slide">
-  <div class="slide-content">
-    <h1>New pitch</h1>
-    <blockquote>
-      Our boss complains he has no easy way to see if any of his employees </br>
-      assigned workload outstrips their scheduled work-capacity. This should be </br>
-      possible to solve with a small- to medium-sized web-application.
-      <footer>Slightly jaded but hopefully more realistic Stefan of 2019.</footer>
-    </blockquote>
   </div>
 </div>
 
@@ -52,42 +57,73 @@
     <ul>
       <li>Real-world benefits that impacts <em>the whole team</em>.</li>
       <li>Single main stakeholder ⟶  tight iteration loop.</li>
-      <li>Questionnaires still possible, but no loger essential for advancing the project.</li>
+      <li>Questionnaires no longer essential for advancing the project.</li>
       <li>Major part of the work will be design related.</li>
+
       <li>Large corpus of literature related to web-design best practices.</li>
-      <li>Resulting knowledge is in demand and is broad enough to be usable in a large swathe of disciplines.</li>
+      <li>Resulting knowledge is in demand and broadly applicable.</li>
     </ul>
   </div>
 </div>
 
 <div class="slide">
   <div class="slide-content question">
-    <h1>What went wrong?</h1>
+    <h1>What have I learnt?</h1>
   </div>
 </div>
 
 <div class="slide">
   <div class="slide-content">
-    <h1>Things that went wrong</h1>
+    <h1>Don't make it harder than it has to be</h1>
+    <p>
+      This new approach still uses the same core question:
+      <em>What design alterations have the largest impact?</em>
+      </br>
+      </br>
+      But with the added benefits to the scientific evaluation:
+    </p>
     <ul>
-      <li>Nobody, (including me), has any vested interest in the work or the result.</li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li>Design is fully customizable ⟶   possible to implement and test any design approach.</li>
+      <li>Web-based technologies throughout ⟶   easier implementation and verification.</li>
+      <li>Web-hosted without need for Shotgun domain knowledge ⟶   large scale usability testing possible.</li>
     </ul>
   </div>
 </div>
 
 <div class="slide">
-  <div class="slide-content question">
-    <h1>What is different this time?</h1>
+  <div class="slide-content">
+    <h1>Make sure to be informed and keep on track</h1>
+    <ul>
+      <li>I did not know of the design limitations of Shotgun.</li>
+      <li>I did not fully define the projects scope and end-goal.</li>
+      <li>Too much time spent on things with no effect on final result; self-updating gantt-chart, etc.</li>
+    </ul>
   </div>
 </div>
 
 <div class="slide">
   <div class="slide-content">
-    <h1>Going forwards</h1>
+    <h1>Use all resources more efficiently</h1>
+    <h2>Time and focus</h2>
+    <ul>
+      <li>No more <span class="latex">L<sup>A</sup>T<sub>E</sub>X</span>, final
+        product web-based ⟶  presentation and article web-based.</li>
+      <li>
+        Everything should tie back into the result ⟶   this presentation
+        template used as basis for final presentation.
+      </li>
+    </ul>
+    <h2>Communication</h2>
+    <ul>
+      <li>
+        Host the current up-to-date version of presentation and article on the
+        web and provide links, don't email or print pdfs.
+      </li>
+      <li>
+        Concisely define anything worthy of feedback in the presentation first.
+        If it is approved, expand the concept in the article.
+      </li>
+    <ul>
   </div>
 </div>
 

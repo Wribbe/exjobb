@@ -5,7 +5,7 @@ import flask
 import os
 
 from flask_weasyprint import render_pdf, HTML
-#from flask import render_template
+from flask import Response
 import weasyprint
 
 app = flask.Flask(__name__)
@@ -16,16 +16,18 @@ def render_template(template, **data):
   html = flask.render_template(template, **data)
   name_out = os.path.join(*os.path.split(template))
   name_out = name_out.replace(".html", ".pdf")
-  save_pdf(html, os.path.join(DIR_OUT, name_out))
-  return html
+  pdf = save_pdf(html, os.path.join(DIR_OUT, name_out))
+  return (html, pdf)
 
 def save_pdf(string_html, path):
   path_dir = os.path.dirname(path)
   if path_dir and not os.path.exists(path_dir):
     os.makedirs(path_dir)
   obj_html = HTML(string=string_html)
+  data_pdf = obj_html.write_pdf()
   with open(path, 'wb') as fh:
-    fh.write(obj_html.write_pdf())
+    fh.write(data_pdf)
+  return data_pdf
 
 @app.route("/")
 def index():
@@ -45,17 +47,30 @@ def presentation():
   return render_template(
     "presentation/01.html",
     styles=["style_presentation.css"]
-  )
+  )[0]
 
-@app.route("/presentation/slides")
-def presentation_slides():
+@app.route("/presentation/slides_render")
+def presentation_slides_render():
   return render_template(
     "presentation/01.html",
     styles=[
       "style_presentation.css",
       "style_presentation_slides.css",
     ]
-  )
+  )[0]
+
+@app.route("/presentation/slides")
+def presentation_slides():
+  pdf = render_template(
+    "presentation/01.html",
+    styles=[
+      "style_presentation.css",
+      "style_presentation_slides.css",
+    ]
+  )[1]
+  resp = Response(pdf)
+  resp.mimetype = 'application/pdf'
+  return resp
 
 def run():
   os.environ["FLASK_APP"] = __name__
