@@ -31,13 +31,13 @@ def save_pdf(string_html, path):
 
 @app.route("/")
 def index():
-  return render_template("main/00_title.html")
+  return render_template("main/00_title.html")[0]
 
 @app.route("/main")
 def main():
   html_final = []
   for name in sorted(os.listdir('exjobb/webapp/templates/main')):
-    html_final.append(render_template(f"main/{name}"))
+    html_final.append(render_template(f"main/{name}")[0])
   html_final = "<br>".join(html_final)
   save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
   return html_final
