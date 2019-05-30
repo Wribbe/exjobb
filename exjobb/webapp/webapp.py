@@ -1,5 +1,5 @@
-import exjobb.config as cfg
-cfg.virt_load()
+import exjobb.config as config
+config.virt_load()
 
 import flask
 import os
@@ -7,8 +7,6 @@ import os
 from flask_weasyprint import render_pdf, HTML
 from flask import Response
 import weasyprint
-
-app = flask.Flask(__name__)
 
 DIR_OUT = os.path.join("exjobb", "out")
 
@@ -29,50 +27,51 @@ def save_pdf(string_html, path):
     fh.write(data_pdf)
   return data_pdf
 
-@app.route("/")
-def index():
-  return render_template("main/00_title.html")[0]
+def create_app():
 
-@app.route("/main")
-def main():
-  html_final = []
-  for name in sorted(os.listdir('exjobb/webapp/templates/main')):
-    html_final.append(render_template(f"main/{name}")[0])
-  html_final = "<br>".join(html_final)
-  save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
-  return html_final
+  app = flask.Flask(__name__)
 
-@app.route("/pitch")
-def pitch():
-  return render_template(
-    "pitch/01.html",
-    styles=["style_pitch.css"]
-  )[0]
+  @app.route("/")
+  def index():
+    return render_template("main/00_title.html")[0]
 
-@app.route("/pitch/slides_render")
-def pitch_slides_render():
-  return render_template(
-    "pitch/01.html",
-    styles=[
-      "style_pitch.css",
-      "style_pitch_slides.css",
-    ]
-  )[0]
+  @app.route("/main")
+  def main():
+    html_final = []
+    for name in sorted(os.listdir('exjobb/webapp/templates/main')):
+      html_final.append(render_template(f"main/{name}")[0])
+    html_final = "<br>".join(html_final)
+    save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
+    return html_final
 
-@app.route("/pitch/slides")
-def pitch_slides():
-  pdf = render_template(
-    "pitch/01.html",
-    styles=[
-      "style_pitch.css",
-      "style_pitch_slides.css",
-    ]
-  )[1]
-  resp = Response(pdf)
-  resp.mimetype = 'application/pdf'
-  return resp
+  @app.route("/pitch")
+  def pitch():
+    return render_template(
+      "pitch/01.html",
+      styles=["style_pitch.css"]
+    )[0]
 
-def run():
-  os.environ["FLASK_APP"] = __name__
-  os.environ["FLASK_ENV"] = "development"
-  cfg.call("flask run --host=0.0.0.0 --port=8000")
+  @app.route("/pitch/slides_render")
+  def pitch_slides_render():
+    return render_template(
+      "pitch/01.html",
+      styles=[
+        "style_pitch.css",
+        "style_pitch_slides.css",
+      ]
+    )[0]
+
+  @app.route("/pitch/slides")
+  def pitch_slides():
+    pdf = render_template(
+      "pitch/01.html",
+      styles=[
+        "style_pitch.css",
+        "style_pitch_slides.css",
+      ]
+    )[1]
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
+
+  return app

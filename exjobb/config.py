@@ -10,10 +10,21 @@ PATH_VIRT_ACTIVATE = os.path.join(DIR_VIRT_BIN, "activate_this.py")
 
 PY = os.path.join(DIR_VIRT_BIN, "python")
 
-def call(command):
+def call(command, env=None):
+  if not env:
+    env = os.environ
   if type(command) == str:
     command = command.split()
-  return subprocess.call(command)
+  out, err = subprocess.Popen(
+    command,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+    env=env
+  ).communicate()
+  if err:
+    print(err, file=sys.stderr)
+  print(out)
+  return out
 
 def virt_create():
   if not os.path.exists(DIR_VIRT):

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+
 from exjobb.webapp import webapp
-webapp.run()
+
+app = webapp.create_app()
+os.environ["FLASK_ENV"] = "development"
+os.environ["FLASK_DEBUG"] = "True"
+app.run(host="0.0.0.0", port=8000)
