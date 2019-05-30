@@ -1,1 +1,2 @@
-from exjobb.webapp.webapp import create_app as application
+from exjobb.webapp.webapp import create_app
+application = create_app()
