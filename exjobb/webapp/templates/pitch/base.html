@@ -1,5 +1,12 @@
-{% for style in styles %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='%s'|format(style)) }}">
-{% endfor %}
-
-{% block content %}{% endblock %}
+<!doctype html>
+<html>
+  <head>
+    <title>Pitch for new angle</title>
+    {% for style in styles %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='%s'|format(style)) }}">
+    {% endfor %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+</html>
