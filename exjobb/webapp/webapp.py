@@ -42,30 +42,30 @@ def main():
   save_pdf(html_final, os.path.join(DIR_OUT, "main", "main.pdf"))
   return html_final
 
-@app.route("/presentation")
-def presentation():
+@app.route("/pitch")
+def pitch():
   return render_template(
-    "presentation/01.html",
-    styles=["style_presentation.css"]
+    "pitch/01.html",
+    styles=["style_pitch.css"]
   )[0]
 
-@app.route("/presentation/slides_render")
-def presentation_slides_render():
+@app.route("/pitch/slides_render")
+def pitch_slides_render():
   return render_template(
-    "presentation/01.html",
+    "pitch/01.html",
     styles=[
-      "style_presentation.css",
-      "style_presentation_slides.css",
+      "style_pitch.css",
+      "style_pitch_slides.css",
     ]
   )[0]
 
-@app.route("/presentation/slides")
-def presentation_slides():
+@app.route("/pitch/slides")
+def pitch_slides():
   pdf = render_template(
-    "presentation/01.html",
+    "pitch/01.html",
     styles=[
-      "style_presentation.css",
-      "style_presentation_slides.css",
+      "style_pitch.css",
+      "style_pitch_slides.css",
     ]
   )[1]
   resp = Response(pdf)
