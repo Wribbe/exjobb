@@ -1,1 +1,1 @@
-from exjobb.webapp.webapp import app as application
+from exjobb.webapp.webapp import create_app as application
