@@ -1,9 +1,9 @@
-{% extends "presentation/base.html" %}
+{% extends "pitch/base.html" %}
 
 {% block content %}
 
-{% if not "style_presentation_slides.css" in styles %}
-  <a href="{{ url_for('presentation_slides') }}">Download as PDF slides.</a>
+{% if not "style_pitch_slides.css" in styles %}
+  <a href="{{ url_for('pitch_slides') }}">Download as PDF slides.</a>
 {% endif %}
 
 <div class="slide">
