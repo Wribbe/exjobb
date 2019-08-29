@@ -51,6 +51,13 @@ def create_app():
       styles=["style_pitch.css"]
     )[0]
 
+  @app.route("/goaldocument")
+  def goaldoc():
+    return render_template(
+      "goaldoc.html",
+      styles=["style_goal.css"],
+    )[0]
+
   @app.route("/pitch/slides_render")
   def pitch_slides_render():
     return render_template(
