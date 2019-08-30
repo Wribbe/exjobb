@@ -4,6 +4,10 @@
 
   <h1> Goal Document </h1>
 
+  {% if not "style_goal_pdf.css" in styles %}
+    <a href="{{ url_for('pdf_goaldoc') }}">[Download as PDF.]</a>
+  {% endif %}
+
   <div id="main">
     <section>
       <span>Title</span>
@@ -54,7 +58,7 @@
       <span>
         Present approximate overview of assigned-to-available time ratio for
         the majority of the team-members in a verifiable digestible manner to
-        Cinematics producer.
+        the Cinematics producer.
       </span>
     </section>
 
