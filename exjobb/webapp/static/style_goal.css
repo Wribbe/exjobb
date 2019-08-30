@@ -1,8 +1,5 @@
 body {
   padding-left: 20px;
-}
-
-#summary {
   width: 60%;
 }
 
@@ -10,22 +7,22 @@ section {
   margin-top: 1em;
 }
 
-#summary section div span:first-of-type {
+#main section span:first-of-type {
   font-weight: bold;
 }
 
-#summary section div span:first-of-type::after {
+#main dl {
+  margin-left: 1em;
+}
+
+#main section span:first-of-type::after {
   content: ":";
 }
 
-.email {
-  font: monospace;
-}
-
-.email::before {
+a[href^="mailto:"]::before {
   content: "<";
 }
 
-.email::after{
+a[href^="mailto:"]::after {
   content: ">";
 }
