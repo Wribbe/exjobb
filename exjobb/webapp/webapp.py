@@ -57,6 +57,21 @@ def create_app():
       "goaldoc.html",
       styles=["style_goal.css"],
     )[0]
+    return html
+
+  @app.route("/goaldocument/pdf")
+  def pdf_goaldoc():
+    pdf = render_template(
+      "goaldoc.html",
+      styles=[
+        "style_goal.css",
+        "style_goal_pdf.css",
+        "style.css",
+      ],
+    )[1]
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
 
   @app.route("/pitch/slides_render")
   def pitch_slides_render():
