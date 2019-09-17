@@ -5,6 +5,20 @@
     <script src="{{url_for('static', filename="node_modules/frappe-gantt/dist/frappe-gantt.js")}}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename="node_modules/frappe-gantt/dist/frappe-gantt.css") }}">
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #ccc;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+      }
+      /* custom class */
+      .gantt .bar-milestone .bar {
+        fill: tomato;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
