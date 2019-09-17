@@ -96,4 +96,11 @@ def create_app():
     resp.mimetype = 'application/pdf'
     return resp
 
+  @app.route("/gantt")
+  def gantt():
+    return render_template(
+      "gantt.html",
+      styles=[]
+    )[0]
+
   return app
