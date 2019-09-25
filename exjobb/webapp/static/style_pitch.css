@@ -38,3 +38,26 @@ blockquote footer {
   margin-left: -0.26em;
   margin-right: -0.05em;
 }
+
+#questions ol {
+  counter-reset: item;
+  list-style-type: none;
+}
+
+#questions ol li {
+  margin-top: 1.0cm;
+}
+
+#questions ol li:before {
+  content: 'Q' counter(item, decimal) '. ';
+  counter-increment: item;
+}
+
+#questions hr {
+   margin-top: 1cm;
+   margin-left: 0;
+}
+
+#questions {
+  width: 25cm;
+}
