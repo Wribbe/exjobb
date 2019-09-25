@@ -57,7 +57,6 @@ def create_app():
       "goaldoc.html",
       styles=["style_goal.css"],
     )[0]
-    return html
 
   @app.route("/goaldocument/pdf")
   def pdf_goaldoc():
@@ -95,6 +94,26 @@ def create_app():
     resp = Response(pdf)
     resp.mimetype = 'application/pdf'
     return resp
+
+  @app.route("/questions/01")
+  def questions():
+    qs = [
+#      "What is your position?",
+      "Do any of your current tasks involve manually drawing conclusions based on data that live in different places?",
+      "Is there a tasks that is made harder by a lacking or cumbersome user interface?",
+      "If you could wish a currently missing, feasible, data-stream into existence to make your work easier, what would it be?",
+      "Do you have a tasks that would become easier if the data involved was organized or filtered in a different way?",
+      "Is there a task that you feel could be automated?",
+      "Do any of your tasks involve assembling data for others to view?"
+    ]
+    html, pdf = render_template(
+      "questions/01.html",
+      styles=[
+        "style_pitch.css",
+      ],
+      questions=qs,
+    )
+    return html
 
   @app.route("/gantt")
   def gantt():
