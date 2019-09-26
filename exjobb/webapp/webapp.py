@@ -106,12 +106,51 @@ def create_app():
       "Is there a task that you feel could be automated?",
       "Do any of your tasks involve assembling data for others to view?"
     ]
+    qs = [
+      "What are your feelings on the current taks assigning and tracking system?",
+      "Anything in particular that works well?",
+      "Could something be improved?",
+      "Is there anything missing that you would like to have?",
+      "Are there gaps in the information you receive? What could be added? Why?",
+      "Notes"
+    ]
+    fields = [
+      "ANON-ID",
+#      "Name",
+#      "Age",
+#      "Gender",
+      "Date",
+      "Time Start",
+      "Time End",
+    ]
     html, pdf = render_template(
       "questions/01.html",
       styles=[
         "style_pitch.css",
       ],
-      questions=qs,
+      fields = fields,
+      questions = qs,
+    )
+    return html
+
+  @app.route("/anon")
+  def anon():
+    num_people = 30
+    fields = [
+      'ANON-ID',
+      'Name',
+      'Position',
+      'Age',
+      'Gender',
+    ]
+    html, pdf = render_template(
+      "questions/anon.html",
+      styles=[
+        "style_pitch.css",
+        "style_anon.css",
+      ],
+      fields = fields,
+      num_people = num_people,
     )
     return html
 

@@ -61,3 +61,18 @@ blockquote footer {
 #questions {
   width: 25cm;
 }
+
+#q_fields td:first-of-type {
+  text-align: right;
+  font-weight: bold;
+  padding-right: 0.2cm;
+}
+
+#q_fields td {
+  padding-top: 0.2cm;
+}
+
+#questions ol #q_notes li:before {
+  content: '';
+  counter-increment: item;
+}

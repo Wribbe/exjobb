@@ -1,0 +1,20 @@
+{% extends "pitch/base.html" %}
+
+{% block content %}
+  <h2>Anonymous id-sheet for interviews.</h2>
+  <table>
+    <tr>
+      {% for field in fields %}
+        <th>{{field}}</th>
+      {% endfor %}
+    </tr>
+    {% for n in range(1, num_people+1) %}
+      <tr>
+        <td class="id">#{{ "%02d" | format(n) }} </td>
+        {% for field in fields[1:] %}
+          <td class="{{field | lower}}"></td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
