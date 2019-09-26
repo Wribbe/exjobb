@@ -168,7 +168,7 @@ def create_app():
     return html, pdf
 
   @app.route("/anon")
-  def a_non():
+  def anon():
     html, pdf = _anon()
     return html
 
