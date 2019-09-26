@@ -1,0 +1,21 @@
+table {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid;
+  text-align: center;
+}
+
+.name {
+  width: 6cm;
+}
+
+.age, .gender{
+  width: 2cm;
+}
+
+.position {
+  width: 9cm;
+}
