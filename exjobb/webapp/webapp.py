@@ -95,8 +95,7 @@ def create_app():
     resp.mimetype = 'application/pdf'
     return resp
 
-  @app.route("/questions/01")
-  def questions():
+  def _questions(hide_pdf=False):
     qs = [
 #      "What is your position?",
       "Do any of your current tasks involve manually drawing conclusions based on data that live in different places?",
@@ -126,15 +125,28 @@ def create_app():
     html, pdf = render_template(
       "questions/01.html",
       styles=[
-        "style_pitch.css",
+#        "style_pitch.css",
+        "style_questions.css",
       ],
       fields = fields,
       questions = qs,
+      hide_pdf=hide_pdf,
     )
+    return html, pdf
+
+  @app.route("/questions/01")
+  def questions():
+    html, pdf = _questions()
     return html
 
-  @app.route("/anon")
-  def anon():
+  @app.route("/questions/01/pdf")
+  def questions_pdf():
+    html, pdf = _questions(hide_pdf=True)
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
+
+  def _anon(hide_pdf=False):
     num_people = 30
     fields = [
       'ANON-ID',
@@ -151,8 +163,21 @@ def create_app():
       ],
       fields = fields,
       num_people = num_people,
+      hide_pdf=hide_pdf,
     )
+    return html, pdf
+
+  @app.route("/anon")
+  def a_non():
+    html, pdf = _anon()
     return html
+
+  @app.route("/anon/pdf")
+  def anon_pdf():
+    html, pdf = _anon(hide_pdf=True)
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
 
   @app.route("/gantt")
   def gantt():

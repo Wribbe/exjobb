@@ -2,7 +2,12 @@
 
 {% block content %}
   <div id="questions">
-    <h2>Exploratory interview questions regarding possible task-improvements.</h2>
+    <div>
+      <h2>Exploratory interview questions regarding possible task-improvements.</h2>
+      {% if not hide_pdf %}
+        <a href="{{ url_for("questions_pdf") }}">(pdf)</a>
+      {%endif%}
+    </div>
     <ol>
       <div id="q_fields">
         <table>
