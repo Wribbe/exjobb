@@ -2,6 +2,9 @@
 
 {% block content %}
   <h2>Anonymous id-sheet for interviews.</h2>
+  {% if not hide_pdf %}
+    <a href="{{ url_for("anon_pdf") }}">(pdf)</a>
+  {% endif %}
   <table>
     <tr>
       {% for field in fields %}
