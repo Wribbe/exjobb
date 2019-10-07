@@ -1,0 +1,21 @@
+{% extends "pitch/base.html" %}
+
+{% block content %}
+  <div id="questions">
+    <div>
+      <h2>Summary of exploratory interview questions regarding possible task-improvements.</h2>
+    </div>
+    <ol>
+      <div id="q_fields">
+      </div>
+      {% for question, summaries in questions %}
+        <li class="question">{{question}}</li>
+        <ul>
+          {% for sum in summaries %}
+            <li> {{sum}} </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </ol>
+  </div>
+{% endblock %}
