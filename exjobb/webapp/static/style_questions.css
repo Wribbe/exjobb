@@ -23,7 +23,7 @@
   margin-top: 1.0cm;
 }
 
-#questions ol li:before {
+.question:before {
   content: 'Q' counter(item, decimal) '. ';
   counter-increment: item;
 }

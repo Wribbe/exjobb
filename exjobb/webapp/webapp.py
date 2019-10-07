@@ -31,6 +31,14 @@ def create_app():
 
   app = flask.Flask(__name__)
 
+  qs = [
+    "What are your feelings on the current taks assigning and tracking system?",
+    "Anything in particular that works well?",
+    "Could something be improved?",
+    "Is there anything missing that you would like to have?",
+    "Are there gaps in the information you receive? What could be added? Why?",
+  ]
+
   @app.route("/")
   def index():
     return render_template("main/00_title.html")[0]
@@ -95,24 +103,126 @@ def create_app():
     resp.mimetype = 'application/pdf'
     return resp
 
+  @app.route("/sum/questions")
+  def questions_sum():
+    sums = [
+      [
+        """
+        Tracking works well when the information is entered in Shotgun correctly.
+        There are lingering ephemeral tasks that never get entered into Shotgun
+        correctly, they exist on a todo somewhere or as an verbal agreement
+        over something.
+        """,
+        """
+        Can be hard to track tasks related to work that overlap different
+        departments, since they can end up in different systems.
+        """,
+        """
+        It is functional but could be more user friendly. If things are moving
+        too fast it is easily abandoned.
+        """,
+      ],
+      [
+        """
+        It is secure and retains data without any loss.
+        """,
+        """
+        Easy to get an overview of who is working on what (though it does only
+        works if people update it correctly). It is easy to create recurring
+        tasks through task templates.
+        """,
+        """
+        Notification system for changes on character tasks works well when you
+        notice them.
+        """,
+        """
+        Good integration with Snowdrop and Quality Control.
+        """,
+      ],
+      [
+        """
+        Making it more user friendly in order to make it easier to incorporate.
+        """,
+        """
+        Templates solves recurring task but still lot of work for unique tasks.
+        """,
+        """
+        Better communication around tasks, threads or similar.
+        """,
+        """
+        Easier tracking of time spent on tasks and logging.
+        """,
+        """
+        There is no way to see the total workload in either system or the work
+        present in them combined.
+        """,
+        """
+        Feed back actual time spent into the proposed bid for adjustment.
+        """,
+        """
+        Easier communication between teams.
+        """,
+        """
+        Consolidate things that currently live in different places.
+        """,
+      ],
+      [
+        """
+        Other input streams for task creation, e.g. email to task.
+        """,
+        """
+        Different, personalized ways of viewing different task and todos, e.g.
+        GTD.
+        """,
+        """
+        Shotgun-Jira bridge that mirrors information between both.
+        """,
+        """
+        Additional status page with filters.
+        """,
+        """
+        Visualization of the whole teams current work.
+        """,
+      ],
+      [
+        """
+        A way to distribute the state of the current movie in a playable format
+        with others in the organization.
+        """,
+        """
+        Better overview.
+        """,
+        """
+        A way to schedule task based on dependencies.
+        """,
+        """
+        Combine task information together with other system, e.g. vacation
+        information from other systems.
+        """,
+      ]
+    ]
+    if len(sums) < len(qs):
+      sums += [[]]*(len(qs)-len(sums))
+    html, pdf = render_template(
+      "questions/01_sum.html",
+      styles=[
+#        "style_pitch.css",
+        "style_questions.css",
+      ],
+      questions = zip(qs, sums),
+    )
+    return html
+
   def _questions(hide_pdf=False):
-    qs = [
-#      "What is your position?",
-      "Do any of your current tasks involve manually drawing conclusions based on data that live in different places?",
-      "Is there a tasks that is made harder by a lacking or cumbersome user interface?",
-      "If you could wish a currently missing, feasible, data-stream into existence to make your work easier, what would it be?",
-      "Do you have a tasks that would become easier if the data involved was organized or filtered in a different way?",
-      "Is there a task that you feel could be automated?",
-      "Do any of your tasks involve assembling data for others to view?"
-    ]
-    qs = [
-      "What are your feelings on the current taks assigning and tracking system?",
-      "Anything in particular that works well?",
-      "Could something be improved?",
-      "Is there anything missing that you would like to have?",
-      "Are there gaps in the information you receive? What could be added? Why?",
-      "Notes"
-    ]
+#    qs = [
+##      "What is your position?",
+#      "Do any of your current tasks involve manually drawing conclusions based on data that live in different places?",
+#      "Is there a tasks that is made harder by a lacking or cumbersome user interface?",
+#      "If you could wish a currently missing, feasible, data-stream into existence to make your work easier, what would it be?",
+#      "Do you have a tasks that would become easier if the data involved was organized or filtered in a different way?",
+#      "Is there a task that you feel could be automated?",
+#      "Do any of your tasks involve assembling data for others to view?"
+#    ]
     fields = [
       "ANON-ID",
 #      "Name",
@@ -129,7 +239,7 @@ def create_app():
         "style_questions.css",
       ],
       fields = fields,
-      questions = qs,
+      questions = qs + ['Notes'],
       hide_pdf=hide_pdf,
     )
     return html, pdf
