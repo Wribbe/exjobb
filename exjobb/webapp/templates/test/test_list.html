@@ -1,0 +1,4 @@
+<h1>List of test-id's</h1>
+{% for id in ids %}
+  <a href="{{ url_for("test", id_test=id) }}">{{id}}</a><br>
+{% endfor %}
