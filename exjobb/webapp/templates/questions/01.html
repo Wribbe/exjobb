@@ -1,0 +1,40 @@
+{% extends "pitch/base.html" %}
+
+{% block content %}
+  <div id="questions">
+    <div>
+      <h2>Exploratory interview questions regarding possible task-improvements.</h2>
+      {% if not hide_pdf %}
+        <a href="{{ url_for("questions_pdf") }}">(pdf)</a>
+      {%endif%}
+    </div>
+    <ol>
+      <div id="q_fields">
+        <table>
+          {% for field_data in fields %}
+            <tr>
+              <td>{{ field_data }}:</td>
+              <td>__________________________________</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% for question in questions %}
+        {% if question == "Notes" %}
+          <div id="q_notes">
+            <li>{{question}}</li>
+          </div>
+          {% for _ in range(10) %}
+            <hr>
+          {% endfor %}
+        {% else %}
+          <li>{{question}}</li>
+          <hr>
+          <hr>
+          <hr>
+          <hr>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </div>
+{% endblock %}

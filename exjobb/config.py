@@ -2,6 +2,7 @@ import os
 import subprocess
 import venv
 import shutil
+import sys
 
 DIR_VIRT = "virt_py3"
 DIR_VIRT_BIN = os.path.join(DIR_VIRT, "bin")
@@ -15,16 +16,7 @@ def call(command, env=None):
     env = os.environ
   if type(command) == str:
     command = command.split()
-  out, err = subprocess.Popen(
-    command,
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE,
-    env=env
-  ).communicate()
-  if err:
-    print(err, file=sys.stderr)
-  print(out)
-  return out
+  return subprocess.call(command, env=env)
 
 def virt_create():
   if not os.path.exists(DIR_VIRT):
