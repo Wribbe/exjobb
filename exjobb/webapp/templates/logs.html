@@ -1,0 +1,16 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Logs</h1>
+    <ul>
+    {% for display, filename in paths %}
+      <li>
+        <a href="{{ url_for('static', filename='logs/%s'|format(filename)) }}">
+          {{display}}
+        </a><br>
+      </li>
+    {% endfor %}
+    </ul>
+  </body>
+</html>
