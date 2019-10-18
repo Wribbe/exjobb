@@ -3,9 +3,17 @@ config.virt_load()
 
 import flask
 import os
+import sqlite3
+import random
 
+DATABASE = 'test_db.db'
+
+from pathlib import Path
 from flask_weasyprint import render_pdf, HTML
-from flask import Response
+from flask import \
+  Response, request, redirect, url_for, session, g, send_from_directory
+
+import datetime
 import weasyprint
 
 DIR_OUT = os.path.join("exjobb", "out")
@@ -30,6 +38,15 @@ def save_pdf(string_html, path):
 def create_app():
 
   app = flask.Flask(__name__)
+  app.secret_key = 'aosit2o3i8ls-[3-[svocx.vk,asrtn33'
+
+  qs = [
+    "What are your feelings on the current taks assigning and tracking system?",
+    "Anything in particular that works well?",
+    "Could something be improved?",
+    "Is there anything missing that you would like to have?",
+    "Are there gaps in the information you receive? What could be added? Why?",
+  ]
 
   @app.route("/")
   def index():
@@ -57,7 +74,6 @@ def create_app():
       "goaldoc.html",
       styles=["style_goal.css"],
     )[0]
-    return html
 
   @app.route("/goaldocument/pdf")
   def pdf_goaldoc():
@@ -95,5 +111,285 @@ def create_app():
     resp = Response(pdf)
     resp.mimetype = 'application/pdf'
     return resp
+
+  @app.route("/sum/questions")
+  def questions_sum():
+    sums = [
+      [
+        """
+        Tracking works well when the information is entered in Shotgun correctly.
+        There are lingering ephemeral tasks that never get entered into Shotgun
+        correctly, they exist on a todo somewhere or as an verbal agreement
+        over something.
+        """,
+        """
+        Can be hard to track tasks related to work that overlap different
+        departments, since they can end up in different systems.
+        """,
+        """
+        It is functional but could be more user friendly. If things are moving
+        too fast it is easily abandoned.
+        """,
+      ],
+      [
+        """
+        It is secure and retains data without any loss.
+        """,
+        """
+        Easy to get an overview of who is working on what (though it does only
+        works if people update it correctly). It is easy to create recurring
+        tasks through task templates.
+        """,
+        """
+        Notification system for changes on character tasks works well when you
+        notice them.
+        """,
+        """
+        Good integration with Snowdrop and Quality Control.
+        """,
+      ],
+      [
+        """
+        Making it more user friendly in order to make it easier to incorporate.
+        """,
+        """
+        Templates solves recurring task but still lot of work for unique tasks.
+        """,
+        """
+        Better communication around tasks, threads or similar.
+        """,
+        """
+        Easier tracking of time spent on tasks and logging.
+        """,
+        """
+        There is no way to see the total workload in either system or the work
+        present in them combined.
+        """,
+        """
+        Feed back actual time spent into the proposed bid for adjustment.
+        """,
+        """
+        Easier communication between teams.
+        """,
+        """
+        Consolidate things that currently live in different places.
+        """,
+      ],
+      [
+        """
+        Other input streams for task creation, e.g. email to task.
+        """,
+        """
+        Different, personalized ways of viewing different task and todos, e.g.
+        GTD.
+        """,
+        """
+        Shotgun-Jira bridge that mirrors information between both.
+        """,
+        """
+        Additional status page with filters.
+        """,
+        """
+        Visualization of the whole teams current work.
+        """,
+      ],
+      [
+        """
+        A way to distribute the state of the current movie in a playable format
+        with others in the organization.
+        """,
+        """
+        Better overview.
+        """,
+        """
+        A way to schedule task based on dependencies.
+        """,
+        """
+        Combine task information together with other system, e.g. vacation
+        information from other systems.
+        """,
+      ]
+    ]
+    if len(sums) < len(qs):
+      sums += [[]]*(len(qs)-len(sums))
+    html, pdf = render_template(
+      "questions/01_sum.html",
+      styles=[
+#        "style_pitch.css",
+        "style_questions.css",
+      ],
+      questions = zip(qs, sums),
+    )
+    return html
+
+  def _questions(hide_pdf=False):
+#    qs = [
+##      "What is your position?",
+#      "Do any of your current tasks involve manually drawing conclusions based on data that live in different places?",
+#      "Is there a tasks that is made harder by a lacking or cumbersome user interface?",
+#      "If you could wish a currently missing, feasible, data-stream into existence to make your work easier, what would it be?",
+#      "Do you have a tasks that would become easier if the data involved was organized or filtered in a different way?",
+#      "Is there a task that you feel could be automated?",
+#      "Do any of your tasks involve assembling data for others to view?"
+#    ]
+    fields = [
+      "ANON-ID",
+#      "Name",
+#      "Age",
+#      "Gender",
+      "Date",
+      "Time Start",
+      "Time End",
+    ]
+    html, pdf = render_template(
+      "questions/01.html",
+      styles=[
+#        "style_pitch.css",
+        "style_questions.css",
+      ],
+      fields = fields,
+      questions = qs + ['Notes'],
+      hide_pdf=hide_pdf,
+    )
+    return html, pdf
+
+  @app.route("/questions/01")
+  def questions():
+    html, pdf = _questions()
+    return html
+
+  @app.route("/questions/01/pdf")
+  def questions_pdf():
+    html, pdf = _questions(hide_pdf=True)
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
+
+  def _anon(hide_pdf=False):
+    num_people = 30
+    fields = [
+      'ANON-ID',
+      'Name',
+      'Position',
+      'Age',
+      'Gender',
+    ]
+    html, pdf = render_template(
+      "questions/anon.html",
+      styles=[
+        "style_pitch.css",
+        "style_anon.css",
+      ],
+      fields = fields,
+      num_people = num_people,
+      hide_pdf=hide_pdf,
+    )
+    return html, pdf
+
+  @app.route("/anon")
+  def anon():
+    html, pdf = _anon()
+    return html
+
+  @app.route("/anon/pdf")
+  def anon_pdf():
+    html, pdf = _anon(hide_pdf=True)
+    resp = Response(pdf)
+    resp.mimetype = 'application/pdf'
+    return resp
+
+  @app.route("/gantt")
+  def gantt():
+    return render_template(
+      "gantt.html",
+      styles=[]
+    )[0]
+
+  @app.route("/logs/")
+  def logs():
+    paths = [
+      os.path.basename(p)
+      for p in os.listdir(os.path.join(app.static_folder, 'logs'))
+    ]
+    paths = [(p.split('.')[0], p) for p in paths]
+    return render_template(
+      'logs.html',
+      paths=paths,
+    )[0]
+
+  @app.route("/test/results")
+  def results_test():
+    cur = get_db().execute('select * from tests')
+    res = [(
+        r['key'],
+        (datetime.datetime.fromtimestamp(float(r['stop'])) -
+        datetime.datetime.fromtimestamp(float(r['start']))).seconds
+      ) for r in cur.fetchall()
+    ]
+    cur.close()
+    return render_template(
+      "test/results.html",
+      results = res,
+    )[0]
+
+  sql_create = "INSERT INTO tests (key, start) VALUES (?, ?)"
+  sql_update_stop = lambda id_test,stop: \
+    f"UPDATE tests SET stop = '{stop}' WHERE key = '{id_test}'"
+
+  @app.route("/test/<id_test>", methods=['GET','POST'])
+  def test(id_test):
+    cur = get_db().cursor()
+    if request.method == "POST":
+      now = datetime.datetime.now().timestamp()
+      cur.execute(sql_update_stop(id_test, now))
+      get_db().commit()
+      cur.close()
+      return redirect(url_for('results_test'))
+    now = datetime.datetime.now().timestamp()
+    try:
+      cur.execute(sql_create, (id_test, now))
+    except sqlite3.IntegrityError as e: # Already exists.
+      pass
+    get_db().commit()
+    cur.close()
+    buttons = [False]*10 + [True]
+    circles = [False]*4 + [True]
+    random.shuffle(buttons)
+    random.shuffle(circles)
+
+    return render_template(
+      'test/test.html',
+      id_test=id_test,
+      buttons=buttons,
+      circles=circles,
+      styles=['style_test.css'],
+    )[0]
+
+  alph = list('abcdefghijklmnopqrstuvwxyz')
+  @app.route("/test/list")
+  def tests_list():
+    ids = [(alph[i].upper())*3 for i in range(0,5)]
+    return render_template(
+      'test/test_list.html',
+      ids=ids
+    )[0]
+
+  def get_db():
+    db = getattr(g, '_database', None)
+    if not db:
+      db = g._database = sqlite3.connect(DATABASE)
+    db.row_factory = sqlite3.Row
+    return db
+
+  @app.teardown_appcontext
+  def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db:
+      db.close()
+
+
+  @app.route("/pdf/<pdf_id>")
+  def send_pdf(pdf_id):
+    return send_from_directory(Path(app.static_folder, 'pdf'), pdf_id)
 
   return app
