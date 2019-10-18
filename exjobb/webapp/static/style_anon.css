@@ -1,0 +1,34 @@
+@page {
+  size: A4 landscape;
+  margin: 1cm;
+  margin-bottom: 0.5cm;
+}
+
+@media print {
+  body {
+    font-size: 72%;
+  }
+}
+
+table {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid;
+  text-align: center;
+  height: 0.5cm;
+}
+
+.name {
+  width: 6cm;
+}
+
+.age, .gender{
+  width: 2cm;
+}
+
+.position {
+  width: 11cm;
+}
