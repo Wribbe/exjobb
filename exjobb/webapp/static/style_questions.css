@@ -1,0 +1,53 @@
+@page {
+  size: A4 portrait;
+  margin: 1cm;
+  margin-bottom: 2cm;
+}
+
+@media print {
+  body {
+    font-size: 72%;
+  }
+  hr {
+    width: 15cm;
+  }
+}
+
+
+#questions ol {
+  counter-reset: item;
+  list-style-type: none;
+}
+
+#questions ol li {
+  margin-top: 1.0cm;
+}
+
+.question:before {
+  content: 'Q' counter(item, decimal) '. ';
+  counter-increment: item;
+}
+
+#questions hr {
+   margin-top: 1cm;
+   margin-left: 0;
+}
+
+#questions {
+  width: 25cm;
+}
+
+#q_fields td:first-of-type {
+  text-align: right;
+  font-weight: bold;
+  padding-right: 0.2cm;
+}
+
+#q_fields td {
+  padding-top: 0.2cm;
+}
+
+#questions ol #q_notes li:before {
+  content: '';
+  counter-increment: item;
+}
