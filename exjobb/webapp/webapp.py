@@ -8,8 +8,11 @@ import random
 
 DATABASE = 'test_db.db'
 
+from pathlib import Path
 from flask_weasyprint import render_pdf, HTML
-from flask import Response, request, redirect, url_for, session, g
+from flask import \
+  Response, request, redirect, url_for, session, g, send_from_directory
+
 import datetime
 import weasyprint
 
@@ -383,5 +386,10 @@ def create_app():
     db = getattr(g, '_database', None)
     if db:
       db.close()
+
+
+  @app.route("/pdf/<pdf_id>")
+  def send_pdf(pdf_id):
+    return send_from_directory(Path(app.static_folder, 'pdf'), pdf_id)
 
   return app
