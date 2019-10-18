@@ -1,0 +1,47 @@
+<html>
+  <head>
+    {% for style in styles %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='%s'|format(style)) }}">
+    {% endfor %}
+  </head>
+  <body>
+    <h1>{{id_test}}</h1>
+
+    <form action="{{ url_for('test', id_test=id_test) }}" method="POST">
+      {% for correct in buttons %}
+        <span>
+          {% if correct %}
+            <input class="correct" type='submit' value='Correct'></input>
+          {% else %}
+            <input class="false" type='button' value='False'></input>
+          {% endif %}
+        </span>
+      {% endfor %}
+      {% for correct in circles %}
+        {% if correct %}
+          <label>
+            <input type="submit" hidden="true"></input>
+            <svg><rect width="100" height="100"/></rect></svg>
+          </label>
+        {% else %}
+          <label>
+            <input class="false" type="submit" hidden="true"></input>
+            <svg><rect width="100" height="100"/></rect></svg>
+          </label>
+        {% endif %}
+      {% endfor %}
+      <label>
+        <input type="submit" hidden="true"></input>
+        <svg><rect width="100" height="100"/></rect></svg>
+      </label>
+      <label>
+        <input type="submit" hidden="true"></input>
+        <svg><rect width="100" height="100"/></rect></svg>
+      </label>
+      <label>
+        <input type="submit" hidden="true"></input>
+        <svg><rect width="100" height="100"/></rect></svg>
+      </label>
+    </form>
+  </body>
+</html>

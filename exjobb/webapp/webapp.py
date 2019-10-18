@@ -3,9 +3,17 @@ config.virt_load()
 
 import flask
 import os
+import sqlite3
+import random
 
+DATABASE = 'test_db.db'
+
+from pathlib import Path
 from flask_weasyprint import render_pdf, HTML
-from flask import Response
+from flask import \
+  Response, request, redirect, url_for, session, g, send_from_directory
+
+import datetime
 import weasyprint
 
 DIR_OUT = os.path.join("exjobb", "out")
@@ -30,6 +38,7 @@ def save_pdf(string_html, path):
 def create_app():
 
   app = flask.Flask(__name__)
+  app.secret_key = 'aosit2o3i8ls-[3-[svocx.vk,asrtn33'
 
   qs = [
     "What are your feelings on the current taks assigning and tracking system?",
@@ -295,5 +304,92 @@ def create_app():
       "gantt.html",
       styles=[]
     )[0]
+
+  @app.route("/logs/")
+  def logs():
+    paths = [
+      os.path.basename(p)
+      for p in os.listdir(os.path.join(app.static_folder, 'logs'))
+    ]
+    paths = [(p.split('.')[0], p) for p in paths]
+    return render_template(
+      'logs.html',
+      paths=paths,
+    )[0]
+
+  @app.route("/test/results")
+  def results_test():
+    cur = get_db().execute('select * from tests')
+    res = [(
+        r['key'],
+        (datetime.datetime.fromtimestamp(float(r['stop'])) -
+        datetime.datetime.fromtimestamp(float(r['start']))).seconds
+      ) for r in cur.fetchall()
+    ]
+    cur.close()
+    return render_template(
+      "test/results.html",
+      results = res,
+    )[0]
+
+  sql_create = "INSERT INTO tests (key, start) VALUES (?, ?)"
+  sql_update_stop = lambda id_test,stop: \
+    f"UPDATE tests SET stop = '{stop}' WHERE key = '{id_test}'"
+
+  @app.route("/test/<id_test>", methods=['GET','POST'])
+  def test(id_test):
+    cur = get_db().cursor()
+    if request.method == "POST":
+      now = datetime.datetime.now().timestamp()
+      cur.execute(sql_update_stop(id_test, now))
+      get_db().commit()
+      cur.close()
+      return redirect(url_for('results_test'))
+    now = datetime.datetime.now().timestamp()
+    try:
+      cur.execute(sql_create, (id_test, now))
+    except sqlite3.IntegrityError as e: # Already exists.
+      pass
+    get_db().commit()
+    cur.close()
+    buttons = [False]*10 + [True]
+    circles = [False]*4 + [True]
+    random.shuffle(buttons)
+    random.shuffle(circles)
+
+    return render_template(
+      'test/test.html',
+      id_test=id_test,
+      buttons=buttons,
+      circles=circles,
+      styles=['style_test.css'],
+    )[0]
+
+  alph = list('abcdefghijklmnopqrstuvwxyz')
+  @app.route("/test/list")
+  def tests_list():
+    ids = [(alph[i].upper())*3 for i in range(0,5)]
+    return render_template(
+      'test/test_list.html',
+      ids=ids
+    )[0]
+
+  def get_db():
+    db = getattr(g, '_database', None)
+    if not db:
+      db = g._database = sqlite3.connect(DATABASE)
+    db.row_factory = sqlite3.Row
+    return db
+
+  @app.teardown_appcontext
+  def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db:
+      db.close()
+
+
+  @app.route("/pdf/<pdf_id>")
+  def send_pdf(pdf_id):
+    return send_from_directory(Path(app.static_folder, 'pdf'), pdf_id)
 
   return app

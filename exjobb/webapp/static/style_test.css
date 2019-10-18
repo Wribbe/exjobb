@@ -1,0 +1,21 @@
+.false {
+  color: red;
+  background: red;
+  width: 200px;
+}
+
+.correct {
+  color: green;
+  background: green;
+  width: 230px;
+}
+
+.rect {display:none}
+svg{float:left;width:100px;margin:0 1px}
+label{cursor:pointer}
+svg:hover {margin-top:1px}
+
+form span::after {
+  content: "\a";
+  white-space: pre;
+}
