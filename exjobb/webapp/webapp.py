@@ -392,4 +392,96 @@ def create_app():
   def send_pdf(pdf_id):
     return send_from_directory(Path(app.static_folder, 'pdf'), pdf_id)
 
+  @app.route("/mockup/<int:batch>/<int:version>")
+  def mockup(batch, version):
+
+    font_size = 20
+    bufferx= 17
+    buffery= 21
+    out = [
+      '<svg width="297mm" height="210mm" xmlns="http://www.w3.org/2000/svg">',
+      '<style>',
+      '  .heavy { font: bold 40px; }',
+      '</style>',
+    ]
+
+    buttons = ["Hours","Availability", "Dependencies", "Performance"]
+
+
+    def button(x,y,width,height,text,rx=0,anchor="middle",left=False):
+      out = []
+      textx = x+(width/2.0)
+      texty = y+(height/2.0)+font_size/2.5
+      out.append(
+        f'<rect x="{x}" y="{y}" width="{width}" height="{height}"'+\
+        f' rx="{rx}" fill="white" stroke="black"/>'
+      )
+      out.append(
+        f'<text x="{textx}" y="{texty}" font-size="{font_size}"'+\
+        f' text-anchor="{anchor}">{text}</text>'
+      )
+      return os.linesep.join(out)
+
+    def workarea(x,y,width,height,text="Data View",font_size=50):
+      textx = x+(width/2.0)
+      texty = y+(height/2.0)+font_size/2.5
+      anchor = "middle"
+      out = [
+        f'<rect x="{x}" y="{y}" width="{width}" height="{height}"'+\
+        f' fill="white" stroke="black" stroke-dasharray="4"/>'
+      ]
+      out.append(
+        f'<text x="{textx}" y="{texty}" font-size="{font_size}"'+\
+        f' text-anchor="{anchor}" fill="black">{text}</text>'
+      )
+      return os.linesep.join(out)
+
+    def mark(text):
+      text = str(text)
+      return \
+        f'<text x="1050" y="60" class="heavy" text-anchor="middle">{text}</text>'
+
+    if version == 1:
+      sumx = 0
+      for i, text in enumerate(buttons):
+        width = len(text)*font_size
+        out.append(button(bufferx+sumx,buffery,width,50,text))
+        sumx += (width + 10)
+      out.append(workarea(bufferx,buffery+60,1080,615))
+      out.append(
+        workarea(bufferx,710,1080,60,text="Additional Info",font_size=30)
+      )
+    if version == 2:
+      sumx = 0
+      for i, text in enumerate(buttons):
+        width = len(text)*font_size
+        out.append(button(bufferx+sumx,buffery,width,50,text))
+        sumx += (width + 10)
+      out.append(workarea(bufferx,buffery+60,830,680))
+      out.append(
+        workarea(bufferx+830+20,buffery+50+10,230,680,text="Additional Info",font_size=25)
+      )
+    if version == 3:
+      size_max = max([len(b) for b in buttons])
+      width = size_max*font_size
+      for i, text in enumerate(buttons):
+        out.append(button(bufferx,buffery+(60*i),width,50,text,left=True))
+      out.append(workarea(bufferx+width+20,buffery,820,670))
+      out.append(
+        workarea(bufferx,710,1080,60,text="Additional Info",font_size=30)
+      )
+    if version == 4:
+      size_max = max([len(b) for b in buttons])
+      width = size_max*font_size
+      for i, text in enumerate(buttons):
+        out.append(button(bufferx,buffery+(60*i),width,50,text,left=True))
+      out.append(workarea(bufferx+width+20,buffery,820,740))
+      out.append(
+        workarea(bufferx,buffery+(60*len(buttons))+20,width,480,text="Additional Info",font_size=30)
+      )
+
+    out.append(mark(f"{batch}.{version}"))
+    out.append("</svg>")
+    return os.linesep.join(out)
+
   return app
