@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='ui_test.css') }}"></style>
+    <style>
+      .wrapper {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 10px;
+        grid-auto-rows: minmax(20px, auto);
+      }
+      .wrapper div {
+        border: 2px solid rgb(233,171,88);
+        border-radius: 5px;
+        background-color: rgba(233,171,88,.5);
+        padding: 1em;
+        color: #d9480f;
+      }
+      {% for class in classes %}
+        .{{class.name}} {
+          grid-column: {{class.col}};
+          grid-row: {{class.row}};
+        }
+      {% endfor %}
+    </style>
+    <script>
+      function div_click(name) {
+        document.getElementById('data-view').innerText = name;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      {% for name in buttons%}
+        <div id="{{ name }}" class="{{ name }}" onclick="div_click('{{name}}')">{{ name | title }}</div>
+      {% endfor %}
+      {% for name in views%}
+        <div id="{{ name }}" class="{{ name }}">{{ name | title }}</div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
