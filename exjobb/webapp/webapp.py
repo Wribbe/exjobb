@@ -486,6 +486,77 @@ def create_app():
 
   @app.route('/ui')
   def ui():
-    return "HELLO"
+
+    classes = []
+
+    buttons = [
+      "Hours",
+      "Availability",
+      "Dependencies",
+      "Performance",
+    ]
+    views = [
+      "data-view",
+      "additional-info"
+    ]
+    vertical = True
+
+    for i, button in enumerate(buttons):
+      if vertical:
+        classes.append(
+          {
+            'name': f"{button}",
+            'col': "1/3",
+            'row': "{i}",
+          }
+        ),
+        classes.append(
+          {
+            'name': "data-view",
+            'col': "3/10",
+            'row': "1/20",
+          }
+        ),
+        classes.append(
+          {
+            'name': "additional-info",
+            'col': "1/3",
+            'row': "5/20",
+          }
+        ),
+
+      else:
+        classes.append(
+          {
+            'name': f"{button}",
+            'col': f"{i}",
+            'row': "1",
+          }
+        )
+
+#      .one {
+#        grid-column: 1/3;
+#        grid-row: 1;
+#      }
+#
+#      .two {
+#        grid-column: 2/4;
+#        grid-row: 1/3;
+#      }
+#      .three {
+#        grid-column: 1;
+#        grid-row: 2/6;
+#      }
+#      .four {
+#        grid-column: 3;
+#        grid-row: 3;
+#      }
+    elements = buttons + views
+    return render_template(
+      "ui/main.html",
+      classes=classes,
+      buttons=buttons,
+      views=views,
+    )[0]
 
   return app
