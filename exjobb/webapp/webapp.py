@@ -484,4 +484,8 @@ def create_app():
     out.append("</svg>")
     return os.linesep.join(out)
 
+  @app.route('/ui')
+  def ui():
+    return "HELLO"
+
   return app
