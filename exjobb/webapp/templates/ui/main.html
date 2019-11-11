@@ -44,7 +44,7 @@
 
         var request = new XMLHttpRequest();
         var data;
-        request.open('GET', `data/ui/${name}`, true);
+        request.open('GET', '{{ url_for("data_ui", mode="") }}'+`${name}`, true);
 
         request.onload = function() {
           if (this.status >= 200 && this.status < 400) {
@@ -68,7 +68,6 @@
 
         // Add and set internal div.
         var div_inner = document.createElement('div');
-        div_inner.className = "view-data-inner";
         div_inner.id = "view-data-inner";
         view.appendChild(div_inner);
 

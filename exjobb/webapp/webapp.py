@@ -485,8 +485,22 @@ def create_app():
     out.append("</svg>")
     return os.linesep.join(out)
 
-  @app.route('/ui')
-  def ui():
+  @app.route('/ui/<version>')
+  def ui(version):
+
+    version_select = {
+      # (Button-are-vertical, additional-pos).
+      '1.1': (False,"B"),
+      '1.2': (False,"R"),
+      '1.3': (True,"B"),
+      '1.4': (True,"L"),
+    }
+
+    vers = version_select.get(version)
+    if not vers:
+      return f"No such ui-version: {version}."
+
+    buttons_vertical, pos_additional = vers
 
     classes = []
 
@@ -500,9 +514,6 @@ def create_app():
       "view-data",
       "view-additional"
     ]
-
-    buttons_vertical = False
-    pos_additional = "R"
 
     view_data = {
       'name': "view-data",
@@ -523,7 +534,6 @@ def create_app():
             }
           ),
     else:
-      size_view_data = (800, 400)
       for i, button in enumerate(buttons, start=1):
         classes.append(
           {
@@ -532,13 +542,45 @@ def create_app():
             'row': "1",
           }
         )
-        if pos_additional == "R":
 
-          view_additional['col'] = '7/10'
-          view_additional['row'] = '2/20'
+    if pos_additional == "R":
 
-          view_data['col'] = '1/7'
-          view_data['row'] = '2/20'
+      size_view_data = (620, 430)
+      view_additional['col'] = '7/10'
+      view_additional['row'] = '2/20'
+
+      view_data['col'] = '1/7'
+      view_data['row'] = '2/20'
+
+    elif pos_additional == "B":
+
+      if buttons_vertical:
+
+        size_view_data = (590, 570)
+        view_additional['col'] = '1/10'
+        view_additional['row'] = '19/20'
+
+        view_data['col'] = '3/10'
+        view_data['row'] = '1/19'
+
+      else:
+
+        size_view_data = (800, 400)
+        view_additional['col'] = '1/10'
+        view_additional['row'] = '19/20'
+
+        view_data['col'] = '1/10'
+        view_data['row'] = '2/19'
+
+    elif pos_additional == "L":
+
+      size_view_data = (590, 600)
+      view_additional['col'] = '1/3'
+      view_additional['row'] = '5/20'
+
+      view_data['col'] = '3/10'
+      view_data['row'] = '1/20'
+
 
 #      .one {
 #        grid-column: 1/3;
