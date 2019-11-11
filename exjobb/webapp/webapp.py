@@ -500,10 +500,21 @@ def create_app():
       "view-data",
       "view-additional"
     ]
-    vertical = True
 
-    if vertical:
-      for i, button in enumerate(buttons):
+    buttons_vertical = False
+    pos_additional = "R"
+
+    view_data = {
+      'name': "view-data",
+    }
+    view_additional = {
+      'name': "view-additional",
+    }
+
+
+    if buttons_vertical:
+      size_view_data = (605, 605)
+      for i, button in enumerate(buttons, start=1):
           classes.append(
             {
               'name': f"{button}",
@@ -511,22 +522,9 @@ def create_app():
               'row': "{i}",
             }
           ),
-      classes.append(
-        {
-          'name': "view-data",
-          'col': "3/10",
-          'row': "1/20",
-        }
-      ),
-      classes.append(
-        {
-          'name': "view-additional",
-          'col': "1/3",
-          'row': "5/20",
-        }
-      ),
     else:
-      for i, button in enumerate(buttons):
+      size_view_data = (800, 400)
+      for i, button in enumerate(buttons, start=1):
         classes.append(
           {
             'name': f"{button}",
@@ -534,6 +532,13 @@ def create_app():
             'row': "1",
           }
         )
+        if pos_additional == "R":
+
+          view_additional['col'] = '7/10'
+          view_additional['row'] = '2/20'
+
+          view_data['col'] = '1/7'
+          view_data['row'] = '2/20'
 
 #      .one {
 #        grid-column: 1/3;
@@ -552,13 +557,16 @@ def create_app():
 #        grid-column: 3;
 #        grid-row: 3;
 #      }
-    elements = buttons + views
+
+    classes.append(view_data)
+    classes.append(view_additional)
+
     return render_template(
       "ui/main.html",
       classes=classes,
       buttons=buttons,
       views=views,
-      height_view_data=605,
+      size_view_data=size_view_data,
     )[0]
 
   @app.route('/data/ui/<mode>')

@@ -75,15 +75,15 @@
         var chart = document.createElementNS(NS_SVG, "svg");
         chart.setAttribute("version", "1.1");
         chart.setAttribute("baseProfile", "full");
-        chart.setAttribute("width", "590");
+        chart.setAttribute("width", "{{size_view_data[0]}}");
         chart.setAttribute("id", "chart");
-        chart.setAttribute("height", "{{height_view_data+40}}");
+        chart.setAttribute("height", "{{size_view_data[1]+40}}");
 
         div_inner.appendChild(chart);
 
         var rect = document.createElementNS(NS_SVG, "rect");
         rect.setAttributeNS(null, "x", 25);
-        rect.setAttributeNS(null, "y", "{{height_view_data-10}}px");
+        rect.setAttributeNS(null, "y", "{{size_view_data[1]-10}}px");
         rect.setAttributeNS(null, "height", 10);
         rect.setAttributeNS(null, "width", 10);
         rect.setAttributeNS(null, "onclick", "alert('Clicked!')");
