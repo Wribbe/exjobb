@@ -559,4 +559,8 @@ def create_app():
       views=views,
     )[0]
 
+  @app.route('/data/ui')
+  def data_ui():
+    return "UI-DATA"
+
   return app
