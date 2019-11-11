@@ -16,15 +16,18 @@
       .button {
         cursor: pointer;
       }
-      .view-data-inner {
-        height: 605px;
-      }
       {% for class in classes %}
         .{{class.name}} {
           grid-column: {{class.col}};
           grid-row: {{class.row}};
         }
       {% endfor %}
+
+      #view-data-inner {
+        height: 605px;
+        border: none;
+      }
+
     </style>
     <script>
       function div_click(name) {
@@ -57,6 +60,7 @@
         var div_inner = document.createElement('div');
         div_inner.innerText = "Inner Div!";
         div_inner.className = "view-data-inner";
+        div_inner.id = "view-data-inner";
         view.appendChild(div_inner);
       }
     </script>
