@@ -12,13 +12,29 @@
     <a href="{{ url_for("anon") }}">(ANON-ID sheet)</a>
     <a href="{{ url_for("questions_sum") }}">Q-summary</a>
     <hr>
-    <a href="{{ url_for("logs") }}">Logs</a><br>
     <a href="{{ url_for("tests_list") }}">Showcase-Tests</a>
     <hr>
     UI-batch-1:
     {% for i in range(1,5) %}
       <a href="{{ url_for("ui", version="1."+i|string) }}">{{ "1."+i|string }}</a>
     {% endfor %}
-    <br>
+    <hr>
+    <div id="list-log">
+      <div>Logs:</div>
+      <div>
+        <a href="{{ url_for("logs", filename="2019-10-14.html") }}">2019-10-14</a>
+      </div>
+      <div><s>2019-10-28</s></div>
+      <span id="log-marker">></span>
+      <div>
+        <a href="{{ url_for("logs", filename="2019-11-11.html") }}">2019-11-11</a>
+      </div>
+      <div>2019-11-25</div>
+      <div>2019-12-09 -- <i> HI-FI DONE</i></div>
+      <div><s>2019-12-23</s></div>
+      <div><s>2020-01-06</s></div>
+      <div>2020-01-20</div>
+      <div>2020-02-03</div>
+    </div>
   </body>
 </html>

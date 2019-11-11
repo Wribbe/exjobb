@@ -306,17 +306,9 @@ def create_app():
       styles=[]
     )[0]
 
-  @app.route("/logs/")
-  def logs():
-    paths = [
-      os.path.basename(p)
-      for p in os.listdir(os.path.join(app.static_folder, 'logs'))
-    ]
-    paths = [(p.split('.')[0], p) for p in paths]
-    return render_template(
-      'logs.html',
-      paths=paths,
-    )[0]
+  @app.route("/logs/<filename>")
+  def logs(filename):
+    return send_from_directory(os.path.join('static','logs'), filename)
 
   @app.route("/test/results")
   def results_test():
