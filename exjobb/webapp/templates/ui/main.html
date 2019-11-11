@@ -30,6 +30,9 @@
 
     </style>
     <script>
+
+      const NS_SVG = "http://www.w3.org/2000/svg";
+
       function div_click(name) {
 
         var request = new XMLHttpRequest();
@@ -58,10 +61,28 @@
 
         // Add and set internal div.
         var div_inner = document.createElement('div');
-        div_inner.innerText = "Inner Div!";
         div_inner.className = "view-data-inner";
         div_inner.id = "view-data-inner";
         view.appendChild(div_inner);
+
+        var chart = document.createElementNS(NS_SVG, "svg");
+        chart.setAttribute("version", "1.1");
+        chart.setAttribute("baseProfile", "full");
+        chart.setAttribute("width", "300");
+        chart.setAttribute("height", "300");
+
+        div_inner.appendChild(chart);
+
+        var rect = document.createElementNS(NS_SVG, "rect");
+        rect.setAttributeNS(null, "x", 25);
+        rect.setAttributeNS(null, "y", 25);
+        rect.setAttributeNS(null, "y", 25);
+        rect.setAttributeNS(null, "height", 10);
+        rect.setAttributeNS(null, "width", 10);
+        rect.setAttributeNS(null, "onclick", "alert('Clicked!')");
+        rect.setAttributeNS(null, "fill", "green");
+
+        chart.appendChild(rect);
       }
     </script>
   </head>
