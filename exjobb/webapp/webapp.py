@@ -497,36 +497,36 @@ def create_app():
       "Performance",
     ]
     views = [
-      "data-view",
-      "additional-info"
+      "view-data",
+      "view-additional"
     ]
     vertical = True
 
-    for i, button in enumerate(buttons):
-      if vertical:
-        classes.append(
-          {
-            'name': f"{button}",
-            'col': "1/3",
-            'row': "{i}",
-          }
-        ),
-        classes.append(
-          {
-            'name': "data-view",
-            'col': "3/10",
-            'row': "1/20",
-          }
-        ),
-        classes.append(
-          {
-            'name': "additional-info",
-            'col': "1/3",
-            'row': "5/20",
-          }
-        ),
-
-      else:
+    if vertical:
+      for i, button in enumerate(buttons):
+          classes.append(
+            {
+              'name': f"{button}",
+              'col': "1/3",
+              'row': "{i}",
+            }
+          ),
+      classes.append(
+        {
+          'name': "view-data",
+          'col': "3/10",
+          'row': "1/20",
+        }
+      ),
+      classes.append(
+        {
+          'name': "view-additional",
+          'col': "1/3",
+          'row': "5/20",
+        }
+      ),
+    else:
+      for i, button in enumerate(buttons):
         classes.append(
           {
             'name': f"{button}",
