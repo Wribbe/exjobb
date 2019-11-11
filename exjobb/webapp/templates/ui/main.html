@@ -36,7 +36,7 @@
         request.onload = function() {
           if (this.status >= 200 && this.status < 400) {
             data = JSON.parse(this.response);
-            document.getElementById('data-view').innerText = data.name;
+            data_visualize(data);
           } else {
             // Failed.
           }
@@ -46,6 +46,18 @@
           alert('AJAX failed!');
         }
         request.send();
+      }
+
+      function data_visualize(data) {
+        // Set up header.
+        var view = document.getElementById('view-data');
+        view.innerText = data.name;
+
+        // Add and set internal div.
+        var div_inner = document.createElement('div');
+        div_inner.innerText = "Inner Div!";
+        div_inner.className = "view-data-inner";
+        view.appendChild(div_inner);
       }
     </script>
   </head>
