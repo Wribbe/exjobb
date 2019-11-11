@@ -564,4 +564,78 @@ def create_app():
   def data_ui(mode):
     return json.dumps({'name': mode})
 
+  @app.route('/cards')
+  def cards():
+    font_size = 35
+    bufferx= 17
+    buffery= 21
+
+    def button(x,y,width,height,text,rx=0,anchor="middle",left=False):
+      nonlocal font_size
+      old_size = font_size
+      if type(text) == tuple:
+        text, font_size = text
+      out = []
+      textx = x+(width/2.0)
+      texty = y+(height/2.0)+font_size/2.5
+      out.append(
+        f'<rect x="{x}" y="{y}" width="{width}" height="{height}"'+\
+        f' rx="{rx}" fill="white" stroke="black"/>'
+      )
+      out.append(
+        f'<text x="{textx}" y="{texty}" font-size="{font_size}"'+\
+        f' text-anchor="{anchor}">{text}</text>'
+      )
+      font_size = old_size
+      return os.linesep.join(out)
+
+    out = [
+      '<svg width="297mm" height="210mm" xmlns="http://www.w3.org/2000/svg">',
+      '<style>',
+      '  .heavy { font: bold 40px; }',
+      '</style>',
+    ]
+    card_width = 350
+    card_height = 178
+
+    cards = [
+      "Clarity",
+      "Discriminability",
+      "Conciseness",
+      "Consistency",
+      "Detectability",
+      "Legibility",
+      "Comprehensibility",
+      "Effectiveness",
+      "Efficiency",
+      "Satisfaction",
+    ]
+
+#Suitability for the task
+#Self-descriptiveness
+#Controllability
+#Conformity with user expectations
+#Error tolerance
+#Suitability for individualization
+#Suitability for learning
+
+    for j in range(4):
+      for i in range(3):
+        index = j*3+i
+        try:
+          txt = cards[index]
+        except:
+          txt = index
+        out.append(
+          button(
+            bufferx+(card_width+10)*i,
+            buffery+(card_height+10)*j,
+            card_width,
+            card_height,
+            txt,
+          )
+        )
+    out.append('</svg>')
+    return os.linesep.join(out)
+
   return app
