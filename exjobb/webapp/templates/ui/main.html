@@ -25,7 +25,24 @@
     </style>
     <script>
       function div_click(name) {
-        document.getElementById('data-view').innerText = name;
+
+        var request = new XMLHttpRequest();
+        var data;
+        request.open('GET', `data/ui/${name}`, true);
+
+        request.onload = function() {
+          if (this.status >= 200 && this.status < 400) {
+            data = JSON.parse(this.response);
+            document.getElementById('data-view').innerText = data.name;
+          } else {
+            // Failed.
+          }
+        }
+
+        request.onerror = function() {
+          alert('AJAX failed!');
+        }
+        request.send();
       }
     </script>
   </head>

@@ -5,6 +5,7 @@ import flask
 import os
 import sqlite3
 import random
+import json
 
 DATABASE = 'test_db.db'
 
@@ -559,8 +560,8 @@ def create_app():
       views=views,
     )[0]
 
-  @app.route('/data/ui')
-  def data_ui():
-    return "UI-DATA"
+  @app.route('/data/ui/<mode>')
+  def data_ui(mode):
+    return json.dumps({'name': mode})
 
   return app
