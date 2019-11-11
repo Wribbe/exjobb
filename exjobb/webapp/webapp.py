@@ -5,6 +5,7 @@ import flask
 import os
 import sqlite3
 import random
+import json
 
 DATABASE = 'test_db.db'
 
@@ -482,6 +483,210 @@ def create_app():
 
     out.append(mark(f"{batch}.{version}"))
     out.append("</svg>")
+    return os.linesep.join(out)
+
+  @app.route('/ui/<version>')
+  def ui(version):
+
+    version_select = {
+      # (Button-are-vertical, additional-pos).
+      '1.1': (False,"B"),
+      '1.2': (False,"R"),
+      '1.3': (True,"B"),
+      '1.4': (True,"L"),
+    }
+
+    vers = version_select.get(version)
+    if not vers:
+      return f"No such ui-version: {version}."
+
+    buttons_vertical, pos_additional = vers
+
+    classes = []
+
+    buttons = [
+      "Hours",
+      "Availability",
+      "Dependencies",
+      "Performance",
+    ]
+    views = [
+      "view-data",
+      "view-additional"
+    ]
+
+    view_data = {
+      'name': "view-data",
+    }
+    view_additional = {
+      'name': "view-additional",
+    }
+
+
+    if buttons_vertical:
+      size_view_data = (605, 605)
+      for i, button in enumerate(buttons, start=1):
+          classes.append(
+            {
+              'name': f"{button}",
+              'col': "1/3",
+              'row': "{i}",
+            }
+          ),
+    else:
+      for i, button in enumerate(buttons, start=1):
+        classes.append(
+          {
+            'name': f"{button}",
+            'col': f"{i}",
+            'row': "1",
+          }
+        )
+
+    if pos_additional == "R":
+
+      size_view_data = (620, 430)
+      view_additional['col'] = '7/10'
+      view_additional['row'] = '2/20'
+
+      view_data['col'] = '1/7'
+      view_data['row'] = '2/20'
+
+    elif pos_additional == "B":
+
+      if buttons_vertical:
+
+        size_view_data = (590, 570)
+        view_additional['col'] = '1/10'
+        view_additional['row'] = '19/20'
+
+        view_data['col'] = '3/10'
+        view_data['row'] = '1/19'
+
+      else:
+
+        size_view_data = (800, 400)
+        view_additional['col'] = '1/10'
+        view_additional['row'] = '19/20'
+
+        view_data['col'] = '1/10'
+        view_data['row'] = '2/19'
+
+    elif pos_additional == "L":
+
+      size_view_data = (590, 600)
+      view_additional['col'] = '1/3'
+      view_additional['row'] = '5/20'
+
+      view_data['col'] = '3/10'
+      view_data['row'] = '1/20'
+
+
+#      .one {
+#        grid-column: 1/3;
+#        grid-row: 1;
+#      }
+#
+#      .two {
+#        grid-column: 2/4;
+#        grid-row: 1/3;
+#      }
+#      .three {
+#        grid-column: 1;
+#        grid-row: 2/6;
+#      }
+#      .four {
+#        grid-column: 3;
+#        grid-row: 3;
+#      }
+
+    classes.append(view_data)
+    classes.append(view_additional)
+
+    return render_template(
+      "ui/main.html",
+      classes=classes,
+      buttons=buttons,
+      views=views,
+      size_view_data=size_view_data,
+    )[0]
+
+  @app.route('/data/ui/<mode>')
+  def data_ui(mode):
+    return json.dumps({'name': mode})
+
+  @app.route('/cards')
+  def cards():
+    font_size = 35
+    bufferx= 17
+    buffery= 21
+
+    def button(x,y,width,height,text,rx=0,anchor="middle",left=False):
+      nonlocal font_size
+      old_size = font_size
+      if type(text) == tuple:
+        text, font_size = text
+      out = []
+      textx = x+(width/2.0)
+      texty = y+(height/2.0)+font_size/2.5
+      out.append(
+        f'<rect x="{x}" y="{y}" width="{width}" height="{height}"'+\
+        f' rx="{rx}" fill="white" stroke="black"/>'
+      )
+      out.append(
+        f'<text x="{textx}" y="{texty}" font-size="{font_size}"'+\
+        f' text-anchor="{anchor}">{text}</text>'
+      )
+      font_size = old_size
+      return os.linesep.join(out)
+
+    out = [
+      '<svg width="297mm" height="210mm" xmlns="http://www.w3.org/2000/svg">',
+      '<style>',
+      '  .heavy { font: bold 40px; }',
+      '</style>',
+    ]
+    card_width = 350
+    card_height = 178
+
+    cards = [
+      "Clarity",
+      "Discriminability",
+      "Conciseness",
+      "Consistency",
+      "Detectability",
+      "Legibility",
+      "Comprehensibility",
+      "Effectiveness",
+      "Efficiency",
+      "Satisfaction",
+    ]
+
+#Suitability for the task
+#Self-descriptiveness
+#Controllability
+#Conformity with user expectations
+#Error tolerance
+#Suitability for individualization
+#Suitability for learning
+
+    for j in range(4):
+      for i in range(3):
+        index = j*3+i
+        try:
+          txt = cards[index]
+        except:
+          txt = index
+        out.append(
+          button(
+            bufferx+(card_width+10)*i,
+            buffery+(card_height+10)*j,
+            card_width,
+            card_height,
+            txt,
+          )
+        )
+    out.append('</svg>')
     return os.linesep.join(out)
 
   return app

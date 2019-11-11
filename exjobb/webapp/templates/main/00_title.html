@@ -14,6 +14,11 @@
     <hr>
     <a href="{{ url_for("logs") }}">Logs</a><br>
     <a href="{{ url_for("tests_list") }}">Showcase-Tests</a>
+    <hr>
+    UI-batch-1:
+    {% for i in range(1,5) %}
+      <a href="{{ url_for("ui", version="1."+i|string) }}">{{ "1."+i|string }}</a>
+    {% endfor %}
     <br>
   </body>
 </html>

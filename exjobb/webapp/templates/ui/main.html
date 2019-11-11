@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <style>
+      .wrapper {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 10px;
+        grid-auto-rows: minmax(20px, auto);
+        width: 900px;
+        padding-left: 30px;
+        padding-top: 30px;
+      }
+      .wrapper div {
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 1em;
+      }
+      .button {
+        cursor: pointer;
+      }
+      {% for class in classes %}
+      #{{class.name | lower}} {
+        grid-column: {{class.col}};
+        grid-row: {{class.row}};
+      }
+      {% endfor %}
+
+      #view-data-inner {
+        height: {{height_view_data}}px;
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+      #chart {
+        border: 1px solid black;
+      }
+
+    </style>
+    <script>
+
+      const NS_SVG = "http://www.w3.org/2000/svg";
+
+      function div_click(name) {
+
+        var request = new XMLHttpRequest();
+        var data;
+        request.open('GET', '{{ url_for("data_ui", mode="") }}'+`${name}`, true);
+
+        request.onload = function() {
+          if (this.status >= 200 && this.status < 400) {
+            data = JSON.parse(this.response);
+            data_visualize(data);
+          } else {
+            // Failed.
+          }
+        }
+
+        request.onerror = function() {
+          alert('AJAX failed!');
+        }
+        request.send();
+      }
+
+      function data_visualize(data) {
+        // Set up header.
+        var view = document.getElementById('view-data');
+        view.innerText = data.name;
+
+        // Add and set internal div.
+        var div_inner = document.createElement('div');
+        div_inner.id = "view-data-inner";
+        view.appendChild(div_inner);
+
+        var chart = document.createElementNS(NS_SVG, "svg");
+        chart.setAttribute("version", "1.1");
+        chart.setAttribute("baseProfile", "full");
+        chart.setAttribute("width", "{{size_view_data[0]}}");
+        chart.setAttribute("id", "chart");
+        chart.setAttribute("height", "{{size_view_data[1]+40}}");
+
+        div_inner.appendChild(chart);
+
+        var rect = document.createElementNS(NS_SVG, "rect");
+        rect.setAttributeNS(null, "x", 25);
+        rect.setAttributeNS(null, "y", "{{size_view_data[1]-10}}px");
+        rect.setAttributeNS(null, "height", 10);
+        rect.setAttributeNS(null, "width", 10);
+        rect.setAttributeNS(null, "onclick", "alert('Clicked!')");
+        rect.setAttributeNS(null, "fill", "green");
+
+        chart.appendChild(rect);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      {% for name in buttons%}
+        <div id="{{ name | lower }}" class="button" onclick="div_click('{{name}}')">{{ name | title }}</div>
+      {% endfor %}
+      {% for name in views%}
+        <div id="{{ name }}" class="{{ name }}">{{ name | title }}</div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
