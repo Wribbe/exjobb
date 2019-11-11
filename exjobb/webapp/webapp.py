@@ -558,6 +558,7 @@ def create_app():
       classes=classes,
       buttons=buttons,
       views=views,
+      height_view_data=605,
     )[0]
 
   @app.route('/data/ui/<mode>')
