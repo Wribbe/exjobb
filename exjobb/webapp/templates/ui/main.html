@@ -19,10 +19,10 @@
         cursor: pointer;
       }
       {% for class in classes %}
-        .{{class.name}} {
-          grid-column: {{class.col}};
-          grid-row: {{class.row}};
-        }
+      #{{class.name | lower}} {
+        grid-column: {{class.col}};
+        grid-row: {{class.row}};
+      }
       {% endfor %}
 
       #view-data-inner {
@@ -96,7 +96,7 @@
   <body>
     <div class="wrapper">
       {% for name in buttons%}
-        <div id="{{ name }}" class="{{ name }} button" onclick="div_click('{{name}}')">{{ name | title }}</div>
+        <div id="{{ name | lower }}" class="button" onclick="div_click('{{name}}')">{{ name | title }}</div>
       {% endfor %}
       {% for name in views%}
         <div id="{{ name }}" class="{{ name }}">{{ name | title }}</div>
