@@ -681,4 +681,12 @@ def create_app():
     out.append('</svg>')
     return os.linesep.join(out)
 
+  @app.route('/presentation')
+  def presentation():
+    return "Presentation"
+
+  @app.route('/report')
+  def report():
+    return "Report"
+
   return app
