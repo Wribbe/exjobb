@@ -1,0 +1,99 @@
+@page {
+  size: A4 landscape;
+  margin: 0;
+  margin-left: -8px;
+  padding: 0;
+}
+
+@page :nth(1) { margin-top: -8px; }
+
+.slide {
+
+  width: 1000px;
+  height: 650px;
+  border: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+
+  font-size: 20pt;
+
+  height: 95%;
+}
+
+.content div {
+  margin-left: 4rem;
+}
+
+.content .title {
+  font-size: 30pt;
+  text-align: center;
+  margin-left: 0;
+}
+
+.content .author {
+  font-size: 15pt;
+  text-align: center;
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+.header, .footer {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  align-items: center;
+  justify-content: left;
+}
+
+.header {
+  background: green;
+}
+
+.footer {
+  background: lightgreen;
+}
+
+a[href^="mailto"] {
+  font-family: monospace;
+}
+
+a[href^="mailto"]::before {
+  content: "<";
+}
+
+a[href^="mailto"]::after {
+  content: ">";
+}
+
+@media screen {
+  body {
+    background: #bbbbbb;
+  }
+  .slide {
+    background: white;
+    margin: auto;
+    margin-top: 30px;
+  }
+}
+
+@media print {
+  .slide {
+    width: 1120px;
+    height: 793px;
+    break-after: always;
+  }
+  .content {
+    height: 733px;
+  }
+}

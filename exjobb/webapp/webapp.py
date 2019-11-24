@@ -683,7 +683,24 @@ def create_app():
 
   @app.route('/presentation')
   def presentation():
-    return "Presentation"
+    header = """
+    <div class="header">
+      <div>Header</div>
+    </div>
+    """
+    footer = """
+    <div class="footer">
+      <div>Footer</div>
+    </div>
+    """
+    html, pdf = render_template(
+      "presentation.html",
+      header=header,
+      footer=footer,
+    )
+    with open('test.pdf', 'wb') as fh:
+      fh.write(pdf)
+    return html
 
   @app.route('/report')
   def report():
