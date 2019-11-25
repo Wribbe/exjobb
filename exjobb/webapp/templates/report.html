@@ -1,8 +1,53 @@
 <html>
   <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='report.css') }}"></link>
+    <style>
+      @font-face {
+        font-family: "LatinModern";
+        src: url("{{ url_for('static', filename='fonts/lmroman12-regular.otf') }}");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "LatinModern";
+        src: url("{{ url_for('static', filename='fonts/lmroman12-bold.otf') }}");
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: "LatinModern-mono";
+        src: url("{{ url_for('static', filename='fonts/lmmonoproplt10-regular.otf') }}");
+      }
+    </style>
   </head>
   <body>
-    <h1>Report</h1>
+    <div class="page title-page">
+      <div class="hrdiv hrtop"></div>
+      <div class="title">
+        {{ title }}
+      </div>
+      <div class="hrdiv hrbottom"></div>
+      <div class="author">
+        <div>Stefan Eng</div>
+        <a href="mailto:atn08@student.lu.se">atn08sen@student.lu.se</a>
+      </div>
+      <div class="date">
+        {{ today }}
+      </div>
+      <div id="title-blurb">
+        Master's thesis work carried out at the Department of Ergonomics and
+        Aerosol Technology, Lund University.
+      </div>
+      <div class="supervisors">
+        <div>
+          <span>Supervisor:</span>
+          <span>Test test,</span>
+          <a href="mailto:">test@test.se</a>
+        </div>
+        <div>
+          <span>Examiner:</span>
+          <span>Test test,</span>
+          <a href="mailto:">test@test.se</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
