@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='presentation.css') }}"></link>
+  </head>
+  <body>
+    <div class="slide">
+      {{ header | safe}}
+      <div class="content">
+        <div class="title">
+          {{ title }}
+        </div>
+        <div class="author">
+          Stefan Eng -- <a href="mailto:atn08sen@student.lu.se">atn08sen@student.lu.se</a>
+        </div>
+      </div>
+      {{ footer | safe}}
+    </div>
+    <div class="slide">
+      {{ header | safe}}
+      <div class="content">
+        <div>
+          Content
+        </div>
+      </div>
+      {{ footer | safe}}
+    </div>
+  </body>
+</html>

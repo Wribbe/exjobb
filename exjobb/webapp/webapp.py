@@ -306,17 +306,9 @@ def create_app():
       styles=[]
     )[0]
 
-  @app.route("/logs/")
-  def logs():
-    paths = [
-      os.path.basename(p)
-      for p in os.listdir(os.path.join(app.static_folder, 'logs'))
-    ]
-    paths = [(p.split('.')[0], p) for p in paths]
-    return render_template(
-      'logs.html',
-      paths=paths,
-    )[0]
+  @app.route("/logs/<filename>")
+  def logs(filename):
+    return send_from_directory(os.path.join('static','logs'), filename)
 
   @app.route("/test/results")
   def results_test():
@@ -688,5 +680,44 @@ def create_app():
         )
     out.append('</svg>')
     return os.linesep.join(out)
+
+
+  title = "Measuring UI-/UX-impact on task efficiency"
+
+  @app.route('/presentation')
+  def presentation():
+    header = """
+    <div class="header">
+      <div>Header</div>
+    </div>
+    """
+    footer = """
+    <div class="footer">
+      <div>Footer</div>
+    </div>
+    """
+    html, pdf = render_template(
+      "presentation.html",
+      header=header,
+      footer=footer,
+      title=title,
+    )
+    with open('presentation.pdf', 'wb') as fh:
+      fh.write(pdf)
+    return html
+
+  @app.route('/report')
+  def report():
+    keywords = [f"keyword{i:02d}" for i in range(5)]
+    today = datetime.date.today().strftime("%B %d, %Y")
+    html, pdf = render_template(
+      "report.html",
+      today=today,
+      title=title,
+      keywords=keywords,
+    )
+    with open('report.pdf', 'wb') as fh:
+      fh.write(pdf)
+    return html
 
   return app
