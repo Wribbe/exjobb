@@ -704,6 +704,7 @@ def create_app():
 
   @app.route('/report')
   def report():
-    return "Report"
+    html, pdf = render_template("report.html")
+    return html
 
   return app
