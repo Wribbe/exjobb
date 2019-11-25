@@ -9,3 +9,23 @@ h2 {
 article {
   font-size: 9pt;
 }
+
+#list-log div {
+  padding-left: 0.8em;
+}
+
+#list-log div:first-child {
+  padding-left: 0;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#log-marker {
+  display: flow;
+}
+
+#log-marker + div {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}

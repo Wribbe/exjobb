@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='report.css') }}"></link>
+    <style>
+      @font-face {
+        font-family: "LatinModern";
+        src: url("{{ url_for('static', filename='fonts/lmroman17-regular.otf') }}");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "LatinModern";
+        src: url("{{ url_for('static', filename='fonts/lmroman12-bold.otf') }}");
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: "LatinModern-mono";
+        src: url("{{ url_for('static', filename='fonts/lmmonoproplt10-regular.otf') }}");
+      }
+      @font-face {
+        font-family: "GyreTermes";
+        src: url("{{ url_for('static', filename='fonts/texgyretermes-regular.otf') }}");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "GyreTermes";
+        src: url("{{ url_for('static', filename='fonts/texgyretermes-bold.otf') }}");
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: "GyreTermes-mono";
+        src: url("{{ url_for('static', filename='fonts/texgyrecursor-regular.otf') }}");
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page title-page">
+      <div class="hrdiv hrtop"></div>
+      <div class="title">
+        {{ title }}
+      </div>
+      <div class="hrdiv hrbottom"></div>
+      <div class="author">
+        <div>Stefan Eng</div>
+        <a href="mailto:atn08@student.lu.se">atn08sen@student.lu.se</a>
+      </div>
+      <div class="date">
+        {{ today }}
+      </div>
+      <div id="title-blurb">
+        Master's thesis work carried out at the Department of Ergonomics and
+        Aerosol Technology, Lund University.
+      </div>
+      <div class="supervisors">
+        <div>
+          <span>Supervisor:</span>
+          <span>Supervisor Supervisor,</span>
+          <a href="mailto:">Supervisor@mail.se</a>
+        </div>
+        <div>
+          <span>Examiner:</span>
+          <span>Examiner, Examiner</span>
+          <a href="mailto:">Examiner@mail.se</a>
+        </div>
+      </div>
+    </div>
+    <div class="page">
+    </div>
+    <div class="page">
+      <h4>Abstract</h4>
+      <section>
+        <p>
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+        </p>
+        <p>
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+        </p>
+        <div id="keywords">
+          <span>Keywords:</span>
+          {% for word in keywords %}
+            {% if not loop.last %}
+              <span>{{word}},</span>
+            {% else %}
+              <span>{{word}}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
