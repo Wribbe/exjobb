@@ -708,11 +708,13 @@ def create_app():
 
   @app.route('/report')
   def report():
+    keywords = [f"keyword{i:02d}" for i in range(5)]
     today = datetime.date.today().strftime("%B %d, %Y")
     html, pdf = render_template(
       "report.html",
       today=today,
       title=title,
+      keywords=keywords,
     )
     with open('report.pdf', 'wb') as fh:
       fh.write(pdf)

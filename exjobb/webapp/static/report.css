@@ -23,6 +23,7 @@ hr {
   flex-direction: column;
   align-items: center;
   padding-top: 7em;
+  font-size: 11pt;
 }
 
 div {
@@ -87,10 +88,23 @@ a[href^=mailto] {
   margin-top: 0.8em;
 }
 
+#keywords {
+  margin-top: 4.0em;
+  text-align: left;
+}
+
+#keywords span:first-child {
+  font-weight: bold;
+}
+
 @media print {
   .page div {
     width: 550px;
   }
+  section {
+    width: 550px;
+  }
+
   .page {
     height: 980px;
   }
@@ -104,8 +118,10 @@ a[href^=mailto] {
     background-color: white;
     width: 600px;
     height: 1000px;
-    padding-left: 5em;
-    padding-right: 5em;
+    padding-left: 80px;
+    padding-right: 80px;
     margin: auto;
+    border: 1px solid black;
+    margin-bottom: 1cm;
   }
 }

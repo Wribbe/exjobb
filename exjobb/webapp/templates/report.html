@@ -4,7 +4,7 @@
     <style>
       @font-face {
         font-family: "LatinModern";
-        src: url("{{ url_for('static', filename='fonts/lmroman12-regular.otf') }}");
+        src: url("{{ url_for('static', filename='fonts/lmroman17-regular.otf') }}");
         font-weight: normal;
       }
       @font-face {
@@ -15,6 +15,21 @@
       @font-face {
         font-family: "LatinModern-mono";
         src: url("{{ url_for('static', filename='fonts/lmmonoproplt10-regular.otf') }}");
+      }
+      @font-face {
+        font-family: "GyreTermes";
+        src: url("{{ url_for('static', filename='fonts/texgyretermes-regular.otf') }}");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "GyreTermes";
+        src: url("{{ url_for('static', filename='fonts/texgyretermes-bold.otf') }}");
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: "GyreTermes-mono";
+        src: url("{{ url_for('static', filename='fonts/texgyrecursor-regular.otf') }}");
+        font-weight: bold;
       }
     </style>
   </head>
@@ -39,15 +54,48 @@
       <div class="supervisors">
         <div>
           <span>Supervisor:</span>
-          <span>Test test,</span>
-          <a href="mailto:">test@test.se</a>
+          <span>Supervisor Supervisor,</span>
+          <a href="mailto:">Supervisor@mail.se</a>
         </div>
         <div>
           <span>Examiner:</span>
-          <span>Test test,</span>
-          <a href="mailto:">test@test.se</a>
+          <span>Examiner, Examiner</span>
+          <a href="mailto:">Examiner@mail.se</a>
         </div>
       </div>
+    </div>
+    <div class="page">
+    </div>
+    <div class="page">
+      <h4>Abstract</h4>
+      <section>
+        <p>
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+        </p>
+        <p>
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+          This is text that describes the abstract.
+        </p>
+        <div id="keywords">
+          <span>Keywords:</span>
+          {% for word in keywords %}
+            {% if not loop.last %}
+              <span>{{word}},</span>
+            {% else %}
+              <span>{{word}}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
     </div>
   </body>
 </html>
