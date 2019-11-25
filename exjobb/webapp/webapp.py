@@ -681,6 +681,9 @@ def create_app():
     out.append('</svg>')
     return os.linesep.join(out)
 
+
+  title = "Measuring UI-/UX-impact on task efficiency"
+
   @app.route('/presentation')
   def presentation():
     header = """
@@ -697,14 +700,22 @@ def create_app():
       "presentation.html",
       header=header,
       footer=footer,
+      title=title,
     )
-    with open('test.pdf', 'wb') as fh:
+    with open('presentation.pdf', 'wb') as fh:
       fh.write(pdf)
     return html
 
   @app.route('/report')
   def report():
-    html, pdf = render_template("report.html")
+    today = datetime.date.today().strftime("%B %d, %Y")
+    html, pdf = render_template(
+      "report.html",
+      today=today,
+      title=title,
+    )
+    with open('report.pdf', 'wb') as fh:
+      fh.write(pdf)
     return html
 
   return app
