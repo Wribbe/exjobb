@@ -706,6 +706,77 @@ def create_app():
       fh.write(pdf)
     return html
 
+  def toc_generate(html):
+    buffer = []
+    num = [0]*10
+    headings = [f"h{i}" for i in range(1,5)]
+    page = 0
+    toc = {}
+
+    for line in html.splitlines():
+
+      if 'class="page' in line:
+        page += 1
+
+      tag = line.split('>', 1)[0]
+      for ending in headings:
+        if tag.endswith(ending):
+          level = int(ending[1:])
+          a,b = line.split('>',1)
+          b,c = b.split('<',1)
+          if b.startswith('**'):
+            b = b[2:]
+            line = f"{a}>{b}<{c}"
+            break
+          elif b.startswith('*'):
+            b = b[1:]
+            toc.setdefault(page, []).append(
+              f"<span class='toc-line toc-{level}'>{b}</span>"+\
+              f"<span class='toc-pagenumber'>{page}</span>"
+            )
+            line = f"{a}>{b}<{c}"
+            break
+          num[level] += 1
+          for i in range(level+1, len(num)):
+            num[i] = 0
+          prefix = '.'.join([str(n) for n in num[:level+1] if n>0])
+          toc.setdefault(page, []).append(
+            f"<span class='toc-line toc-{level}'><span class='prefix-toc'>"+\
+            f"{prefix}</span>{b}</span><span class='toc-pagenumber'>"+\
+            f"{page}</span>"
+          )
+          line = f"{a}>{prefix} {b}<{c}"
+          break
+
+      buffer.append(line)
+
+      if 'class="page' in line:
+        if page == 1:
+          continue
+        padding = len(line) - len(line.lstrip())
+        buffer.append(f'{(padding+2)*" "}<div class="pagenumber"><span>{page}</span></div>')
+
+
+    return os.linesep.join(buffer), toc
+
+  def toc_to_html(toc):
+    buffer = ['<div id="toc">']
+    lvl = 1
+    indent = lambda lvl: " "*(2*(lvl+2))
+    for page, headings in sorted(toc.items()):
+      for heading in headings:
+        old_lvl = lvl
+        lvl = len(heading.split('.'))+1
+        for i in range((old_lvl-lvl)+1):
+          buffer.append(f'{indent(old_lvl-(i+1))}  </div>')
+        buffer.append(f'{indent(lvl)}<div>')
+        buffer.append(f'{indent(lvl+1)}{heading}')
+    lvl = 1
+    for i in range(old_lvl-lvl):
+      buffer.append(f'{indent(old_lvl-i)}  </div>')
+    buffer.append('      </div>')
+    return os.linesep.join(buffer)
+
   @app.route('/report')
   def report():
     keywords = [f"keyword{i:02d}" for i in range(5)]
@@ -716,8 +787,9 @@ def create_app():
       title=title,
       keywords=keywords,
     )
-    with open('report.pdf', 'wb') as fh:
-      fh.write(pdf)
+    html, toc = toc_generate(html)
+    html = html.replace('!!toc!!',toc_to_html(toc))
+    pdf = save_pdf(html, 'report.pdf')
     return html
 
   return app
