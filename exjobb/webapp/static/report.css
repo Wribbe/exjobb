@@ -141,6 +141,11 @@ h1 {
   position: absolute;
 }
 
+.references div {
+  width: 100%;
+  text-align: left;
+}
+
 
 @media screen {
   body {

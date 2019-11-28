@@ -759,6 +759,44 @@ def create_app():
 
     return os.linesep.join(buffer), toc
 
+  def citations_resolve(html):
+    import bib2json
+    references = json.loads(bib2json.read('references.bib'))
+    indexes = {}
+    index_current = 1
+    buffer = []
+
+    def reference_html(word):
+      index = indexes[word]
+      return f"<span class='citation'>[{index}]</span>"
+
+    def html_references_page():
+      references_by_index = {
+        index: references[name] for name,index in indexes.items()
+      }
+      buffer = []
+      for index, reference in sorted(references_by_index.items()):
+        buffer.append(f"<div><span>{index}: {reference['title']}</span></div>")
+      return os.linesep.join(buffer)
+
+    for word in html.split(' '):
+      if word.startswith('_cit_'):
+        index_trailing = len(word)
+        for c in reversed(word):
+          if c.isalpha():
+            break
+          index_trailing -= 1
+        word, trailing = word[:index_trailing], word[index_trailing:]
+        if word not in indexes:
+          indexes[word] = str(index_current)
+          index_current += 1
+        buffer.append(reference_html(word)+trailing)
+      else:
+        buffer.append(word)
+    html = ' '.join(buffer)
+    html = html.replace('!!references!!', html_references_page())
+    return html
+
   def toc_to_html(toc):
     buffer = ['<div id="toc">']
     lvl = 1
@@ -787,6 +825,7 @@ def create_app():
       title=title,
       keywords=keywords,
     )
+    html = citations_resolve(html)
     html, toc = toc_generate(html)
     html = html.replace('!!toc!!',toc_to_html(toc))
     pdf = save_pdf(html, 'report.pdf')
