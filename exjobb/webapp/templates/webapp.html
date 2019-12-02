@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='webapp.css') }}"></link>
+    <title>Master Thesis Webapp</title>
+  </head>
+  <body>
+    <div class='wrapper_page'>
+      <div id='sidebar'>
+        {% for i in range(5) %}
+          <div class="button_sidebar">{{ i }}</div>
+        {% endfor %}
+      </div>
+      <div id='wrapper_data'>
+        <div id='data'>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

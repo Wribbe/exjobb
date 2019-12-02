@@ -831,4 +831,9 @@ def create_app():
     pdf = save_pdf(html, 'report.pdf')
     return html
 
+  @app.route('/webapp')
+  def webapp():
+    html, pdf = render_template('webapp.html')
+    return html
+
   return app
