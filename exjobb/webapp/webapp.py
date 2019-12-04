@@ -831,9 +831,20 @@ def create_app():
     pdf = save_pdf(html, 'report.pdf')
     return html
 
-  @app.route('/webapp')
+  @app.route('/webapp', methods=['GET','POST'])
   def webapp():
-    html, pdf = render_template('webapp.html')
+    buttons = ['hours','availability','dependencies','performance']
+    data = ""
+
+    if request.method == 'POST':
+      print(request.form)
+      return redirect(url_for('webapp'))
+
+    html, pdf = render_template(
+      'webapp.html',
+      buttons=buttons,
+      data=data,
+    )
     return html
 
   return app
