@@ -883,17 +883,20 @@ def create_app():
       return redirect(url_for('webapp'))
 
     id_run = session.get('id_run')
-    time_start = ""
+    time_start = None
     if id_run:
-      time_start = datetime.datetime.strptime(
-        db.execute(
-          f'SELECT t_start FROM test_run WHERE id = {id_run}'
-        ).fetchone()[0]+'000',
-        '%Y-%m-%d %H:%M:%S.%f'
-      )
+      db_entity = db.execute(
+        f'SELECT t_start FROM test_run WHERE id = {id_run}'
+      ).fetchone()
+      if db_entity:
+        time_start = datetime.datetime.strptime(
+          db_entity[0]+'000',
+          '%Y-%m-%d %H:%M:%S.%f'
+        )
 
-    print(id_run)
-    print(datetime.datetime.now() - time_start)
+    if time_start:
+      print(id_run)
+      print(datetime.datetime.utcnow() - time_start)
 
     html, pdf = render_template(
       'webapp.html',
