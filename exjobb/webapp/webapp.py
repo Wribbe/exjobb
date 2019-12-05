@@ -831,13 +831,53 @@ def create_app():
     pdf = save_pdf(html, 'report.pdf')
     return html
 
+  DATABASE2 = 'db2.sqlite3.db'
+
+  @app.teardown_request
+  def teardown_request(exception):
+    db = g.pop('db2', None)
+    if db:
+      db.close()
+
+  def _db2():
+    if 'db2' in g:
+      return g.db2
+    g.db2 = sqlite3.connect(DATABASE2)
+    is_initialized = g.db2.execute(
+      "SELECT name FROM sqlite_master WHERE type='table'"
+    ).fetchone()
+    if not is_initialized:
+      with open('schema2.sql') as fh:
+        g.db2.executescript(fh.read())
+    return g.db2
+
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
     buttons = ['hours','availability','dependencies','performance']
     data = ""
 
+    db = _db2()
+
+    def ids_tests_data_types():
+      types_from_db = db.execute('SELECT name, id FROM type_data').fetchall()
+      return {
+        name_type: id_type for name_type, id_type in types_from_db
+      }
+
     if request.method == 'POST':
-      print(request.form)
+      if 'btn_select_mode' in request.form:
+        type_data = request.form['btn_select_mode'].lower()
+        ids_types_data = ids_tests_data_types()
+        if not ids_types_data:
+          for button in buttons:
+            db.execute('INSERT INTO type_data (name) VALUES (?)', (button,))
+          db.commit()
+          ids_types_data = ids_tests_data_types()
+        db.execute(
+          'INSERT INTO test_run (id_type_data) VALUES (?)',
+          (ids_types_data[type_data],)
+        )
+        db.commit()
       return redirect(url_for('webapp'))
 
     html, pdf = render_template(

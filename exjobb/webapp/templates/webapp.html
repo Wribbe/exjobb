@@ -9,7 +9,7 @@
         <div id='wrapper_buttons'>
           <form action='{{ url_for('webapp') }}' method='post'>
             {% for name in buttons %}
-              <input type='submit' class='button_sidebar' name="select_mode" value="{{ name | title }}">
+              <input type='submit' class='button_sidebar' name="btn_select_mode" value="{{ name | title }}">
             {% endfor %}
           </form>
         </div>
