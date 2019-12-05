@@ -858,6 +858,9 @@ def create_app():
 
     db = _db2()
 
+    for run in db.execute('SELECT * FROM test_run').fetchall():
+      print(run)
+
     def ids_tests_data_types():
       types_from_db = db.execute('SELECT name, id FROM type_data').fetchall()
       return {
