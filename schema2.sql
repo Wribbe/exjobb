@@ -5,7 +5,7 @@ CREATE TABLE type_data (
 
 CREATE TABLE test_run (
   id INTEGER PRIMARY KEY
-  ,t_start TEXT DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW'))
+  ,t_start TEXT DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW', 'localtime'))
   ,id_type_data INTEGER NOT NULL
   ,FOREIGN KEY (id_type_data) REFERENCES type_data (id)
 );
