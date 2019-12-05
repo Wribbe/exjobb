@@ -858,9 +858,6 @@ def create_app():
 
     db = _db2()
 
-    for run in db.execute('SELECT * FROM test_run').fetchall():
-      print(run)
-
     def ids_tests_data_types():
       types_from_db = db.execute('SELECT name, id FROM type_data').fetchall()
       return {
@@ -872,16 +869,31 @@ def create_app():
         type_data = request.form['btn_select_mode'].lower()
         ids_types_data = ids_tests_data_types()
         if not ids_types_data:
-          for button in buttons:
-            db.execute('INSERT INTO type_data (name) VALUES (?)', (button,))
+          values = [(button,) for button in buttons]
+          db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
           db.commit()
           ids_types_data = ids_tests_data_types()
-        db.execute(
+        cursor = db.cursor()
+        cursor.execute(
           'INSERT INTO test_run (id_type_data) VALUES (?)',
           (ids_types_data[type_data],)
         )
         db.commit()
+        session['id_run'] = cursor.lastrowid
       return redirect(url_for('webapp'))
+
+    id_run = session.get('id_run')
+    time_start = ""
+    if id_run:
+      time_start = datetime.datetime.strptime(
+        db.execute(
+          f'SELECT t_start FROM test_run WHERE id = {id_run}'
+        ).fetchone()[0]+'000',
+        '%Y-%m-%d %H:%M:%S.%f'
+      )
+
+    print(id_run)
+    print(datetime.datetime.now() - time_start)
 
     html, pdf = render_template(
       'webapp.html',
