@@ -854,8 +854,19 @@ def create_app():
 
   @app.route('/webapp/results', methods=['GET'])
   def webapp_results():
-    data = _db2().execute('SELECT * FROM test_run').fetchall()
-    html, pdf = render_template('webapp_results.html', data=data)
+    data = _db2().execute("""
+      SELECT
+        test.id AS id
+        ,t_start AS start
+        ,type.name AS type
+      FROM test_run AS test
+      JOIN type_data AS type
+      WHERE id_type_data = type.id
+    """).fetchall()
+    html, pdf = render_template(
+      'webapp_results.html',
+      data=[dict(d) for d in data],
+    )
     return html
 
   @app.route('/webapp', methods=['GET','POST'])
