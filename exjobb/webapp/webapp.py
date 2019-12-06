@@ -890,8 +890,8 @@ def create_app():
       ).fetchone()
       if db_entity:
         time_start = datetime.datetime.strptime(
-          db_entity[0]+'000',
-          '%Y-%m-%d %H:%M:%S.%f'
+          db_entity[0],
+          '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
     if time_start:
