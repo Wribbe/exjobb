@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <link rel='stylesheet' href="{{ url_for('static', filename='webapp_results.css') }}">
+  </head>
+  <body>
+    {% for d in data %}
+      <div>
+        {{ d.id }}
+      </div>
+    {% endfor %}
+  </body>
+</html>
