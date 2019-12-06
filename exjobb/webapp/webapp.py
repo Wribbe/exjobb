@@ -919,13 +919,36 @@ def create_app():
         )
 
     def data_generate(task_type, seed):
-      return ""
+      random.seed(seed)
+      data = []
+      if task_type == 'hours':
+        data.append("<svg id='svg-data'>")
+        values = [random.randrange(1e10) for _ in range(600)]
+        colors = ['red','green','blue','black','teal','orange','grey','purple']
+        num = len(values)
+        width = 100.0/(num+1)
+        spacing = 0.3*width
+        width *= 0.7
+        max_value = (max(values)/100)*1.02
+        for i, value in enumerate(sorted(values)):
+        #for i, value in enumerate(values):
+          value /= max_value
+          color = random.choice(colors)
+          x = spacing*2 + ((width+spacing)*i);
+          rest = 100-value
+          data.append(f"""
+            <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}'/>
+          """)
+          color = random.choice(colors)
+          data.append(f"""
+            <rect width='{width}%' height='{rest-3}%' x="{x}%" y='0' fill='{color}'/>
+          """)
+#          data.append(f"<div>{value}</div>")
+        data.append("</svg>")
+        return os.linesep.join(data)
 
     task_type = session.get('task_type')
     task_started = session.get('task_started')
-
-    random.seed(task_run_id)
-    print([random.randrange(10) for i in range(10)])
 
     if task_type and not task_started:
       data = f"""
