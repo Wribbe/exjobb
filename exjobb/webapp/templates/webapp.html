@@ -19,9 +19,9 @@
       <div id='wrapper_data'>
         <div id='data'>
           <div>
-            {{data}}
+            {{data | safe}}
           </div>
-          {% if not task_started %}
+          {% if task_type and not task_started %}
             <form action='{{ url_for('webapp') }}' method='post'>
               <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
             </form>

@@ -51,11 +51,19 @@ body {
 }
 
 .button_start {
-  margin-top: 1em;
+  margin-top: -1.5em;
+}
+
+#description {
+  font-style: italic;
 }
 
 #data {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#data div {
+  margin: 1.0em;
 }
