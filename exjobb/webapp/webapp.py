@@ -927,8 +927,11 @@ def create_app():
     random.seed(task_run_id)
     print([random.randrange(10) for i in range(10)])
 
-    if not task_started:
-      data = f"Press here to start a {task_type.title()}-task."
+    if task_type and not task_started:
+      data = f"""
+        <div id='description'> {{ Description goes here }} </div>
+        <div>Press here to start a {task_type.title()}-task.</div>
+      """
     else:
       data = data_generate(task_type, task_run_id);
 
