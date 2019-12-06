@@ -49,3 +49,13 @@ body {
 .button_sidebar:active{
   background: grey;
 }
+
+.button_start {
+  margin-top: 1em;
+}
+
+#data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
