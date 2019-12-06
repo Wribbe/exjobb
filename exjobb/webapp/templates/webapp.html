@@ -9,7 +9,7 @@
         <div id='wrapper_buttons'>
           <form action='{{ url_for('webapp') }}' method='post'>
             {% for name in buttons %}
-              <input type='submit' class='button_sidebar' name="btn_select_mode" value="{{ name | title }}">
+              <input type='submit' class='button_sidebar' name="btn_task_type" value="{{ name | title }}">
             {% endfor %}
           </form>
         </div>
@@ -18,7 +18,14 @@
       </div>
       <div id='wrapper_data'>
         <div id='data'>
-          {{data}}
+          <div>
+            {{data}}
+          </div>
+          {% if not task_started %}
+            <form action='{{ url_for('webapp') }}' method='post'>
+              <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
+            </form>
+          {% endif %}
         </div>
       </div>
     </div>

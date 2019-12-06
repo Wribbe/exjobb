@@ -864,29 +864,35 @@ def create_app():
         name_type: id_type for name_type, id_type in types_from_db
       }
 
-    if request.method == 'POST':
-      if 'btn_select_mode' in request.form:
-        type_data = request.form['btn_select_mode'].lower()
-        ids_types_data = ids_tests_data_types()
-        if not ids_types_data:
-          values = [(button,) for button in buttons]
-          db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
-          db.commit()
-          ids_types_data = ids_tests_data_types()
-        cursor = db.cursor()
-        cursor.execute(
-          'INSERT INTO test_run (id_type_data) VALUES (?)',
-          (ids_types_data[type_data],)
-        )
+    def new_run(type_data):
+      ids_types_data = ids_tests_data_types()
+      if not ids_types_data:
+        values = [(button,) for button in buttons]
+        db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
         db.commit()
-        session['id_run'] = cursor.lastrowid
+        ids_types_data = ids_tests_data_types()
+      cursor = db.cursor()
+      cursor.execute(
+        'INSERT INTO test_run (id_type_data) VALUES (?)',
+        (ids_types_data[type_data],)
+      )
+      db.commit()
+      return cursor.lastrowid
+
+    if request.method == 'POST':
+      if 'btn_task_type' in request.form:
+        session['task_started'] = False
+        session['task_type'] = request.form['btn_task_type'].lower()
+      elif 'btn_task_start' in request.form:
+        session['task_run_id'] = new_run(session['task_type'])
+        session['task_started'] = True
       return redirect(url_for('webapp'))
 
-    id_run = session.get('id_run')
+    task_run_id = session.get('task_run_id')
     time_start = None
-    if id_run:
+    if task_run_id:
       db_entity = db.execute(
-        f'SELECT t_start FROM test_run WHERE id = {id_run}'
+        f'SELECT t_start FROM test_run WHERE id = {task_run_id}'
       ).fetchone()
       if db_entity:
         time_start = datetime.datetime.strptime(
@@ -894,14 +900,19 @@ def create_app():
           '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
-    if time_start:
-      print(id_run)
-      print(datetime.datetime.utcnow() - time_start)
+    task_type = session.get('task_type')
+    task_started = session.get('task_started')
+    print(task_started)
+
+    if not task_started:
+      data = f"Press here to start a {task_type.title()}-task."
 
     html, pdf = render_template(
       'webapp.html',
       buttons=buttons,
       data=data,
+      task_type=task_type,
+      task_started=task_started,
     )
     return html
 
