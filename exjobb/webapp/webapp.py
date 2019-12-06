@@ -843,6 +843,7 @@ def create_app():
     if 'db2' in g:
       return g.db2
     g.db2 = sqlite3.connect(DATABASE2)
+    g.db2.row_factory = sqlite3.Row
     is_initialized = g.db2.execute(
       "SELECT name FROM sqlite_master WHERE type='table'"
     ).fetchone()
@@ -850,6 +851,12 @@ def create_app():
       with open('schema2.sql') as fh:
         g.db2.executescript(fh.read())
     return g.db2
+
+  @app.route('/webapp/results', methods=['GET'])
+  def webapp_results():
+    data = _db2().execute('SELECT * FROM test_run').fetchall()
+    html, pdf = render_template('webapp_results.html', data=data)
+    return html
 
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
@@ -900,12 +907,19 @@ def create_app():
           '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
+    def data_generate(task_type, seed):
+      return ""
+
     task_type = session.get('task_type')
     task_started = session.get('task_started')
-    print(task_started)
+
+    random.seed(task_run_id)
+    print([random.randrange(10) for i in range(10)])
 
     if not task_started:
       data = f"Press here to start a {task_type.title()}-task."
+    else:
+      data = data_generate(task_type, task_run_id);
 
     html, pdf = render_template(
       'webapp.html',
