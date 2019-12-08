@@ -18,16 +18,18 @@
       </div>
       <div id='wrapper_data'>
         <div id='data'>
-          <div>
-            {{data | safe}}
-          </div>
+          {% if data %}
+            <div>
+              {{data | safe}}
+            </div>
+          {% endif %}
           {% if task_type and not task_started %}
             <form action='{{ url_for('webapp') }}' method='post'>
               <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
             </form>
           {% endif %}
           {% if not task_type %}
-            <div> Select a activity type to the left to start. </div>
+            <div> Select a activity type to the left. </div>
           {% endif %}
         </div>
       </div>

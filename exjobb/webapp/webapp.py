@@ -923,29 +923,27 @@ def create_app():
       data = []
       if task_type == 'hours':
         data.append("<svg id='svg-data'>")
-        values = [random.randrange(1e10) for _ in range(600)]
-        colors = ['red','green','blue','black','teal','orange','grey','purple']
+        values = [random.randrange(1e10) for _ in range(100)]
+        colors = ['red','green','blue','black','teal','orange','grey','purple','pink']
         num = len(values)
-        width = 100.0/(num+1)
+        total_width = 95
+        total_spacing = 100-total_width
+        width = total_width/num
         spacing = 0.3*width
         width *= 0.7
-        max_value = (max(values)/100)*1.02
-        for i, value in enumerate(sorted(values)):
-        #for i, value in enumerate(values):
-          value /= max_value
-          color = random.choice(colors)
-          x = spacing*2 + ((width+spacing)*i);
+        max_value = max(values)/100
+        divisor = max_value * 1.02
+        data.append(f"<line x1='0' x2='100%' y1='2%' y2='2%' stroke='black' stroke-width='1pt' stroke-dasharray='4' />")
+        for i, value in enumerate(values):
+          value /= divisor
+          color = (colors[i%len(colors)])
+          x = (total_spacing/2) + spacing/2 + ((width+spacing)*i);
           rest = 100-value
           data.append(f"""
             <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}'/>
           """)
-          color = random.choice(colors)
-          data.append(f"""
-            <rect width='{width}%' height='{rest-3}%' x="{x}%" y='0' fill='{color}'/>
-          """)
-#          data.append(f"<div>{value}</div>")
         data.append("</svg>")
-        return os.linesep.join(data)
+      return os.linesep.join(data)
 
     task_type = session.get('task_type')
     task_started = session.get('task_started')
