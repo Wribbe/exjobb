@@ -73,3 +73,7 @@ body {
   height: 80%;
   border: 1px solid blue;
 }
+
+#checkbox-correct {
+  display: none;
+}
