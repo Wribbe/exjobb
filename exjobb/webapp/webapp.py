@@ -959,7 +959,7 @@ def create_app():
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
         opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
         opacities += [random.uniform(0.6,0.80) for _ in range(int(0.1*num))]
-        opacities += [0.0]*10
+        opacities += [0.0]*(num-len(opacities))
         opacities.pop()
         opacities.append(1.0)
         random.shuffle(opacities)
