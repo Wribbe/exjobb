@@ -923,7 +923,7 @@ def create_app():
       data = []
       if task_type == 'hours':
         data.append("<svg id='svg-data'>")
-        values = [random.randrange(1e10) for _ in range(100)]
+        values = [random.randrange(1e10) for _ in range(30)]
         colors = ['red','green','blue','black','teal','orange','grey','purple','pink']
         num = len(values)
         total_width = 95
@@ -933,11 +933,14 @@ def create_app():
         width *= 0.7
         max_value = max(values)/100
         divisor = max_value * 1.02
-        data.append(f"<line x1='0' x2='100%' y1='2%' y2='2%' stroke='black' stroke-width='1pt' stroke-dasharray='4' />")
+        x_start = (total_spacing/2) + spacing/2
+        x_end = total_width+x_start-spacing
+
+        data.append(f"<line x1='{x_start}%' x2='{x_end}%' y1='2%' y2='2%' stroke='black' stroke-width='1pt' stroke-dasharray='4' />")
         for i, value in enumerate(values):
           value /= divisor
           color = (colors[i%len(colors)])
-          x = (total_spacing/2) + spacing/2 + ((width+spacing)*i);
+          x = x_start + ((width+spacing)*i);
           rest = 100-value
           data.append(f"""
             <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}'/>
