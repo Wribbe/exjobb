@@ -953,6 +953,7 @@ def create_app():
         data.append("</form>")
       elif task_type == 'availability':
         data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        data.append("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         data.append("  <svg id='svg-data'>")
         data.append("    <style> rect { cursor: pointer; } </style>")
         num = 25*25
@@ -966,7 +967,10 @@ def create_app():
         for x in range(25):
           for y in range(25):
             opacity = opacities.pop()
-            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='green' style='fill-opacity: {opacity};' onclick='document.form_answer.submit()'/>")
+            command = "document.form_answer.submit()"
+            if opacity == 1.0:
+              command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='green' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
         for i in range(100):
           x = i*4
           d(f"<line y1='0' y2='100%' x1='{x}%' x2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
