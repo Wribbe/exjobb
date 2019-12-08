@@ -922,8 +922,10 @@ def create_app():
       random.seed(seed)
       data = []
       if task_type == 'hours':
-        data.append("<svg id='svg-data'>")
-        values = [random.randrange(1e10) for _ in range(30)]
+        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        data.append("  <svg id='svg-data'>")
+        data.append("    <style> rect { cursor: pointer; } </style>")
+        values = [random.randrange(1e10) for _ in range(10)]
         colors = ['red','green','blue','black','teal','orange','grey','purple','pink']
         num = len(values)
         total_width = 95
@@ -943,9 +945,10 @@ def create_app():
           x = x_start + ((width+spacing)*i);
           rest = 100-value
           data.append(f"""
-            <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}'/>
+              <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}' onclick="document.form_answer.submit()"/>
           """)
         data.append("</svg>")
+        data.append("</form>")
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
