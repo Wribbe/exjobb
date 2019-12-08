@@ -921,6 +921,8 @@ def create_app():
     def data_generate(task_type, seed):
       random.seed(seed)
       data = []
+      d = lambda i: data.append(i)
+
       if task_type == 'hours':
         data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         data.append("  <svg id='svg-data'>")
@@ -949,6 +951,29 @@ def create_app():
           """)
         data.append("</svg>")
         data.append("</form>")
+      elif task_type == 'availability':
+        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        data.append("  <svg id='svg-data'>")
+        data.append("    <style> rect { cursor: pointer; } </style>")
+        num = 25*25
+        opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
+        opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
+        opacities += [random.uniform(0.6,0.80) for _ in range(int(0.1*num))]
+        opacities += [0.0]*10
+        opacities.pop()
+        opacities.append(1.0)
+        random.shuffle(opacities)
+        for x in range(25):
+          for y in range(25):
+            opacity = opacities.pop()
+            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='green' style='fill-opacity: {opacity};' onclick='document.form_answer.submit()'/>")
+        for i in range(100):
+          x = i*4
+          d(f"<line y1='0' y2='100%' x1='{x}%' x2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
+          d(f"<line x1='0' x2='100%' y1='{x}%' y2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
+        data.append("  </svg>")
+        data.append("</form>")
+
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
