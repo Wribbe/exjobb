@@ -977,7 +977,14 @@ def create_app():
           d(f"<line x1='0' x2='100%' y1='{x}%' y2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
         data.append("  </svg>")
         data.append("</form>")
-
+      elif task_type == 'dependencies':
+        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        data.append("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        data.append("  <svg id='svg-data'>")
+        d(f"<line x1='10%' x2='90%' y1='5%' y2='5%' stroke='blue' stroke-width='0.4%' stroke-linecap='round'/>")
+        d(f"<circle cx='10%' cy='5%' r='0.5%' fill='none' stroke='blue' stroke-width='0.4%'/>")
+        data.append("  </svg>")
+        data.append("</form>")
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
