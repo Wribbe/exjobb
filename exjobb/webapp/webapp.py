@@ -6,6 +6,7 @@ import os
 import sqlite3
 import random
 import json
+import math
 
 DATABASE = 'test_db.db'
 
@@ -952,9 +953,9 @@ def create_app():
         data.append("</svg>")
         data.append("</form>")
       elif task_type == 'availability':
-        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        data.append("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
-        data.append("  <svg id='svg-data'>")
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
         data.append("    <style> rect { cursor: pointer; } </style>")
         num = 25*25
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
@@ -975,16 +976,45 @@ def create_app():
           x = i*4
           d(f"<line y1='0' y2='100%' x1='{x}%' x2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
           d(f"<line x1='0' x2='100%' y1='{x}%' y2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
-        data.append("  </svg>")
-        data.append("</form>")
+        d("  </svg>")
+        d("</form>")
       elif task_type == 'dependencies':
-        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        data.append("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
-        data.append("  <svg id='svg-data'>")
-        d(f"<line x1='10%' x2='90%' y1='5%' y2='5%' stroke='blue' stroke-width='0.4%' stroke-linecap='round'/>")
-        d(f"<circle cx='10%' cy='5%' r='0.5%' fill='none' stroke='blue' stroke-width='0.4%'/>")
-        data.append("  </svg>")
-        data.append("</form>")
+
+        dot_width = 3.3
+        num_dots = random.randrange(10,20)
+        dot_angle = 2*math.pi / num_dots
+        dots = []
+        max_connections = 4
+        index_correct = random.choice(range(num_dots))
+
+        for i in range(num_dots):
+          x = 50 + 45 * math.cos(dot_angle*i)
+          y = 50 + 45 * math.sin(dot_angle*i)
+          if i == index_correct:
+            connections = max_connections + 7
+          else:
+            connections = random.randrange(1,max_connections)
+          dots.append((x,y,connections))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
+        for i, dot in enumerate(dots):
+          others = dots[:i] + dots[i:]
+          random.shuffle(others)
+          x,y,connections = dot
+          for ox, oy, _ in others[:connections]:
+            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='black' stroke-width='0.2%' stroke-opacity='0.5'/>")
+        for i, dot in enumerate(dots):
+          command = "document.form_answer.submit()"
+          if i == index_correct:
+            command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+          x,y,connections = dot
+          d(f"<circle cx='{x}%' cy='{y}%' r={dot_width}% fill='white' stroke='black' stroke-width='0.5%' onclick=\"{command}\"/>")
+        d("  </svg>")
+        d("</form>")
+
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
