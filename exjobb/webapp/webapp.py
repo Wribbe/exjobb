@@ -1086,7 +1086,7 @@ def create_app():
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
         for i,team in enumerate(teams):
           x,y,index_max,parts,parts_sum = team
           offset = 0
