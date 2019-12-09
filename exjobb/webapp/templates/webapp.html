@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='webapp.css') }}"></link>
+    <title>Master Thesis Webapp</title>
+  </head>
+  <body>
+    <div class='wrapper_page'>
+      <div id='sidebar'>
+        <div id='wrapper_buttons'>
+          <form action='{{ url_for('webapp') }}' method='post'>
+            {% for name in buttons %}
+              <input type='submit' class='button_sidebar' name="btn_task_type" value="{{ name | title }}">
+            {% endfor %}
+          </form>
+        </div>
+        <div id='data_additional'>
+        </div>
+      </div>
+      <div id='wrapper_data'>
+        <div id='data'>
+          {% if data %}
+            <div>
+              {{data | safe}}
+            </div>
+          {% endif %}
+          {% if task_type and not task_started %}
+            <form action='{{ url_for('webapp') }}' method='post'>
+              <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
+            </form>
+          {% endif %}
+          {% if not task_type %}
+            <div> Select a activity type to the left. </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

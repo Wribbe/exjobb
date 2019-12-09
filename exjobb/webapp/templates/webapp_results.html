@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <link rel='stylesheet' href="{{ url_for('static', filename='webapp_results.css') }}">
+  </head>
+  <body>
+    <table>
+      {% for dic in data %}
+        {% if loop.first %}
+          <thead>
+            {% for key in dic.keys() %}
+              <th>{{ key | title}}</th>
+            {% endfor %}
+          </thead>
+          <tbody>
+        {% endif %}
+        <tr>
+          {% for value in dic.values() %}
+            <td>{{value}}</td>
+          {% endfor %}
+        </tr>
+        {% if loop.last %}
+          </tbody>
+        {% endif %}
+      {% endfor %}
+    </table>
+  </body>
+</html>

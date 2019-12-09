@@ -6,6 +6,7 @@ import os
 import sqlite3
 import random
 import json
+import math
 
 DATABASE = 'test_db.db'
 
@@ -706,6 +707,115 @@ def create_app():
       fh.write(pdf)
     return html
 
+  def toc_generate(html):
+    buffer = []
+    num = [0]*10
+    headings = [f"h{i}" for i in range(1,5)]
+    page = 0
+    toc = {}
+
+    for line in html.splitlines():
+
+      if 'class="page' in line:
+        page += 1
+
+      tag = line.split('>', 1)[0]
+      for ending in headings:
+        if tag.endswith(ending):
+          level = int(ending[1:])
+          a,b = line.split('>',1)
+          b,c = b.split('<',1)
+          if b.startswith('**'):
+            b = b[2:]
+            line = f"{a}>{b}<{c}"
+            break
+          elif b.startswith('*'):
+            b = b[1:]
+            toc.setdefault(page, []).append(
+              f"<span class='toc-line toc-{level}'>{b}</span>"+\
+              f"<span class='toc-pagenumber'>{page}</span>"
+            )
+            line = f"{a}>{b}<{c}"
+            break
+          num[level] += 1
+          for i in range(level+1, len(num)):
+            num[i] = 0
+          prefix = '.'.join([str(n) for n in num[:level+1] if n>0])
+          toc.setdefault(page, []).append(
+            f"<span class='toc-line toc-{level}'><span class='prefix-toc'>"+\
+            f"{prefix}</span>{b}</span><span class='toc-pagenumber'>"+\
+            f"{page}</span>"
+          )
+          line = f"{a}>{prefix} {b}<{c}"
+          break
+
+      buffer.append(line)
+
+      if 'class="page' in line:
+        if page == 1:
+          continue
+        padding = len(line) - len(line.lstrip())
+        buffer.append(f'{(padding+2)*" "}<div class="pagenumber"><span>{page}</span></div>')
+
+
+    return os.linesep.join(buffer), toc
+
+  def citations_resolve(html):
+    import bib2json
+    references = json.loads(bib2json.read('references.bib'))
+    indexes = {}
+    index_current = 1
+    buffer = []
+
+    def reference_html(word):
+      index = indexes[word]
+      return f"<span class='citation'>[{index}]</span>"
+
+    def html_references_page():
+      references_by_index = {
+        index: references[name] for name,index in indexes.items()
+      }
+      buffer = []
+      for index, reference in sorted(references_by_index.items()):
+        buffer.append(f"<div><span>{index}: {reference['title']}</span></div>")
+      return os.linesep.join(buffer)
+
+    for word in html.split(' '):
+      if word.startswith('_cit_'):
+        index_trailing = len(word)
+        for c in reversed(word):
+          if c.isalpha():
+            break
+          index_trailing -= 1
+        word, trailing = word[:index_trailing], word[index_trailing:]
+        if word not in indexes:
+          indexes[word] = str(index_current)
+          index_current += 1
+        buffer.append(reference_html(word)+trailing)
+      else:
+        buffer.append(word)
+    html = ' '.join(buffer)
+    html = html.replace('!!references!!', html_references_page())
+    return html
+
+  def toc_to_html(toc):
+    buffer = ['<div id="toc">']
+    lvl = 1
+    indent = lambda lvl: " "*(2*(lvl+2))
+    for page, headings in sorted(toc.items()):
+      for heading in headings:
+        old_lvl = lvl
+        lvl = len(heading.split('.'))+1
+        for i in range((old_lvl-lvl)+1):
+          buffer.append(f'{indent(old_lvl-(i+1))}  </div>')
+        buffer.append(f'{indent(lvl)}<div>')
+        buffer.append(f'{indent(lvl+1)}{heading}')
+    lvl = 1
+    for i in range(old_lvl-lvl):
+      buffer.append(f'{indent(old_lvl-i)}  </div>')
+    buffer.append('      </div>')
+    return os.linesep.join(buffer)
+
   @app.route('/report')
   def report():
     keywords = [f"keyword{i:02d}" for i in range(5)]
@@ -716,8 +826,304 @@ def create_app():
       title=title,
       keywords=keywords,
     )
-    with open('report.pdf', 'wb') as fh:
-      fh.write(pdf)
+    html = citations_resolve(html)
+    html, toc = toc_generate(html)
+    html = html.replace('!!toc!!',toc_to_html(toc))
+    pdf = save_pdf(html, 'report.pdf')
+    return html
+
+  DATABASE2 = 'db2.sqlite3.db'
+
+  @app.teardown_request
+  def teardown_request(exception):
+    db = g.pop('db2', None)
+    if db:
+      db.close()
+
+  def _db2():
+    if 'db2' in g:
+      return g.db2
+    g.db2 = sqlite3.connect(DATABASE2)
+    g.db2.row_factory = sqlite3.Row
+    is_initialized = g.db2.execute(
+      "SELECT name FROM sqlite_master WHERE type='table'"
+    ).fetchone()
+    if not is_initialized:
+      with open('schema2.sql') as fh:
+        g.db2.executescript(fh.read())
+    return g.db2
+
+  @app.route('/webapp/results', methods=['GET'])
+  def webapp_results():
+    data = _db2().execute("""
+      SELECT
+        test.id AS id
+        ,t_start AS start
+        ,type.name AS type
+      FROM test_run AS test
+      JOIN type_data AS type
+      WHERE id_type_data = type.id
+    """).fetchall()
+    html, pdf = render_template(
+      'webapp_results.html',
+      data=[dict(d) for d in data],
+    )
+    return html
+
+  @app.route('/webapp', methods=['GET','POST'])
+  def webapp():
+    buttons = ['hours','availability','dependencies','performance']
+    data = ""
+
+    db = _db2()
+
+    def ids_tests_data_types():
+      types_from_db = db.execute('SELECT name, id FROM type_data').fetchall()
+      return {
+        name_type: id_type for name_type, id_type in types_from_db
+      }
+
+    def new_run(type_data):
+      ids_types_data = ids_tests_data_types()
+      if not ids_types_data:
+        values = [(button,) for button in buttons]
+        db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
+        db.commit()
+        ids_types_data = ids_tests_data_types()
+      cursor = db.cursor()
+      cursor.execute(
+        'INSERT INTO test_run (id_type_data) VALUES (?)',
+        (ids_types_data[type_data],)
+      )
+      db.commit()
+      return cursor.lastrowid
+
+    if request.method == 'POST':
+      if 'btn_task_type' in request.form:
+        session['task_started'] = False
+        session['task_type'] = request.form['btn_task_type'].lower()
+      elif 'btn_task_start' in request.form:
+        session['task_run_id'] = new_run(session['task_type'])
+        session['task_started'] = True
+      print(request.form)
+      return redirect(url_for('webapp'))
+
+    task_run_id = session.get('task_run_id')
+    time_start = None
+    if task_run_id:
+      db_entity = db.execute(
+        f'SELECT t_start FROM test_run WHERE id = {task_run_id}'
+      ).fetchone()
+      if db_entity:
+        time_start = datetime.datetime.strptime(
+          db_entity[0],
+          '%Y-%m-%d %H:%M:%S.%f%Z'
+        )
+
+    def data_generate(task_type, seed):
+      random.seed(seed)
+      data = []
+      d = lambda i: data.append(i)
+
+      pallet = [
+        "#001f3f",
+        "#0074D9",
+        "#39CCCC",
+        "#3D9970",
+        "#2ECC40",
+        "#01FF70",
+        "#FFDC00",
+        "#FF851B",
+        "#85144b",
+        "#F012BE",
+        "#B10DC9"
+      ]
+
+      if task_type == 'hours':
+
+        num_people = 35
+        people = []
+        index_correct = random.choice(range(num_people))
+        for i in range(num_people):
+          available = random.choice(range(50,80)[::10])
+          if i == index_correct:
+            assigned = 1.4*available
+          else:
+            assigned = random.uniform(0.5,1.3)*available
+          people.append((available, assigned))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
+        offset = 0
+        increment = 90/num_people
+        color=random.choice(pallet)
+        for i, (available, assigned) in enumerate(people):
+          command = "document.form_answer.submit()"
+          if i == index_correct:
+            command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+          if assigned > available:
+            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+          else:
+            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+          offset += increment
+        d("  </svg>")
+        d("</form>")
+      elif task_type == 'availability':
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        color = random.choice(pallet)
+        num = 25*25
+        opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
+        opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
+        opacities += [random.uniform(0.6,0.80) for _ in range(int(0.1*num))]
+        opacities += [0.0]*(num-len(opacities))
+        opacities.pop()
+        opacities.append(1.0)
+        random.shuffle(opacities)
+        for x in range(25):
+          for y in range(25):
+            opacity = opacities.pop()
+            command = "document.form_answer.submit()"
+            if opacity == 1.0:
+              command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
+        d("  </svg>")
+        d("</form>")
+
+      elif task_type == 'dependencies':
+
+        dot_width = 3.3
+        num_dots = random.randrange(10,20)
+        dot_angle = 2*math.pi / num_dots
+        dots = []
+        max_connections = 4
+        index_correct = random.choice(range(num_dots))
+
+        for i in range(num_dots):
+          x = 50 + 45 * math.cos(dot_angle*i)
+          y = 50 + 45 * math.sin(dot_angle*i)
+          if i == index_correct:
+            connections = max_connections + 7
+          else:
+            connections = random.randrange(1,max_connections)
+          dots.append((x,y,connections))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
+        for i, dot in enumerate(dots):
+          others = dots[:i] + dots[i:]
+          random.shuffle(others)
+          x,y,connections = dot
+          for ox, oy, _ in others[:connections]:
+            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='black' stroke-width='0.2%' stroke-opacity='0.5'/>")
+        for i, dot in enumerate(dots):
+          command = "document.form_answer.submit()"
+          if i == index_correct:
+            command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+          x,y,connections = dot
+          d(f"<circle cx='{x}%' cy='{y}%' r={dot_width}% fill='white' stroke='black' stroke-width='0.5%' onclick=\"{command}\"/>")
+        d("  </svg>")
+        d("</form>")
+
+      elif task_type == 'performance':
+
+        #pallet = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
+        #pallet = ["windows blue", "amber", "greyish", "faded green", "dusty purple"]
+        tasks = ["tickets","rnd","support","features","maintenance"]
+
+
+        random.shuffle(pallet)
+
+        colors = { k:v for k,v in zip(tasks, pallet) }
+
+        #http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf
+
+        num_teams = random.randrange(7,10)
+        spacing_vertical = 95/num_teams
+        teams = []
+
+        index_correct = random.choice(range(num_teams))
+
+        spread_max = 0
+        spread_sum_max = 0
+        def get_spread(i):
+          index_rect_max = 0
+          nonlocal spread_max, spread_sum_max
+          spread = []
+          if i == index_correct:
+            num_tasks = 1050
+          else:
+            num_tasks = random.randint(700,1000)
+          top = int(num_tasks * 0.3)
+          num_tasks -= top
+          spread.append(top)
+          for _ in range(len(tasks)-2):
+            pick_tasks = int(num_tasks * random.uniform(0.3,0.4))
+            num_tasks -= pick_tasks
+            spread.append(pick_tasks)
+          spread.append(num_tasks)
+          random.shuffle(spread)
+
+          spread_sum = sum(spread)
+          spread_max = max(spread_max, max(spread))
+          if spread_sum > spread_sum_max:
+            index_rect_max = spread.index(top)
+            spread_sum_max = spread_sum
+          spread_sum = sum(spread)
+
+          return (index_rect_max, zip(tasks, spread), spread_sum)
+
+        spreads = [get_spread(i) for i in range(num_teams)]
+
+        for i in range(num_teams):
+          teams.append((0,i*spacing_vertical,*spreads[i]))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
+        for i,team in enumerate(teams):
+          x,y,index_max,parts,parts_sum = team
+          offset = 0
+          for ii, (name, p)  in enumerate(parts):
+            command = "document.form_answer.submit()"
+            if i == index_correct and ii == index_max:
+              command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+            color = colors[name]
+            p = (90*p/parts_sum)*(parts_sum/spread_sum_max)
+            d(f'<rect x="{5+x+offset}%" y="{5+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            offset += p
+        d("  </svg>")
+        d("</form>")
+
+      return os.linesep.join(data)
+
+    task_type = session.get('task_type')
+    task_started = session.get('task_started')
+
+    if task_type and not task_started:
+      data = f"""
+        <div id='description'> {{ Description goes here }} </div>
+        <div>Press here to start a {task_type.title()}-task.</div>
+      """
+    else:
+      data = data_generate(task_type, task_run_id);
+
+    html, pdf = render_template(
+      'webapp.html',
+      buttons=buttons,
+      data=data,
+      task_type=task_type,
+      task_started=task_started,
+    )
     return html
 
   return app
