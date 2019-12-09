@@ -905,6 +905,7 @@ def create_app():
       elif 'btn_task_start' in request.form:
         session['task_run_id'] = new_run(session['task_type'])
         session['task_started'] = True
+      print(request.form)
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -978,6 +979,7 @@ def create_app():
           d(f"<line x1='0' x2='100%' y1='{x}%' y2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
         d("  </svg>")
         d("</form>")
+
       elif task_type == 'dependencies':
 
         dot_width = 3.3
@@ -1012,6 +1014,90 @@ def create_app():
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           x,y,connections = dot
           d(f"<circle cx='{x}%' cy='{y}%' r={dot_width}% fill='white' stroke='black' stroke-width='0.5%' onclick=\"{command}\"/>")
+        d("  </svg>")
+        d("</form>")
+
+      elif task_type == 'performance':
+
+        #pallet = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
+        #pallet = ["windows blue", "amber", "greyish", "faded green", "dusty purple"]
+        tasks = ["tickets","rnd","support","features","maintenance"]
+
+        pallet = [
+          "#001f3f",
+          "#0074D9",
+          "#39CCCC",
+          "#3D9970",
+          "#2ECC40",
+          "#01FF70",
+          "#FFDC00",
+          "#FF851B",
+          "#85144b",
+          "#F012BE",
+          "#B10DC9"
+        ]
+
+        random.shuffle(pallet)
+
+        colors = { k:v for k,v in zip(tasks, pallet) }
+
+        #http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf
+
+        num_teams = random.randrange(7,10)
+        spacing_vertical = 95/num_teams
+        teams = []
+
+        index_correct = random.choice(range(num_teams))
+
+        spread_max = 0
+        spread_sum_max = 0
+        def get_spread(i):
+          index_rect_max = 0
+          nonlocal spread_max, spread_sum_max
+          spread = []
+          if i == index_correct:
+            num_tasks = 1050
+          else:
+            num_tasks = random.randint(700,1000)
+          top = int(num_tasks * 0.3)
+          num_tasks -= top
+          spread.append(top)
+          for _ in range(len(tasks)-2):
+            pick_tasks = int(num_tasks * random.uniform(0.3,0.4))
+            num_tasks -= pick_tasks
+            spread.append(pick_tasks)
+          spread.append(num_tasks)
+          random.shuffle(spread)
+
+          spread_sum = sum(spread)
+          spread_max = max(spread_max, max(spread))
+          if spread_sum > spread_sum_max:
+            index_rect_max = spread.index(top)
+            spread_sum_max = spread_sum
+          spread_sum = sum(spread)
+
+          return (index_rect_max, zip(tasks, spread), spread_sum)
+
+        spreads = [get_spread(i) for i in range(num_teams)]
+
+        for i in range(num_teams):
+          teams.append((0,i*spacing_vertical,*spreads[i]))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
+        for i,team in enumerate(teams):
+          x,y,index_max,parts,parts_sum = team
+          offset = 0
+          for ii, (name, p)  in enumerate(parts):
+            command = "document.form_answer.submit()"
+            if i == index_correct and ii == index_max:
+              command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+            color = colors[name]
+            p = (90*p/parts_sum)*(parts_sum/spread_sum_max)
+            d(f'<rect x="{5+x+offset}%" y="{5+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            offset += p
         d("  </svg>")
         d("</form>")
 
