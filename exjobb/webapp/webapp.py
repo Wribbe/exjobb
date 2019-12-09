@@ -925,39 +925,59 @@ def create_app():
       data = []
       d = lambda i: data.append(i)
 
-      if task_type == 'hours':
-        data.append(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        data.append("  <svg id='svg-data'>")
-        data.append("    <style> rect { cursor: pointer; } </style>")
-        values = [random.randrange(1e10) for _ in range(10)]
-        colors = ['red','green','blue','black','teal','orange','grey','purple','pink']
-        num = len(values)
-        total_width = 95
-        total_spacing = 100-total_width
-        width = total_width/num
-        spacing = 0.3*width
-        width *= 0.7
-        max_value = max(values)/100
-        divisor = max_value * 1.02
-        x_start = (total_spacing/2) + spacing/2
-        x_end = total_width+x_start-spacing
+      pallet = [
+        "#001f3f",
+        "#0074D9",
+        "#39CCCC",
+        "#3D9970",
+        "#2ECC40",
+        "#01FF70",
+        "#FFDC00",
+        "#FF851B",
+        "#85144b",
+        "#F012BE",
+        "#B10DC9"
+      ]
 
-        data.append(f"<line x1='{x_start}%' x2='{x_end}%' y1='2%' y2='2%' stroke='black' stroke-width='1pt' stroke-dasharray='4' />")
-        for i, value in enumerate(values):
-          value /= divisor
-          color = (colors[i%len(colors)])
-          x = x_start + ((width+spacing)*i);
-          rest = 100-value
-          data.append(f"""
-              <rect width='{width}%' height='{value}%' x="{x}%" y='{rest}%' fill='{color}' onclick="document.form_answer.submit()"/>
-          """)
-        data.append("</svg>")
-        data.append("</form>")
+      if task_type == 'hours':
+
+        num_people = 35
+        people = []
+        index_correct = random.choice(range(num_people))
+        for i in range(num_people):
+          available = random.choice(range(50,80)[::10])
+          if i == index_correct:
+            assigned = 1.4*available
+          else:
+            assigned = random.uniform(0.5,1.3)*available
+          people.append((available, assigned))
+
+        d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
+        offset = 0
+        increment = 90/num_people
+        color=random.choice(pallet)
+        for i, (available, assigned) in enumerate(people):
+          command = "document.form_answer.submit()"
+          if i == index_correct:
+            command = f"document.getElementById('checkbox-correct').checked = true;{command}"
+          if assigned > available:
+            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+          else:
+            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+          offset += increment
+        d("  </svg>")
+        d("</form>")
       elif task_type == 'availability':
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        data.append("    <style> rect { cursor: pointer; } </style>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        color = random.choice(pallet)
         num = 25*25
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
         opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
@@ -972,11 +992,7 @@ def create_app():
             command = "document.form_answer.submit()"
             if opacity == 1.0:
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
-            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='green' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
-        for i in range(100):
-          x = i*4
-          d(f"<line y1='0' y2='100%' x1='{x}%' x2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
-          d(f"<line x1='0' x2='100%' y1='{x}%' y2='{x}%' stroke='black' style='stroke-opacity: .6;'/>")
+            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
         d("  </svg>")
         d("</form>")
 
@@ -1023,19 +1039,6 @@ def create_app():
         #pallet = ["windows blue", "amber", "greyish", "faded green", "dusty purple"]
         tasks = ["tickets","rnd","support","features","maintenance"]
 
-        pallet = [
-          "#001f3f",
-          "#0074D9",
-          "#39CCCC",
-          "#3D9970",
-          "#2ECC40",
-          "#01FF70",
-          "#FFDC00",
-          "#FF851B",
-          "#85144b",
-          "#F012BE",
-          "#B10DC9"
-        ]
 
         random.shuffle(pallet)
 
