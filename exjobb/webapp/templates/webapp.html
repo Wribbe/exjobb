@@ -19,9 +19,7 @@
       <div id='wrapper_data'>
         <div id='data'>
           {% if data %}
-            <div>
-              {{data | safe}}
-            </div>
+            {{data | safe}}
           {% endif %}
           {% if task_type and not task_started %}
             <form action='{{ url_for('webapp') }}' method='post'>
