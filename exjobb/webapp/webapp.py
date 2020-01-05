@@ -905,7 +905,8 @@ def create_app():
       elif 'btn_task_start' in request.form:
         session['task_run_id'] = new_run(session['task_type'])
         session['task_started'] = True
-      print(request.form)
+      elif 'btn_accept_disclosure' in request.form:
+        session['accept_disclosure'] = True
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -1108,8 +1109,14 @@ def create_app():
 
     task_type = session.get('task_type')
     task_started = session.get('task_started')
+    accept_disclosure = session.get('accept_disclosure')
 
-    if task_type and not task_started:
+    if not accept_disclosure:
+      html, pdf = render_template(
+        'disclosure.html',
+      )
+      return html
+    elif task_type and not task_started:
       data = f"""
         <div id='description'> {{ Description goes here }} </div>
         <div>Press here to start a {task_type.title()}-task.</div>
