@@ -956,28 +956,46 @@ def create_app():
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
+        d("    <defs>")
+        d('      <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">')
+        d('        <path d="M-1,1 l2,-2')
+        d('                 M0,4 l4,-4')
+        d('                 M3,5 l2,-2" />')
+        d('      </pattern>')
+        d('      <mask id="mask">')
+        d('        <rect height="100%" width="100%" style="fill: url(#stripe)" />')
+        d('      </mask>')
+        d("    </defs>")
+#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
         offset = 0
+        y_end = 95
         increment = 90/num_people
-        color=random.choice(pallet)
+        random.shuffle(pallet)
+        color = pallet.pop(0)
+        color_overshot = pallet.pop(0)
         for i, (available, assigned) in enumerate(people):
           command = "document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
-            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+            d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available}%" stroke="black" fill="{color}" />')
           else:
-            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
+        d("    <text class='legendx' x='50%' y='98%'>Employees</text>")
+        d("    <text class='legend_title' x='50%' y='3%'>Hours</text>")
+        d("    <text class='legendy' x='-2.5%' y='-65%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
+
       elif task_type == 'availability':
+
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
         color = random.choice(pallet)
         num = 25*25
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]

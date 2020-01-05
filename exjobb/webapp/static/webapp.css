@@ -64,9 +64,29 @@ body {
 #svg-data {
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
 }
 
 #checkbox-correct {
   display: none;
+}
+
+.clickable:hover {
+  fill: lightgrey;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.legendy, .legendx {
+  font-weight: bold;
+}
+
+.legend_title {
+  font-size: 20pt;
+}
+
+.legendy {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
