@@ -872,7 +872,7 @@ def create_app():
 
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
-    buttons = ['hours','availability','dependencies','performance']
+    buttons = ['hours','team workload','dependencies','performance']
     data = ""
 
     db = _db2()
@@ -986,18 +986,20 @@ def create_app():
           offset += increment
         d("    <text class='legendx' x='50%' y='98%'>Employees</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Hours</text>")
-        d("    <text class='legendy' x='-2.5%' y='-65%'>Assigned vs. Available Hours</text>")
+        d("    <text class='legendy' x='-2.5%' y='-62%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
 
-      elif task_type == 'availability':
+      elif task_type == 'team workload':
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
 #        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
         color = random.choice(pallet)
-        num = 25*25
+        num_x = 5
+        num_y = 25
+        num = num_x * num_y
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
         opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
         opacities += [random.uniform(0.6,0.80) for _ in range(int(0.1*num))]
@@ -1005,13 +1007,26 @@ def create_app():
         opacities.pop()
         opacities.append(1.0)
         random.shuffle(opacities)
-        for x in range(25):
-          for y in range(25):
+        offset_x = 8
+        offset_y = 15
+        workable_x = 100-offset_x
+        workable_y = 100-offset_y
+        width = workable_x/(num_x)
+        height = workable_y/(num_y)
+        days = "MON TUE WED THU FRI".split()
+        for x in range(num_x):
+          for y in range(num_y):
             opacity = opacities.pop()
             command = "document.form_answer.submit()"
             if opacity == 1.0:
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
-            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
+            d(f"<rect x='{offset_x/2+x*width}%' y='{offset_y/2+y*height}%' width='{width}%' height='{height}%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
+        for i, y in enumerate(range(num_y), start=1):
+          d(f"<text x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
+        for i, x in enumerate(range(num_x), start=0):
+          d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
+        d("    <text class='legend_title' x='45%' y='3%'>Team Workload</text>")
+        d("    <text class='legendy' x='-2.0%' y='-53%'>Work Week</text>")
         d("  </svg>")
         d("</form>")
 
