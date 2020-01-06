@@ -52,7 +52,20 @@ body {
 }
 
 .button_start {
-  margin-top: 1.0em;
+  margin-top: 10px;
+  font-size: 12vw;
+  border-radius: 12px;
+  padding: 15px 32px;
+  background-color: #3e8e41;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+.button_start:hover {
+  background-color: #4e9e51;
 }
 
 #description {
@@ -106,7 +119,6 @@ body {
 .group_circle:hover {
   fill: lightgrey;
 }
-
 
 .group_circle text {
   font-size: 1.7vw;
