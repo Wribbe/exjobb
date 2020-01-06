@@ -1033,7 +1033,7 @@ def create_app():
       elif task_type == 'dependencies':
 
         dot_width = 3.3
-        num_dots = random.randrange(10,20)
+        num_dots = random.randrange(10,15)
         dot_angle = 2*math.pi / num_dots
         dots = []
         max_connections = 4
@@ -1041,8 +1041,8 @@ def create_app():
 
         radius = 38
         for i in range(num_dots):
-          x = 50 + radius * math.cos(dot_angle*i)
-          y = 50 + radius * math.sin(dot_angle*i)
+          x = 50 + radius * math.cos(dot_angle*i + math.pi)
+          y = 50 + radius * math.sin(dot_angle*i + math.pi)
           if i == index_correct:
             connections = max_connections + 7
           else:
