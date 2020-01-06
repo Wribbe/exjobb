@@ -1142,8 +1142,8 @@ def create_app():
             p = (90*p/parts_sum)*(parts_sum/spread_sum_max)
             d('<g class="group_performance">')
             d(f'  <rect class="part_performance" x="{5+x+offset}%" y="{offset_y+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
-            if p < 10:
-              name = name[:4]
+            if p < len(name)+2:
+              name = name[:3]+'..'
             d(f'  <text class="text_performance" x="{5+x+offset+p/2}%" y="{offset_y+y+2.5}%" fill="black">{name.title()}</text>')
             if ii == 0:
               d(f'  <text x="{5+x+offset}%" y="{offset_y+y-0.5}%" fill="black">Team {i+1:02d}</text>')
