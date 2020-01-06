@@ -1066,10 +1066,10 @@ def create_app():
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           x,y,connections = dot
           d(f"<g class='group_circle'>")
-          d(f"  <circle cx='{x}%' cy='{y}%' r={dot_width}% fill='{color}' stroke='black' stroke-width='0.3%' onclick=\"{command}\"/>")
+          d(f"  <circle cx='{x}%' cy='{y}%' r={dot_width}% fill='#eee' stroke='#555' stroke-width='0.3%' onclick=\"{command}\"/>")
           d(f"  <text x='{x}%' y='{y}%'>T{i:02d}</text>")
           d(f"</g>")
-        d("    <text class='legend_title' x='50%' y='3%'>Task Dependencies</text>")
+        d("    <text class='legend_title' x='50%' y='3%' fill='black' >Task Dependencies</text>")
         d("  </svg>")
         d("</form>")
 

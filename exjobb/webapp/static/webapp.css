@@ -117,13 +117,14 @@ body {
   cursor: pointer;
 }
 
-.group_circle:hover {
-  fill: lightgrey;
-}
-
 .group_circle text {
   font-size: 1.7vw;
   font-weight: bold;
   text-anchor: middle;
   dominant-baseline: middle;
+  transform: translate(0em, 0.1em);
+}
+
+.group_circle:hover {
+  fill: #616161;
 }
