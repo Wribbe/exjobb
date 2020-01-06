@@ -93,6 +93,7 @@ body {
 
 .legendy, .legendx {
   font-weight: bold;
+  text-anchor: middle;
 }
 
 .legend_title {
@@ -123,5 +124,6 @@ body {
 .group_circle text {
   font-size: 1.7vw;
   font-weight: bold;
-  transform: translate(-1.0em, 0.3em);
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
