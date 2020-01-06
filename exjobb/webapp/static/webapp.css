@@ -127,3 +127,23 @@ body {
 .group_circle:hover {
   fill: #616161;
 }
+
+.group_performance {
+  cursor: pointer;
+}
+
+.group_performance rect:hover {
+  pointer-events: bounding-box;
+  fill: lightgrey;
+}
+
+.group_performance text {
+  font-size: 1.5vw;
+  pointer-events: none;
+}
+
+
+.text_performance {
+  text-anchor: middle;
+  dominant-baseline: middle;
+}

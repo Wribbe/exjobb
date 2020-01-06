@@ -872,7 +872,7 @@ def create_app():
 
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
-    buttons = ['hours','team workload','dependencies','performance']
+    buttons = ['employee hours','team workload','task dependencies','team performance']
     data = ""
 
     db = _db2()
@@ -940,7 +940,7 @@ def create_app():
         "#B10DC9"
       ]
 
-      if task_type == 'hours':
+      if task_type == 'employee hours':
 
         num_people = 35
         people = []
@@ -985,7 +985,7 @@ def create_app():
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
         d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
-        d("    <text class='legend_title' x='50%' y='3%'>Hours</text>")
+        d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
@@ -1030,7 +1030,7 @@ def create_app():
         d("  </svg>")
         d("</form>")
 
-      elif task_type == 'dependencies':
+      elif task_type == 'task dependencies':
 
         dot_width = 3.3
         num_dots = random.randrange(10,15)
@@ -1073,7 +1073,7 @@ def create_app():
         d("  </svg>")
         d("</form>")
 
-      elif task_type == 'performance':
+      elif task_type == 'team performance':
 
         #pallet = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
         #pallet = ["windows blue", "amber", "greyish", "faded green", "dusty purple"]
@@ -1087,7 +1087,7 @@ def create_app():
         #http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf
 
         num_teams = random.randrange(7,10)
-        spacing_vertical = 95/num_teams
+        spacing_vertical = 80/num_teams
         teams = []
 
         index_correct = random.choice(range(num_teams))
@@ -1129,7 +1129,8 @@ def create_app():
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
+#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
+        offset_y = 8
         for i,team in enumerate(teams):
           x,y,index_max,parts,parts_sum = team
           offset = 0
@@ -1139,8 +1140,16 @@ def create_app():
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             color = colors[name]
             p = (90*p/parts_sum)*(parts_sum/spread_sum_max)
-            d(f'<rect x="{5+x+offset}%" y="{5+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            d('<g class="group_performance">')
+            d(f'  <rect class="part_performance" x="{5+x+offset}%" y="{offset_y+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            if p < 10:
+              name = name[:4]
+            d(f'  <text class="text_performance" x="{5+x+offset+p/2}%" y="{offset_y+y+2.5}%" fill="black">{name.title()}</text>')
+            if ii == 0:
+              d(f'  <text x="{5+x+offset}%" y="{offset_y+y-0.5}%" fill="black">Team {i+1:02d}</text>')
+            d('</g>')
             offset += p
+        d("    <text class='legend_title' x='50%' y='3%' fill='black' >Team Performance</text>")
         d("  </svg>")
         d("</form>")
 
