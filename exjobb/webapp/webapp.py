@@ -946,7 +946,7 @@ def create_app():
         people = []
         index_correct = random.choice(range(num_people))
         for i in range(num_people):
-          available = random.choice(range(50,80)[::10])
+          available = random.choice(range(45,75)[::10])
           if i == index_correct:
             assigned = 1.4*available
           else:
@@ -984,7 +984,7 @@ def create_app():
             d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black"/>')
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
-        d("    <text class='legendx' x='50%' y='98%'>Employees</text>")
+        d("    <text class='legendx' x='40%' y='98%'>Time assignment per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-62%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
@@ -995,7 +995,7 @@ def create_app():
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
         color = random.choice(pallet)
         num_x = 5
         num_y = 25
@@ -1025,7 +1025,7 @@ def create_app():
           d(f"<text x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
         for i, x in enumerate(range(num_x), start=0):
           d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
-        d("    <text class='legend_title' x='45%' y='3%'>Team Workload</text>")
+        d("    <text class='legend_title' x='50%' y='3%'>Team Workload</text>")
         d("    <text class='legendy' x='-2.0%' y='-53%'>Work Week</text>")
         d("  </svg>")
         d("</form>")
@@ -1039,9 +1039,10 @@ def create_app():
         max_connections = 4
         index_correct = random.choice(range(num_dots))
 
+        radius = 38
         for i in range(num_dots):
-          x = 50 + 45 * math.cos(dot_angle*i)
-          y = 50 + 45 * math.sin(dot_angle*i)
+          x = 50 + radius * math.cos(dot_angle*i)
+          y = 50 + radius * math.sin(dot_angle*i)
           if i == index_correct:
             connections = max_connections + 7
           else:
@@ -1051,19 +1052,24 @@ def create_app():
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
         d("  <svg id='svg-data'>")
-        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
+#        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } .tag:hover { color: blue; }</style>")
         for i, dot in enumerate(dots):
           others = dots[:i] + dots[i:]
           random.shuffle(others)
           x,y,connections = dot
+          color = random.choice(pallet)
           for ox, oy, _ in others[:connections]:
-            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='black' stroke-width='0.2%' stroke-opacity='0.5'/>")
+            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='{color}' stroke-width='0.3%' stroke-opacity='0.5'/>")
         for i, dot in enumerate(dots):
           command = "document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           x,y,connections = dot
-          d(f"<circle cx='{x}%' cy='{y}%' r={dot_width}% fill='white' stroke='black' stroke-width='0.5%' onclick=\"{command}\"/>")
+          d(f"<g class='group_circle'>")
+          d(f"  <circle cx='{x}%' cy='{y}%' r={dot_width}% fill='{color}' stroke='black' stroke-width='0.3%' onclick=\"{command}\"/>")
+          d(f"  <text x='{x}%' y='{y}%'>T{i:02d}</text>")
+          d(f"</g>")
+        d("    <text class='legend_title' x='50%' y='3%'>Task Dependencies</text>")
         d("  </svg>")
         d("</form>")
 
