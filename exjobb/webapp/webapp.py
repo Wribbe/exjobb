@@ -984,9 +984,9 @@ def create_app():
             d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black"/>')
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
-        d("    <text class='legendx' x='40%' y='98%'>Time assignment per employee</text>")
+        d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Hours</text>")
-        d("    <text class='legendy' x='-2.5%' y='-62%'>Assigned vs. Available Hours</text>")
+        d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
 
@@ -1026,7 +1026,7 @@ def create_app():
         for i, x in enumerate(range(num_x), start=0):
           d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Team Workload</text>")
-        d("    <text class='legendy' x='-2.0%' y='-53%'>Work Week</text>")
+        d("    <text class='legendy' x='-2.0%' y='-50%'>Work Week</text>")
         d("  </svg>")
         d("</form>")
 
