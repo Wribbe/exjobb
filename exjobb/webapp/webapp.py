@@ -942,7 +942,7 @@ def create_app():
         """
         SELECT * FROM test_run
         WHERE id_user=(
-          SELECT id FROM test_user WHERE str_id=(?)
+          SELECT id FROM test_user WHERE str_id=(?) AND t_stop!= ""
         )
         """,
         (session['id_user'],)
@@ -953,7 +953,6 @@ def create_app():
       return stats
 
     if request.method == 'POST':
-      print(request.form)
       if 'btn_task_type' in request.form:
         session['task_started'] = False
         session['task_type'] = request.form['btn_task_type'].lower()
@@ -972,6 +971,10 @@ def create_app():
         session['id_user'] = id_user
       elif 'btn_survey' in request.form:
         session['survey_take'] = True
+      elif 'btn_survey_cancel' in request.form:
+        session['survey_take'] = False
+      elif 'btn_survey_submit' in request.form:
+        session.clear()
       elif 'not_correct' in request.form:
         cursor = db.cursor()
         now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
@@ -1135,10 +1138,10 @@ def create_app():
       elif task_type == 'task dependencies':
 
         dot_width = 3.3
-        num_dots = random.randrange(10,15)
+        num_dots = 17
         dot_angle = 2*math.pi / num_dots
         dots = []
-        max_connections = 7
+        max_connections = 3
         connections_correct_additional = 3
         index_correct = random.choice(range(num_dots))
 
@@ -1304,6 +1307,68 @@ def create_app():
     task_started = session.get('task_started')
     accept_disclosure = session.get('accept_disclosure')
 
+    description = {
+      'employee hours': """
+        <strong>Goal:</strong> <br>
+        Select the most over-booked employee.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present a bar-chart (one bar per employee) <br>
+        where the bar represents their available time. <br>
+        <br>
+        If their work-load is lower than the total available hours <br>
+        the bar will be partially filled, showing the white background. <br>
+        <br>
+        If the planned work-load exceeds the total amount of available <br>
+        hour the fill will go beyond the bar and turn a different color. <br>
+        <br>
+        Click the largest other-colored section in order to <br>
+        select the most over-booked employee.
+      """,
+      'team workload': """
+        <strong>Goal:</strong> <br>
+        Select the busiest day in the calendar.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present a colored grid where each cell represents a day of <br>
+        a 5-day work week. The more intense the color, the more things <br>
+        are scheduled to be done at that day. <br>
+        <br>
+        Click the most color-intense cell in order to select the busiest day.
+      """,
+      'task dependencies': """
+        <strong>Goal:</strong><br>
+        Select the task with the most connections.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present several circles representing tasks. <br>
+        <br>
+        The connected lines represent how many dependencies are linked <br>
+        to that task. More lines -> more dependencies. <br>
+        <br>
+        Click the circle with the most lines attached to it.
+      """,
+      'team performance': """
+        <strong>Goal:</strong><br>
+        Select the area where the most performant team did the most work.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present several horizontal bars representing the total <br>
+        work of different teams. Longer bar -> more work done. <br>
+        <br>
+        The bars are then divided into differently colored and labeled <br>
+        sections. These sections represent different type of work done by<br>
+        the team. Same thing here, larger section -> more done. <br>
+        <br>
+        First find the team that did the most work (logest bar) then click <br>
+        the largest sub-section of that bar.
+      """,
+    }
+
     if not accept_disclosure:
       html, pdf = render_template(
         'disclosure.html',
@@ -1312,8 +1377,10 @@ def create_app():
     elif task_type:
       if not task_started:
         data = f"""
-          <div id='description'> {{ Description goes here }} </div>
-          <div>Press here to start a {task_type.title()}-task.</div>
+          <div id='description'>
+            <h2>{task_type.title()}</h2>
+            {description.get(task_type, "")}
+          </div>
         """
       else:
         data = data_generate(task_type, task_run_id);
