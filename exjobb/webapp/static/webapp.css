@@ -14,7 +14,8 @@ body {
 }
 
 #data {
-  flex-grow: 1;
+  width: 100%;
+  height: 100%;
   background: white;
   border: 1px solid black;
 }
@@ -40,10 +41,18 @@ body {
   padding: 1.0em;
   border: 1px solid black;
   margin-bottom: 1em;
+  cursor: pointer;
+
+  border-radius: 8px;
+  background-color: #3e8e41;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: white;
 }
 
 .button_sidebar:hover {
-  background: lightgrey;
+  background-color: #4e9e51;
 }
 
 .button_sidebar:active{
@@ -51,29 +60,98 @@ body {
 }
 
 .button_start {
-  margin-top: -1.5em;
+  margin-top: 10px;
+  font-size: 7vw;
+  border-radius: 12px;
+  padding: 15px 32px;
+  background-color: #3e8e41;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+.button_start:hover {
+  background-color: #4e9e51;
 }
 
 #description {
-  font-style: italic;
+  margin-top: 25vh;
+  margin-bottom: 1em;
 }
 
-#data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#data div {
-  margin: 1.0em;
-}
 
 #svg-data {
   width: 100%;
-  height: 80%;
-  border: 1px solid blue;
+  height: 100%;
 }
 
-#checkbox-correct {
+#checkbox-correct, .hidden {
   display: none;
+}
+
+.clickable:hover {
+  fill: lightgrey;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.legendy, .legendx {
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.legend_title {
+  font-size: 20pt;
+  text-anchor: middle;
+}
+
+.legendy {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+#select_activity {
+  width: 100%;
+  height: 100%;
+  margin-top: 40vh;
+}
+
+.group_circle {
+  cursor: pointer;
+}
+
+.group_circle text {
+  pointer-events: none;
+  font-size: 1.7vw;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transform: translate(0em, 0.1em);
+}
+
+.group_circle:hover {
+  fill: #616161;
+}
+
+.group_performance {
+  cursor: pointer;
+}
+
+.group_performance rect:hover {
+  pointer-events: bounding-box;
+  fill: lightgrey;
+}
+
+.group_performance text {
+  font-size: 1.5vw;
+  pointer-events: none;
+}
+
+
+.text_performance {
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
