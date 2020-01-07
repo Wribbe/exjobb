@@ -79,7 +79,7 @@ body {
   height: 100%;
 }
 
-#checkbox-correct {
+#checkbox-correct, .hidden {
   display: none;
 }
 
@@ -113,11 +113,11 @@ body {
 }
 
 .group_circle {
-  pointer-events: bounding-box;
   cursor: pointer;
 }
 
 .group_circle text {
+  pointer-events: none;
   font-size: 1.7vw;
   text-anchor: middle;
   dominant-baseline: middle;
