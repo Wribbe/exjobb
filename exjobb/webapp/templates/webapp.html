@@ -27,8 +27,23 @@
             </form>
           {% endif %}
           {% if not task_type %}
-            <div id='select_activity'> Select a task type to the left to
-              continue. </div>
+            <div id='select_activity'>
+              <div id='stats_tasks'>
+                <div>
+                  Registered as: <span id='id_user'>{{ session.id_user }}</span>
+                </div>
+                <div>
+                  Total tests completed: X
+                </div>
+                <div>
+                  Remaining for survey: Y
+                </div>
+                {% for type, num in stats.num_types.items() %}
+                  <div> {{ type }} : {{ num }} </div>
+                {% endfor %}
+              </div>
+              Select a task type to the left to continue.
+            </div>
           {% endif %}
         </div>
       </div>

@@ -851,6 +851,21 @@ def create_app():
     if not is_initialized:
       with open('schema2.sql') as fh:
         g.db2.executescript(fh.read())
+      user_ids = set()
+      pool = 'abcdefghijklmnopqrstuvwxyz'
+      pool += pool.upper()
+      pool += '123456789#@!'
+      while len(user_ids) < 10e3:
+        user_id = ''.join([random.choice(pool) for _ in range(5)])
+        user_ids.add(user_id)
+      cursor = g.db2.cursor()
+      cursor.executemany(
+        'INSERT INTO test_user_ids (str_id) VALUES (?)',
+        [(user_id,) for user_id in user_ids]
+      )
+      cursor.close()
+      g.db2.commit()
+
     return g.db2
 
   @app.route('/webapp/results', methods=['GET'])
@@ -884,19 +899,43 @@ def create_app():
       }
 
     def new_run(type_data):
-      ids_types_data = ids_tests_data_types()
-      if not ids_types_data:
-        values = [(button,) for button in buttons]
-        db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
-        db.commit()
-        ids_types_data = ids_tests_data_types()
       cursor = db.cursor()
+      user = cursor.execute(
+        'SELECT id FROM test_user WHERE str_id = (?)',
+        (session['id_user'],)
+      ).fetchone()
       cursor.execute(
-        'INSERT INTO test_run (id_type_data) VALUES (?)',
-        (ids_types_data[type_data],)
+        'INSERT INTO test_run (name, id_user) VALUES (?,?)',
+        (type_data, user['id'])
       )
       db.commit()
+      cursor.close()
       return cursor.lastrowid
+
+    def id_user_get():
+      cursor = db.cursor()
+      cursor.execute(
+        """
+        UPDATE test_user_ids SET used=TRUE
+        WHERE id=(
+          SELECT id FROM test_user_ids WHERE used=FALSE
+          ORDER BY id LIMIT 1
+        )
+        """
+      )
+      rowid = cursor.lastrowid
+      db.commit()
+      user_id = cursor.execute(
+        'SELECT * FROM test_user_ids WHERE id=(?)',
+        (rowid,)
+      ).fetchone()
+      cursor.close()
+      return user_id['str_id']
+
+    def stats_get():
+      stats = {
+        'num_types': {k:0 for k in buttons},
+      }
 
     if request.method == 'POST':
       if 'btn_task_type' in request.form:
@@ -906,7 +945,34 @@ def create_app():
         session['task_run_id'] = new_run(session['task_type'])
         session['task_started'] = True
       elif 'btn_accept_disclosure' in request.form:
+        cursor = db.cursor()
+        id_user = id_user_get()
+        cursor.execute(
+          'INSERT INTO test_user (str_id) VALUES (?);', (id_user,)
+        )
+        db.commit()
+        cursor.close()
         session['accept_disclosure'] = True
+        session['id_user'] = id_user
+      elif 'not_correct' in request.form:
+        cursor = db.cursor()
+        now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
+        now = now[:-3]
+        now += '000UTC'
+        cursor.execute(
+          'UPDATE test_run SET t_stop = (?), success = (?), answer = (?), answer_correct = (?) WHERE id = (?);',
+          (
+            now,
+            'correct' in request.form,
+            request.form.get('answer'),
+            request.form.get('answer_correct'),
+            session["task_run_id"],
+          )
+        )
+        db.commit()
+        cursor.close()
+        session['task_started'] = False
+        session['task_type'] = ""
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -942,19 +1008,22 @@ def create_app():
 
       if task_type == 'employee hours':
 
-        num_people = 35
+        num_people = 25
         people = []
         index_correct = random.choice(range(num_people))
         for i in range(num_people):
           available = random.choice(range(45,75)[::10])
           if i == index_correct:
-            assigned = 1.4*available
+            assigned = 1.3*available
           else:
-            assigned = random.uniform(0.5,1.3)*available
+            assigned = random.uniform(0.5,1.2)*available
           people.append((available, assigned))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d(f" <input id='answer_correct' class='hidden' name='answer_correct' type='text' value='{index_correct}'/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
         d("    <defs>")
         d('      <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">')
@@ -973,29 +1042,36 @@ def create_app():
         random.shuffle(pallet)
         color = pallet.pop(0)
         color_overshot = pallet.pop(0)
+        width = 3
         for i, (available, assigned) in enumerate(people):
-          command = "document.form_answer.submit()"
+          command = f"document.getElementById('answer').value='{index_correct}';document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
-            d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available}%" stroke="black" fill="{color}" />')
+            d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available}%" stroke="black" fill="{color}" />')
           else:
-            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black"/>')
-            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="1%" height="{available-assigned}%" stroke="black" fill="none"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned}%" fill="{color}" stroke="black"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
         d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([
+          f'{num_people=}',
+          f'{color=}',
+          f'{color_overshot=}',
+          f'{people=}',
+        ])
 
       elif task_type == 'team workload':
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
-        d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         color = random.choice(pallet)
         num_x = 5
         num_y = 25
@@ -1006,6 +1082,7 @@ def create_app():
         opacities += [0.0]*(num-len(opacities))
         opacities.pop()
         opacities.append(1.0)
+        opacities_copy = list(opacities)
         random.shuffle(opacities)
         offset_x = 8
         offset_y = 15
@@ -1014,11 +1091,14 @@ def create_app():
         width = workable_x/(num_x)
         height = workable_y/(num_y)
         days = "MON TUE WED THU FRI".split()
-        for x in range(num_x):
-          for y in range(num_y):
-            opacity = opacities.pop()
-            command = "document.form_answer.submit()"
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        for y in range(num_y):
+          for x in range(num_x):
+            opacity = opacities[x + y*num_x]
+            command = f"document.getElementById('answer').value = '({x},{y})';document.form_answer.submit()"
             if opacity == 1.0:
+              data.insert(3, f"  <input id='answer_correct' class='hidden' name='answer_correct' type='text' value='({x},{y})'/>")
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             d(f"<rect x='{offset_x/2+x*width}%' y='{offset_y/2+y*height}%' width='{width}%' height='{height}%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
         for i, y in enumerate(range(num_y), start=1):
@@ -1029,6 +1109,10 @@ def create_app():
         d("    <text class='legendy' x='-2.0%' y='-50%'>Work Week</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([
+          f'{color=}',
+          f'{opacities=}',
+        ])
 
       elif task_type == 'task dependencies':
 
@@ -1036,7 +1120,8 @@ def create_app():
         num_dots = random.randrange(10,15)
         dot_angle = 2*math.pi / num_dots
         dots = []
-        max_connections = 4
+        max_connections = 7
+        connections_correct_additional = 3
         index_correct = random.choice(range(num_dots))
 
         radius = 38
@@ -1044,34 +1129,61 @@ def create_app():
           x = 50 + radius * math.cos(dot_angle*i + math.pi)
           y = 50 + radius * math.sin(dot_angle*i + math.pi)
           if i == index_correct:
-            connections = max_connections + 7
+            connections = max_connections + connections_correct_additional
           else:
             connections = random.randrange(1,max_connections)
-          dots.append((x,y,connections))
+          dots.append((i,x,y,connections))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
 #        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } .tag:hover { color: blue; }</style>")
-        for i, dot in enumerate(dots):
-          others = dots[:i] + dots[i:]
+        connections_all = [[0]*num_dots for _ in range(num_dots)]
+        for dot in dots:
+          index,x,y,connections = dot
+          others = dots[:index] + dots[index:]
           random.shuffle(others)
-          x,y,connections = dot
           color = random.choice(pallet)
-          for ox, oy, _ in others[:connections]:
+          while sum(connections_all[index]) < connections:
+            dot_connections = connections_all[index]
+            while True:
+              connect_to = random.choice(range(len(dot_connections)))
+              if sum(connections_all[connect_to]) < max_connections:
+                connections_all[connect_to][index] = 1
+                connections_all[index][connect_to] = 1
+                break
+
+        set_connections = set()
+        color = random.choice(pallet)
+        for i, conns in enumerate(connections_all):
+          for ii, con in enumerate(conns):
+            if con == 0:
+              continue
+            if (i, ii) in set_connections or (ii, i) in set_connections:
+              continue
+            set_connections.add((i, ii))
+            _, x, y, _ = dots[i]
+            _, ox, oy, _ = dots[ii]
             d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='{color}' stroke-width='0.3%' stroke-opacity='0.5'/>")
-        for i, dot in enumerate(dots):
-          command = "document.form_answer.submit()"
-          if i == index_correct:
+        for dot in dots:
+          command = f"document.getElementById('answer').value = '{index}';document.form_answer.submit()"
+          index,x,y,_ = dot
+          if index == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
-          x,y,connections = dot
           d(f"<g class='group_circle'>")
           d(f"  <circle cx='{x}%' cy='{y}%' r={dot_width}% fill='#eee' stroke='#555' stroke-width='0.3%' onclick=\"{command}\"/>")
-          d(f"  <text x='{x}%' y='{y}%'>T{i:02d}</text>")
+          d(f"  <text x='{x}%' y='{y}%'>T{index:02d}</text>")
           d(f"</g>")
         d("    <text class='legend_title' x='50%' y='3%' fill='black' >Task Dependencies</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([str(v) for v in [
+          f'{color=}',
+          f'{index_correct=}',
+          f'{connections_all=}',
+        ]])
 
       elif task_type == 'team performance':
 
@@ -1119,7 +1231,7 @@ def create_app():
             spread_sum_max = spread_sum
           spread_sum = sum(spread)
 
-          return (index_rect_max, zip(tasks, spread), spread_sum)
+          return (index_rect_max, list(zip(tasks, spread)), spread_sum)
 
         spreads = [get_spread(i) for i in range(num_teams)]
 
@@ -1127,7 +1239,9 @@ def create_app():
           teams.append((0,i*spacing_vertical,*spreads[i]))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
 #        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
         offset_y = 8
@@ -1135,7 +1249,7 @@ def create_app():
           x,y,index_max,parts,parts_sum = team
           offset = 0
           for ii, (name, p)  in enumerate(parts):
-            command = "document.form_answer.submit()"
+            command = f"document.getElementById('answer').value='({i},{ii})';document.form_answer.submit()"
             if i == index_correct and ii == index_max:
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             color = colors[name]
@@ -1152,7 +1266,20 @@ def create_app():
         d("    <text class='legend_title' x='50%' y='3%' fill='black' >Team Performance</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([
+          f'{index_max=}',
+          f'{index_correct=}',
+          f'{teams=}',
+        ])
 
+      vars += ';'+f'{data=}'
+      cursor = db.cursor()
+      cursor.execute(
+        'UPDATE test_run SET vars=(?) WHERE id=(?);',
+        (vars, seed)
+      )
+      db.commit()
+      cursor.close()
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
@@ -1164,13 +1291,18 @@ def create_app():
         'disclosure.html',
       )
       return html
-    elif task_type and not task_started:
-      data = f"""
-        <div id='description'> {{ Description goes here }} </div>
-        <div>Press here to start a {task_type.title()}-task.</div>
-      """
+    elif task_type:
+      if not task_started:
+        data = f"""
+          <div id='description'> {{ Description goes here }} </div>
+          <div>Press here to start a {task_type.title()}-task.</div>
+        """
+      else:
+        data = data_generate(task_type, task_run_id);
     else:
-      data = data_generate(task_type, task_run_id);
+      data = ""
+
+    stats = stats_get()
 
     html, pdf = render_template(
       'webapp.html',
@@ -1178,6 +1310,7 @@ def create_app():
       data=data,
       task_type=task_type,
       task_started=task_started,
+      stats=stats,
     )
     return html
 
