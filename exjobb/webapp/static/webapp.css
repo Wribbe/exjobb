@@ -41,10 +41,18 @@ body {
   padding: 1.0em;
   border: 1px solid black;
   margin-bottom: 1em;
+  cursor: pointer;
+
+  border-radius: 8px;
+  background-color: #3e8e41;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: white;
 }
 
 .button_sidebar:hover {
-  background: lightgrey;
+  background-color: #4e9e51;
 }
 
 .button_sidebar:active{
@@ -53,7 +61,7 @@ body {
 
 .button_start {
   margin-top: 10px;
-  font-size: 12vw;
+  font-size: 7vw;
   border-radius: 12px;
   padding: 15px 32px;
   background-color: #3e8e41;
@@ -69,10 +77,10 @@ body {
 }
 
 #description {
-  margin-top: 45vh;
+  margin-top: 25vh;
   margin-bottom: 1em;
-  font-style: italic;
 }
+
 
 #svg-data {
   width: 100%;
