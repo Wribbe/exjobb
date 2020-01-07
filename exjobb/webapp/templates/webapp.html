@@ -30,18 +30,25 @@
             <div id='select_activity'>
               <div id='stats_tasks'>
                 <div>
-                  Registered as: <span id='id_user'>{{ session.id_user }}</span>
+                  User key: <span id='id_user'>{{ session.id_user }}</span>
                 </div>
                 <div>
-                  Total tests completed: X
+                  Total tests completed: {{ stats.total }}
                 </div>
                 <div>
-                  Remaining for survey: Y
+                  Remaining for survey: {{ [stats.required- stats.total, 0] | max }}
                 </div>
                 {% for type, num in stats.num_types.items() %}
-                  <div> {{ type }} : {{ num }} </div>
+                  <div> {{ type | title}} : {{ num }} </div>
                 {% endfor %}
               </div>
+              <form action="{{ url_for('webapp') }}" method="POST">
+                {% if stats.total < stats.required %}
+                  <input type="submit" name="btn_survey" value="Take Survey" disabled/>
+                {% else %}
+                  <input type="submit" name="btn_survey" value="Take Survey" />
+                {% endif %}
+              </form>
               Select a task type to the left to continue.
             </div>
           {% endif %}
