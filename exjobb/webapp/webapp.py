@@ -953,6 +953,7 @@ def create_app():
       return stats
 
     if request.method == 'POST':
+      print(request.form)
       if 'btn_task_type' in request.form:
         session['task_started'] = False
         session['task_type'] = request.form['btn_task_type'].lower()
@@ -969,6 +970,8 @@ def create_app():
         cursor.close()
         session['accept_disclosure'] = True
         session['id_user'] = id_user
+      elif 'btn_survey' in request.form:
+        session['survey_take'] = True
       elif 'not_correct' in request.form:
         cursor = db.cursor()
         now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
@@ -1318,6 +1321,28 @@ def create_app():
       data = ""
 
     stats = stats_get()
+
+    if session.get('survey_take'):
+
+      questions = [
+        """The goal of each task was clear""",
+        """Test-application looks good""",
+        """Use of colors helped with the tasks""",
+        """Amount of information was adequate""",
+        """Test-application is easy to to navigate""",
+        """Appropriate choice of colors""",
+        """Language used was easy to understand""",
+        """Easy to understand what to do next""",
+      ]
+
+      if not session.get('survey_done'):
+        html, pdf = render_template(
+          'survey.html',
+          questions=questions,
+        )
+        return html
+      else:
+        session['survey_take'] = False
 
     html, pdf = render_template(
       'webapp.html',
