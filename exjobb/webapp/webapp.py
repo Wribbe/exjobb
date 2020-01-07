@@ -935,7 +935,22 @@ def create_app():
     def stats_get():
       stats = {
         'num_types': {k:0 for k in buttons},
+        'required': 5,
       }
+      cursor = db.cursor()
+      tasks = cursor.execute(
+        """
+        SELECT * FROM test_run
+        WHERE id_user=(
+          SELECT id FROM test_user WHERE str_id=(?)
+        )
+        """,
+        (session['id_user'],)
+      ).fetchall()
+      stats['total'] = len(tasks)
+      for task in tasks:
+        stats['num_types'][task['name']] += 1
+      return stats
 
     if request.method == 'POST':
       if 'btn_task_type' in request.form:
