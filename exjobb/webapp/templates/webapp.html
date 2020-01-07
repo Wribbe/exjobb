@@ -19,9 +19,7 @@
       <div id='wrapper_data'>
         <div id='data'>
           {% if data %}
-            <div>
-              {{data | safe}}
-            </div>
+            {{data | safe}}
           {% endif %}
           {% if task_type and not task_started %}
             <form action='{{ url_for('webapp') }}' method='post'>
@@ -29,7 +27,30 @@
             </form>
           {% endif %}
           {% if not task_type %}
-            <div> Select a activity type to the left. </div>
+            <div id='select_activity'>
+              <div id='stats_tasks'>
+                <div>
+                  User key: <span id='id_user'>{{ session.id_user }}</span>
+                </div>
+                <div>
+                  Total tests completed: {{ stats.total }}
+                </div>
+                <div>
+                  Remaining for survey: {{ [stats.required- stats.total, 0] | max }}
+                </div>
+                {% for type, num in stats.num_types.items() %}
+                  <div> {{ type | title}} : {{ num }} </div>
+                {% endfor %}
+              </div>
+              <form action="{{ url_for('webapp') }}" method="POST">
+                {% if stats.total < stats.required %}
+                  <input type="submit" name="btn_survey" value="Take Survey" disabled/>
+                {% else %}
+                  <input type="submit" name="btn_survey" value="Take Survey" />
+                {% endif %}
+              </form>
+              Select a task type to the left to continue.
+            </div>
           {% endif %}
         </div>
       </div>

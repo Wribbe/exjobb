@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Test information and agreement.</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='disclosure.css') }}"/>
+  </head>
+  <body>
+    <div id="page">
+      <h2>Test information</h2>
+      <ul id='ul_info_test'>
+        <li>
+          <span>What</span> -
+          This test consists of abstracted representations of pseudo-managerial
+          tasks, where the goal is to find a specific interface element as fast as
+          possible.
+        </li>
+        <li>
+          <span>Why</span> -
+          The goal is to examine how different combinations of text, color,
+          contrast etc. impact reaction times of users.
+        </li>
+        <li>
+          <span>How</span> -
+          The server will keep track of when the task was started. When the
+          taks is finished, the final time and variables used to
+          generate the test-data are recorded.
+        </li>
+      </ul>
+      <h2>Data collection and publication</h2>
+      <div>
+      </div>
+      <ul>
+        <li>
+          The goal is to record as little, ideally no, personally identifiable
+          information about the participants of this test.
+        </li>
+        <li>
+          If identifiable patterns emerge they will not be included in any
+          publicly distributed material.
+        </li>
+        <li>
+          Any statistical reporting will be done in aggregate and
+          not focus on individual test-results.
+        </li>
+      </ul>
+      <h2>Post-test survey.</h2>
+      <p>
+        There it a short, less than ten questions, post-test survey, accessible
+        after completing five or more tasks. This survey needs to be completed
+        in order for the results of the tasks to be registered correctly.
+      </p>
+      <form action='{{ url_for("webapp") }}' method='POST'>
+        <input id='check_accept' type='checkbox' required></input>
+        <label for='check_accept'>
+          I have read and understand what I'm participating in.
+        </label>
+        <div>
+          <input type='submit' name='btn_accept_disclosure' value="Submit"></input>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

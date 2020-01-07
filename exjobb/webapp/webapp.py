@@ -851,6 +851,21 @@ def create_app():
     if not is_initialized:
       with open('schema2.sql') as fh:
         g.db2.executescript(fh.read())
+      user_ids = set()
+      pool = 'abcdefghijklmnopqrstuvwxyz'
+      pool += pool.upper()
+      pool += '123456789#@!'
+      while len(user_ids) < 10e3:
+        user_id = ''.join([random.choice(pool) for _ in range(5)])
+        user_ids.add(user_id)
+      cursor = g.db2.cursor()
+      cursor.executemany(
+        'INSERT INTO test_user_ids (str_id) VALUES (?)',
+        [(user_id,) for user_id in user_ids]
+      )
+      cursor.close()
+      g.db2.commit()
+
     return g.db2
 
   @app.route('/webapp/results', methods=['GET'])
@@ -872,7 +887,7 @@ def create_app():
 
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
-    buttons = ['hours','availability','dependencies','performance']
+    buttons = ['employee hours','team workload','task dependencies','team performance']
     data = ""
 
     db = _db2()
@@ -884,19 +899,58 @@ def create_app():
       }
 
     def new_run(type_data):
-      ids_types_data = ids_tests_data_types()
-      if not ids_types_data:
-        values = [(button,) for button in buttons]
-        db.executemany('INSERT INTO type_data (name) VALUES (?)', values)
-        db.commit()
-        ids_types_data = ids_tests_data_types()
       cursor = db.cursor()
+      user = cursor.execute(
+        'SELECT id FROM test_user WHERE str_id = (?)',
+        (session['id_user'],)
+      ).fetchone()
       cursor.execute(
-        'INSERT INTO test_run (id_type_data) VALUES (?)',
-        (ids_types_data[type_data],)
+        'INSERT INTO test_run (name, id_user) VALUES (?,?)',
+        (type_data, user['id'])
       )
       db.commit()
+      cursor.close()
       return cursor.lastrowid
+
+    def id_user_get():
+      cursor = db.cursor()
+      cursor.execute(
+        """
+        UPDATE test_user_ids SET used=TRUE
+        WHERE id=(
+          SELECT id FROM test_user_ids WHERE used=FALSE
+          ORDER BY id LIMIT 1
+        )
+        """
+      )
+      rowid = cursor.lastrowid
+      db.commit()
+      user_id = cursor.execute(
+        'SELECT * FROM test_user_ids WHERE id=(?)',
+        (rowid,)
+      ).fetchone()
+      cursor.close()
+      return user_id['str_id']
+
+    def stats_get():
+      stats = {
+        'num_types': {k:0 for k in buttons},
+        'required': 5,
+      }
+      cursor = db.cursor()
+      tasks = cursor.execute(
+        """
+        SELECT * FROM test_run
+        WHERE id_user=(
+          SELECT id FROM test_user WHERE str_id=(?) AND t_stop!= ""
+        )
+        """,
+        (session['id_user'],)
+      ).fetchall()
+      stats['total'] = len(tasks)
+      for task in tasks:
+        stats['num_types'][task['name']] += 1
+      return stats
 
     if request.method == 'POST':
       if 'btn_task_type' in request.form:
@@ -905,7 +959,41 @@ def create_app():
       elif 'btn_task_start' in request.form:
         session['task_run_id'] = new_run(session['task_type'])
         session['task_started'] = True
-      print(request.form)
+      elif 'btn_accept_disclosure' in request.form:
+        cursor = db.cursor()
+        id_user = id_user_get()
+        cursor.execute(
+          'INSERT INTO test_user (str_id) VALUES (?);', (id_user,)
+        )
+        db.commit()
+        cursor.close()
+        session['accept_disclosure'] = True
+        session['id_user'] = id_user
+      elif 'btn_survey' in request.form:
+        session['survey_take'] = True
+      elif 'btn_survey_cancel' in request.form:
+        session['survey_take'] = False
+      elif 'btn_survey_submit' in request.form:
+        session.clear()
+      elif 'not_correct' in request.form:
+        cursor = db.cursor()
+        now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
+        now = now[:-3]
+        now += '000UTC'
+        cursor.execute(
+          'UPDATE test_run SET t_stop = (?), success = (?), answer = (?), answer_correct = (?) WHERE id = (?);',
+          (
+            now,
+            'correct' in request.form,
+            request.form.get('answer'),
+            request.form.get('answer_correct'),
+            session["task_run_id"],
+          )
+        )
+        db.commit()
+        cursor.close()
+        session['task_started'] = False
+        session['task_type'] = ""
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -939,101 +1027,186 @@ def create_app():
         "#B10DC9"
       ]
 
-      if task_type == 'hours':
+      if task_type == 'employee hours':
 
-        num_people = 35
+        num_people = 25
         people = []
         index_correct = random.choice(range(num_people))
         for i in range(num_people):
-          available = random.choice(range(50,80)[::10])
+          available = random.choice(range(45,75)[::10])
           if i == index_correct:
-            assigned = 1.4*available
+            assigned = 1.3*available
           else:
-            assigned = random.uniform(0.5,1.3)*available
+            assigned = random.uniform(0.5,1.2)*available
           people.append((available, assigned))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d(f" <input id='answer_correct' class='hidden' name='answer_correct' type='text' value='{index_correct}'/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
+        d("    <defs>")
+        d('      <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">')
+        d('        <path d="M-1,1 l2,-2')
+        d('                 M0,4 l4,-4')
+        d('                 M3,5 l2,-2" />')
+        d('      </pattern>')
+        d('      <mask id="mask">')
+        d('        <rect height="100%" width="100%" style="fill: url(#stripe)" />')
+        d('      </mask>')
+        d("    </defs>")
+#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
         offset = 0
+        y_end = 95
         increment = 90/num_people
-        color=random.choice(pallet)
+        random.shuffle(pallet)
+        color = pallet.pop(0)
+        color_overshot = pallet.pop(0)
+        width = 3
         for i, (available, assigned) in enumerate(people):
-          command = "document.form_answer.submit()"
+          command = f"document.getElementById('answer').value='{index_correct}';document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
-            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+            d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available}%" stroke="black" fill="{color}" />')
           else:
-            d(f'<rect x="{5+offset}%" y="{100-assigned}%" width="1%" height="{assigned}%" fill="{color}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{100-available}%" width="1%" height="{available}%" stroke="black" fill="none" onclick="{command}"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned}%" fill="{color}" stroke="black"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
+        d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
+        d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
+        d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
         d("</form>")
-      elif task_type == 'availability':
+        vars = ';'.join([
+          f'{num_people=}',
+          f'{color=}',
+          f'{color_overshot=}',
+          f'{people=}',
+        ])
+
+      elif task_type == 'team workload':
+
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
-        d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         color = random.choice(pallet)
-        num = 25*25
+        num_x = 5
+        num_y = 25
+        num = num_x * num_y
         opacities = [random.uniform(0.1,0.5) for _ in range(int(0.7*num))]
         opacities += [random.uniform(0.5,0.6) for _ in range(int(0.2*num))]
         opacities += [random.uniform(0.6,0.80) for _ in range(int(0.1*num))]
         opacities += [0.0]*(num-len(opacities))
         opacities.pop()
         opacities.append(1.0)
+        opacities_copy = list(opacities)
         random.shuffle(opacities)
-        for x in range(25):
-          for y in range(25):
-            opacity = opacities.pop()
-            command = "document.form_answer.submit()"
+        offset_x = 8
+        offset_y = 15
+        workable_x = 100-offset_x
+        workable_y = 100-offset_y
+        width = workable_x/(num_x)
+        height = workable_y/(num_y)
+        days = "MON TUE WED THU FRI".split()
+        d("  <svg id='svg-data'>")
+        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; }</style>")
+        for y in range(num_y):
+          for x in range(num_x):
+            opacity = opacities[x + y*num_x]
+            command = f"document.getElementById('answer').value = '({x},{y})';document.form_answer.submit()"
             if opacity == 1.0:
+              data.insert(3, f"  <input id='answer_correct' class='hidden' name='answer_correct' type='text' value='({x},{y})'/>")
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
-            d(f"<rect x='{x*4}%' y='{y*4}%' width='4%' height='4%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
+            d(f"<rect x='{offset_x/2+x*width}%' y='{offset_y/2+y*height}%' width='{width}%' height='{height}%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
+        for i, y in enumerate(range(num_y), start=1):
+          d(f"<text x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
+        for i, x in enumerate(range(num_x), start=0):
+          d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
+        d("    <text class='legend_title' x='50%' y='3%'>Team Workload</text>")
+        d("    <text class='legendy' x='-2.0%' y='-50%'>Work Week</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([
+          f'{color=}',
+          f'{opacities=}',
+        ])
 
-      elif task_type == 'dependencies':
+      elif task_type == 'task dependencies':
 
         dot_width = 3.3
-        num_dots = random.randrange(10,20)
+        num_dots = 17
         dot_angle = 2*math.pi / num_dots
         dots = []
-        max_connections = 4
+        max_connections = 3
+        connections_correct_additional = 3
         index_correct = random.choice(range(num_dots))
 
+        radius = 38
         for i in range(num_dots):
-          x = 50 + 45 * math.cos(dot_angle*i)
-          y = 50 + 45 * math.sin(dot_angle*i)
+          x = 50 + radius * math.cos(dot_angle*i + math.pi)
+          y = 50 + radius * math.sin(dot_angle*i + math.pi)
           if i == index_correct:
-            connections = max_connections + 7
+            connections = max_connections + connections_correct_additional
           else:
             connections = random.randrange(1,max_connections)
-          dots.append((x,y,connections))
+          dots.append((i,x,y,connections))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
-        d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
-        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } </style>")
-        for i, dot in enumerate(dots):
-          others = dots[:i] + dots[i:]
+#        d("    <style> circle { cursor: pointer; } circle:hover { fill: lightgrey; } .tag:hover { color: blue; }</style>")
+        connections_all = [[0]*num_dots for _ in range(num_dots)]
+        for dot in dots:
+          index,x,y,connections = dot
+          others = dots[:index] + dots[index:]
           random.shuffle(others)
-          x,y,connections = dot
-          for ox, oy, _ in others[:connections]:
-            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='black' stroke-width='0.2%' stroke-opacity='0.5'/>")
-        for i, dot in enumerate(dots):
-          command = "document.form_answer.submit()"
-          if i == index_correct:
+          color = random.choice(pallet)
+          while sum(connections_all[index]) < connections:
+            dot_connections = connections_all[index]
+            while True:
+              connect_to = random.choice(range(len(dot_connections)))
+              if sum(connections_all[connect_to]) < max_connections:
+                connections_all[connect_to][index] = 1
+                connections_all[index][connect_to] = 1
+                break
+
+        set_connections = set()
+        color = random.choice(pallet)
+        for i, conns in enumerate(connections_all):
+          for ii, con in enumerate(conns):
+            if con == 0:
+              continue
+            if (i, ii) in set_connections or (ii, i) in set_connections:
+              continue
+            set_connections.add((i, ii))
+            _, x, y, _ = dots[i]
+            _, ox, oy, _ = dots[ii]
+            d(f"<line x1='{x}%' x2='{ox}%' y1='{y}%' y2='{oy}%' stroke='{color}' stroke-width='0.3%' stroke-opacity='0.5'/>")
+        for dot in dots:
+          command = f"document.getElementById('answer').value = '{index}';document.form_answer.submit()"
+          index,x,y,_ = dot
+          if index == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
-          x,y,connections = dot
-          d(f"<circle cx='{x}%' cy='{y}%' r={dot_width}% fill='white' stroke='black' stroke-width='0.5%' onclick=\"{command}\"/>")
+          d(f"<g class='group_circle'>")
+          d(f"  <circle cx='{x}%' cy='{y}%' r={dot_width}% fill='#eee' stroke='#555' stroke-width='0.3%' onclick=\"{command}\"/>")
+          d(f"  <text x='{x}%' y='{y}%'>T{index:02d}</text>")
+          d(f"</g>")
+        d("    <text class='legend_title' x='50%' y='3%' fill='black' >Task Dependencies</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([str(v) for v in [
+          f'{color=}',
+          f'{index_correct=}',
+          f'{connections_all=}',
+        ]])
 
-      elif task_type == 'performance':
+      elif task_type == 'team performance':
 
         #pallet = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
         #pallet = ["windows blue", "amber", "greyish", "faded green", "dusty purple"]
@@ -1047,7 +1220,7 @@ def create_app():
         #http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf
 
         num_teams = random.randrange(7,10)
-        spacing_vertical = 95/num_teams
+        spacing_vertical = 80/num_teams
         teams = []
 
         index_correct = random.choice(range(num_teams))
@@ -1079,7 +1252,7 @@ def create_app():
             spread_sum_max = spread_sum
           spread_sum = sum(spread)
 
-          return (index_rect_max, zip(tasks, spread), spread_sum)
+          return (index_rect_max, list(zip(tasks, spread)), spread_sum)
 
         spreads = [get_spread(i) for i in range(num_teams)]
 
@@ -1087,35 +1260,156 @@ def create_app():
           teams.append((0,i*spacing_vertical,*spreads[i]))
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
+        d("  <input id='checkbox-false' class='hidden' name='not_correct' type='checkbox' checked/>")
         d("  <input id='checkbox-correct' name='correct' type='checkbox'/>")
+        d("  <input id='answer' class='hidden' name='answer' type='text' value=''/>")
         d("  <svg id='svg-data'>")
-        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
+#        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey; } </style>")
+        offset_y = 8
         for i,team in enumerate(teams):
           x,y,index_max,parts,parts_sum = team
           offset = 0
           for ii, (name, p)  in enumerate(parts):
-            command = "document.form_answer.submit()"
+            command = f"document.getElementById('answer').value='({i},{ii})';document.form_answer.submit()"
             if i == index_correct and ii == index_max:
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             color = colors[name]
             p = (90*p/parts_sum)*(parts_sum/spread_sum_max)
-            d(f'<rect x="{5+x+offset}%" y="{5+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            d('<g class="group_performance">')
+            d(f'  <rect class="part_performance" x="{5+x+offset}%" y="{offset_y+y}%" width="{p}%" height="5%" fill="{color}" stroke="black" stroke-width="2.0" onclick="{command}"/>')
+            if p < len(name)+2:
+              name = name[:3]+'..'
+            d(f'  <text class="text_performance" x="{5+x+offset+p/2}%" y="{offset_y+y+2.5}%" fill="black">{name.title()}</text>')
+            if ii == 0:
+              d(f'  <text x="{5+x+offset}%" y="{offset_y+y-0.5}%" fill="black">Team {i+1:02d}</text>')
+            d('</g>')
             offset += p
+        d("    <text class='legend_title' x='50%' y='3%' fill='black' >Team Performance</text>")
         d("  </svg>")
         d("</form>")
+        vars = ';'.join([
+          f'{index_max=}',
+          f'{index_correct=}',
+          f'{teams=}',
+        ])
 
+      vars += ';'+f'{data=}'
+      cursor = db.cursor()
+      cursor.execute(
+        'UPDATE test_run SET vars=(?) WHERE id=(?);',
+        (vars, seed)
+      )
+      db.commit()
+      cursor.close()
       return os.linesep.join(data)
 
     task_type = session.get('task_type')
     task_started = session.get('task_started')
+    accept_disclosure = session.get('accept_disclosure')
 
-    if task_type and not task_started:
-      data = f"""
-        <div id='description'> {{ Description goes here }} </div>
-        <div>Press here to start a {task_type.title()}-task.</div>
-      """
+    description = {
+      'employee hours': """
+        <strong>Goal:</strong> <br>
+        Select the most over-booked employee.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present a bar-chart (one bar per employee) <br>
+        where the bar represents their available time. <br>
+        <br>
+        If their work-load is lower than the total available hours <br>
+        the bar will be partially filled, showing the white background. <br>
+        <br>
+        If the planned work-load exceeds the total amount of available <br>
+        hour the fill will go beyond the bar and turn a different color. <br>
+        <br>
+        Click the largest other-colored section in order to <br>
+        select the most over-booked employee.
+      """,
+      'team workload': """
+        <strong>Goal:</strong> <br>
+        Select the busiest day in the calendar.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present a colored grid where each cell represents a day of <br>
+        a 5-day work week. The more intense the color, the more things <br>
+        are scheduled to be done at that day. <br>
+        <br>
+        Click the most color-intense cell in order to select the busiest day.
+      """,
+      'task dependencies': """
+        <strong>Goal:</strong><br>
+        Select the task with the most connections.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present several circles representing tasks. <br>
+        <br>
+        The connected lines represent how many dependencies are linked <br>
+        to that task. More lines -> more dependencies. <br>
+        <br>
+        Click the circle with the most lines attached to it.
+      """,
+      'team performance': """
+        <strong>Goal:</strong><br>
+        Select the area where the most performant team did the most work.
+        <br>
+        <br>
+        <strong>How:</strong> <br>
+        This task present several horizontal bars representing the total <br>
+        work of different teams. Longer bar -> more work done. <br>
+        <br>
+        The bars are then divided into differently colored and labeled <br>
+        sections. These sections represent different type of work done by<br>
+        the team. Same thing here, larger section -> more done. <br>
+        <br>
+        First find the team that did the most work (logest bar) then click <br>
+        the largest sub-section of that bar.
+      """,
+    }
+
+    if not accept_disclosure:
+      html, pdf = render_template(
+        'disclosure.html',
+      )
+      return html
+    elif task_type:
+      if not task_started:
+        data = f"""
+          <div id='description'>
+            <h2>{task_type.title()}</h2>
+            {description.get(task_type, "")}
+          </div>
+        """
+      else:
+        data = data_generate(task_type, task_run_id);
     else:
-      data = data_generate(task_type, task_run_id);
+      data = ""
+
+    stats = stats_get()
+
+    if session.get('survey_take'):
+
+      questions = [
+        """The goal of each task was clear""",
+        """Test-application looks good""",
+        """Use of colors helped with the tasks""",
+        """Amount of information was adequate""",
+        """Test-application is easy to to navigate""",
+        """Appropriate choice of colors""",
+        """Language used was easy to understand""",
+        """Easy to understand what to do next""",
+      ]
+
+      if not session.get('survey_done'):
+        html, pdf = render_template(
+          'survey.html',
+          questions=questions,
+        )
+        return html
+      else:
+        session['survey_take'] = False
 
     html, pdf = render_template(
       'webapp.html',
@@ -1123,6 +1417,7 @@ def create_app():
       data=data,
       task_type=task_type,
       task_started=task_started,
+      stats=stats,
     )
     return html
 
