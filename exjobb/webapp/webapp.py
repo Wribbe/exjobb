@@ -923,14 +923,16 @@ def create_app():
         )
         """
       )
-      rowid = cursor.lastrowid
       db.commit()
       user_id = cursor.execute(
-        'SELECT * FROM test_user_ids WHERE id=(?)',
-        (rowid,)
-      ).fetchone()
+        """
+          SELECT str_id FROM test_user_ids
+            WHERE used=1
+            ORDER BY id DESC LIMIT 1
+        """
+      ).fetchone()['str_id']
       cursor.close()
-      return user_id['str_id']
+      return user_id
 
     def stats_get():
       stats = {
