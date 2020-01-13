@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <style>
+      .emphasis {
+        font-weight: bold;
+      }
+      .wrapper {
+        width: 35em;
+        padding-left: 5%;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='wrapper'>
+      <h2>Abort test-session and delete user information.</h2>
+      <form action="{{ url_for('abort') }}" method='POST'>
+        <p>
+          This will <span class='emphasis'>delete all the information</span> about
+          the user-id: <span class='emphasis'>{{ id_user }}</span>
+          and return the id to the pool of available user-id's.
+        </p>
+        <div>
+          <input type='submit' value="Delete user data" name='btn_abort_delete'/>
+          <input type='submit' value="Return to test" name='btn_abort_return'/>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
