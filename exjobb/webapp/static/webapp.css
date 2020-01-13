@@ -59,6 +59,15 @@ body {
   background: grey;
 }
 
+.button_abort:hover {
+  background-color: #ff0000;
+}
+
+.button_abort {
+  margin-top: 3em;
+  background-color: #dd2222;
+}
+
 .button_start {
   margin-top: 10px;
   font-size: 7vw;
@@ -149,7 +158,6 @@ body {
   font-size: 1.5vw;
   pointer-events: none;
 }
-
 
 .text_performance {
   text-anchor: middle;

@@ -885,6 +885,33 @@ def create_app():
     )
     return html
 
+  @app.route('/webapp/abort', methods=['GET','POST'])
+  def abort():
+
+    db = _db2()
+    if request.method == "POST":
+
+      id_user = session['id_user']
+
+      if 'btn_abort_delete' in request.form:
+        db.execute("DELETE FROM test_user WHERE str_id = (?)", (id_user,))
+        db.execute("DELETE FROM test_run WHERE id_user = (?)", (id_user,))
+        db.execute("DELETE FROM answer WHERE str_id = (?)", (id_user,))
+        db.execute(
+          "UPDATE test_user_ids SET used=FALSE WHERE str_id = (?)",
+          (id_user,)
+        )
+        db.commit()
+        session.clear()
+
+      return redirect(url_for('webapp'))
+
+    html, pdf = render_template(
+      'abort.html',
+      id_user = session['id_user'],
+    )
+    return html
+
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
     buttons = ['employee hours','team workload','task dependencies','team performance']
@@ -996,6 +1023,9 @@ def create_app():
         cursor.close()
         session['task_started'] = False
         session['task_type'] = ""
+      elif 'btn_abort' in request.form:
+        return redirect(url_for('abort'))
+
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -1366,7 +1396,7 @@ def create_app():
         sections. These sections represent different type of work done by<br>
         the team. Same thing here, larger section -> more done. <br>
         <br>
-        First find the team that did the most work (logest bar) then click <br>
+        First find the team that did the most work (longest bar) then click <br>
         the largest sub-section of that bar.
       """,
     }
