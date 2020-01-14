@@ -163,3 +163,19 @@ body {
   text-anchor: middle;
   dominant-baseline: middle;
 }
+
+#stats_tasks {
+  padding-left: 40%;
+  text-align: left;
+}
+
+#stats_tasks div {
+  margin-bottom: 0.8em;
+}
+
+#stats_tasks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.2em;
+  padding-left: 0.5em;
+}
