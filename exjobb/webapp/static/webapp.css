@@ -1,42 +1,44 @@
-body {
+#wrapper_page {
+  height: 100%;
+  width: 100%;
+  font-size: 1.3vw;
+  border: 1px solid black;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  height: 98%;
 }
 
-.wrapper_page {
-  display: flex;
-  flex-direction: row;
+input {
+  font-size: inherit;
+}
+
+#sidebar {
+  flex-basis: 1vw;
   margin: 1em;
-  height: 100%;
+}
+
+#main {
+  flex-grow: 1;
+  display: flex;
+  padding: 1em;
+  border-left: 1px solid black;
+  align-content: center;
+  justify-content: center;
+}
+
+#info {
+  align-self: center;
+  border: 1px solid red;
+}
+
+#info div {
+  margin-top: 1em;
 }
 
 #data {
   width: 100%;
   height: 100%;
-  background: white;
-  border: 1px solid black;
-}
-
-#sidebar {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  width: 200px;
-  margin-right: 1em;
-}
-
-#wrapper_data {
-  display: flex;
-  align-content: center;
-  flex-grow: 1;
 }
 
 .button_sidebar {
-  display: inline-block;
-  text-align: center;
   width: 100%;
   padding: 1.0em;
   border: 1px solid black;
@@ -59,6 +61,11 @@ body {
   background: grey;
 }
 
+.button_sidebar:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
 .button_abort:hover {
   background-color: #ff0000;
 }
@@ -70,7 +77,6 @@ body {
 
 .button_start {
   margin-top: 10px;
-  font-size: 7vw;
   border-radius: 12px;
   padding: 15px 32px;
   background-color: #3e8e41;
@@ -79,21 +85,21 @@ body {
   outline: none;
   border: none;
   color: white;
+  width: 100%;
 }
 
 .button_start:hover {
   background-color: #4e9e51;
 }
 
-#description {
-  margin-top: 25vh;
-  margin-bottom: 1em;
-}
-
-
-#svg-data {
+svg {
   width: 100%;
   height: 100%;
+}
+
+svg .legend_title {
+  font-size: 3vw;
+  transform: translate(0, 1vw);
 }
 
 #checkbox-correct, .hidden {
@@ -114,19 +120,12 @@ body {
 }
 
 .legend_title {
-  font-size: 20pt;
   text-anchor: middle;
 }
 
 .legendy {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-}
-
-#select_activity {
-  width: 100%;
-  height: 100%;
-  margin-top: 40vh;
 }
 
 .group_circle {
@@ -165,15 +164,13 @@ body {
 }
 
 #stats_tasks {
-  padding-left: 40%;
   text-align: left;
 }
 
 #stats_tasks div {
-  margin-bottom: 0.8em;
 }
 
-#stats_tasks ul {
+#main ul {
   list-style: none;
   padding: 0;
   margin: 0.2em;
