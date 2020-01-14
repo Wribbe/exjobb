@@ -4,64 +4,63 @@
     <title>Master Thesis Webapp</title>
   </head>
   <body>
-    <div class='wrapper_page'>
+    <div id='wrapper_page'>
       <div id='sidebar'>
-        <div id='wrapper_buttons'>
-          <form action='{{ url_for('webapp') }}' method='post'>
-            {% for name in buttons %}
-              <input type='submit' class='button_sidebar' name="btn_task_type" value="{{ name | title }}">
-            {% endfor %}
-            <input type='submit' class='button_sidebar button_abort' name='btn_abort' value="Abort Test"</input>
-          </form>
-        </div>
-        <div id='data_additional'>
-        </div>
+        <form action='{{ url_for('webapp') }}' method='post'>
+          {% for name in buttons %}
+            <input type='submit' class='button_sidebar' name="btn_task_type" value="{{ name | title }}">
+          {% endfor %}
+          <input type='submit' class='button_sidebar button_abort' name='btn_abort' value="Abort Test"</input>
+        </form>
       </div>
-      <div id='wrapper_data'>
-        <div id='data'>
-          {% if data %}
+      <div id='main'>
+        {% if task_started %}
+          <div id='data'>
             {{data | safe}}
-          {% endif %}
-          {% if task_type and not task_started %}
-            <form action='{{ url_for('webapp') }}' method='post'>
-              <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
-            </form>
-          {% endif %}
-          {% if not task_type %}
-            <div id='select_activity'>
-              <div id='stats_tasks'>
-                <div>
-                  User key: {{ session.id_user }}
-                </div>
-                <div>
-                  Test-stats:
-                  <ul class="stats_tests">
-                    <li>Total tests completed: {{ stats.total }}</li>
-                    <li>Remaining for survey: {{ [stats.required- stats.total, 0] | max }}</li>
-                  </ul>
-                </div>
-                <div>
-                  Types of tests done:
-                  <ul>
-                    {% for type, num in stats.num_types.items() %}
-                      <li> {{ num }} - {{ type | title}} </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-                <div>
-                  <form action="{{ url_for('webapp') }}" method="POST">
-                    {% if stats.total < stats.required %}
-                      <input type="submit" name="btn_survey" value="Take Survey" disabled/>
-                    {% else %}
-                      <input type="submit" name="btn_survey" value="Take Survey" />
-                    {% endif %}
-                  </form>
-                </div>
+            {% if task_type and not task_started %}
+              <form action='{{ url_for('webapp') }}' method='post'>
+                <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
+              </form>
+            {% endif %}
+          </div>
+        {% else %}
+          <div id='info'>
+            {% if data %}
+              {{data | safe}}
+            {% else %}
+              <div>
+                User key: {{ session.id_user }}
+              </div>
+              <div>
+                Test-stats:
+                <ul class="stats_tests">
+                  <li>Total tests completed: {{ stats.total }}</li>
+                  <li>Remaining for survey: {{ [stats.required- stats.total, 0] | max }}</li>
+                </ul>
+              </div>
+              <div>
+                Types of tests done:
+                <ul>
+                  {% for type, num in stats.num_types.items() %}
+                    <li> {{ num }} - {{ type | title}} </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div>
+                <form action="{{ url_for('webapp') }}" method="POST">
+                  {% if stats.total < stats.required %}
+                    <input class='button_sidebar' type="submit" name="btn_survey" value="Take Survey" disabled/>
+                  {% else %}
+                    <input class='button_sidebar' type="submit" name="btn_survey" value="Take Survey" />
+                  {% endif %}
+                </form>
+              </div>
+              <div>
                 Select a task type to the left to continue.
               </div>
-            </div>
-          {% endif %}
-        </div>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
     </div>
   </body>

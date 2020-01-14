@@ -928,12 +928,12 @@ def create_app():
     def new_run(type_data):
       cursor = db.cursor()
       user = cursor.execute(
-        'SELECT id FROM test_user WHERE str_id = (?)',
+        'SELECT * FROM test_user WHERE str_id = (?)',
         (session['id_user'],)
       ).fetchone()
       cursor.execute(
         'INSERT INTO test_run (name, id_user) VALUES (?,?)',
-        (type_data, user['id'])
+        (type_data, user['str_id'])
       )
       db.commit()
       cursor.close()
@@ -1412,7 +1412,7 @@ def create_app():
           <div id='description'>
             <h2>{task_type.title()}</h2>
             {description.get(task_type, "")}
-          </div>
+          <div>
         """
       else:
         data = data_generate(task_type, task_run_id);
