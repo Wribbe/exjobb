@@ -17,16 +17,14 @@
         {% if task_started %}
           <div id='data'>
             {{data | safe}}
-            {% if task_type and not task_started %}
-              <form action='{{ url_for('webapp') }}' method='post'>
-                <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
-              </form>
-            {% endif %}
           </div>
         {% else %}
           <div id='info'>
             {% if data %}
               {{data | safe}}
+              <form action='{{ url_for('webapp') }}' method='post'>
+                <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
+              </form>
             {% else %}
               <div>
                 User key: {{ session.id_user }}

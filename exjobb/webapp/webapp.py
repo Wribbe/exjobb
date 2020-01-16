@@ -968,12 +968,7 @@ def create_app():
       }
       cursor = db.cursor()
       tasks = cursor.execute(
-        """
-        SELECT * FROM test_run
-        WHERE id_user=(
-          SELECT id FROM test_user WHERE str_id=(?) AND t_stop!= ""
-        )
-        """,
+        "SELECT name FROM test_run WHERE id_user=(?) AND t_stop!= ''",
         (session['id_user'],)
       ).fetchall()
       stats['total'] = len(tasks)
