@@ -9,18 +9,24 @@
         flex-direction: column;
         align-content: center;
         justify-content: center;
+        font-size: 1.5vw;
       }
       th, td {
-        width: 70px;
+        width: 5em;
         text-align: center;
         min-height: 50px;
         height: 100%;
+        font-size: inherit;
       }
       .question {
         padding-left: 1em;
         padding-right: 1em;
         width: auto;
         text-align: left;
+        font-size: inherit;
+      }
+      .question_span {
+        font-size: 1.5vw;
       }
       table {
         border-collapse: collapse;
@@ -76,7 +82,7 @@
         outline: none;
         border: none;
         color: white;
-        font-size: 15pt;
+        font-size: inherit;
       }
 
       .button_sidebar:hover {
@@ -110,7 +116,7 @@
             {% set index_q = loop.index %}
             <tr>
               <td class='question'>
-                {{question}}
+                <span class='question_span'>{{question}}</span>
                 <input class="hidden" name='Q{{index_q}}' type='text' value="{{question}}">
               </td>
               {% for _ in range(5) %}
