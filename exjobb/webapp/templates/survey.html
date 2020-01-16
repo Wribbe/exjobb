@@ -3,61 +3,67 @@
     <title>Survey</title>
   </head>
   <body>
-<style>
-  th, td {
-    width: 70px;
-    text-align: center;
-    min-height: 50px;
-    height: 100%;
-  }
-  .question {
-    padding-left: 1em;
-    padding-right: 1em;
-    width: auto;
-    text-align: left;
-  }
-  table {
-    border-collapse: collapse;
-    height: 1px;
-  }
-  table, th, td {
-    border: 1px solid black;
-  }
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+      }
+      th, td {
+        width: 70px;
+        text-align: center;
+        min-height: 50px;
+        height: 100%;
+      }
+      .question {
+        padding-left: 1em;
+        padding-right: 1em;
+        width: auto;
+        text-align: left;
+      }
+      table {
+        border-collapse: collapse;
+        height: 1px;
+      }
+      table, th, td {
+        border: 1px solid black;
+      }
 
-  td input {
-    margin-top: 0;
-    display: inline-block;
-    height: 100%;
-    cursor: pointer;
-  }
+      td input {
+        margin-top: 0;
+        display: inline-block;
+        height: 100%;
+        cursor: pointer;
+      }
 
-  .input_div {
-    display: inline-block;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    min-height: 50px;
-    cursor: pointer;
-  }
+      .input_div {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        min-height: 50px;
+        cursor: pointer;
+      }
 
-  .input_div:hover {
-    background: lightgrey;
-  }
+      .input_div:hover {
+        background: lightgrey;
+      }
 
-  .hidden {
-    display: none;
-  }
+      .hidden {
+        display: none;
+      }
 
-  #wrapper {
-    padding-left: 1em;
-  }
+      #wrapper {
+        align-self: center;
+      }
 
-  .note {
-    width: 48em;
-    font-style: italic;
-  }
+      .note {
+        width: 48em;
+        font-style: italic;
+      }
 
-</style>
+    </style>
     <div id="wrapper">
       <h2>Task data submission survey</h2>
       <form action="{{ url_for('webapp') }}" method="POST">
