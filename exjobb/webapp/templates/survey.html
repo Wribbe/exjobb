@@ -63,6 +63,34 @@
         font-style: italic;
       }
 
+      .button_sidebar {
+        width: 30%;
+        padding: 0.2em;
+        border: 1px solid black;
+        margin-bottom: 1em;
+        cursor: pointer;
+
+        border-radius: 8px;
+        background-color: #3e8e41;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 15pt;
+      }
+
+      .button_sidebar:hover {
+        background-color: #4e9e51;
+      }
+
+
+      .button_abort:hover {
+        background-color: #ff0000;
+      }
+
+      .button_abort {
+        background-color: #dd2222;
+      }
     </style>
     <div id="wrapper">
       <h2>Task data submission survey</h2>
@@ -108,8 +136,8 @@
           </p>
         </div>
         <div>
-          <input class='submit' name="btn_survey_submit" type="submit" value="Submit"/>
-          <input class='submit' name="btn_survey_cancel" type="submit" value="Cancel" formnovalidate/>
+          <input class='submit button_sidebar' name="btn_survey_submit" type="submit" value="Submit"/>
+          <input class='submit button_sidebar button_abort' name="btn_survey_cancel" type="submit" value="Cancel" formnovalidate/>
         </div>
       </form>
     </div>
