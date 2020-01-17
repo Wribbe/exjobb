@@ -1416,17 +1416,18 @@ def create_app():
 
     stats = stats_get()
 
+
     if session.get('survey_take'):
 
       questions = [
-        """The goal of each task was clear""",
-        """Test-application looks good""",
-        """Use of colors helped with the tasks""",
-        """Amount of information was adequate""",
-        """Test-application is easy to to navigate""",
-        """Appropriate choice of colors""",
-        """Language used was easy to understand""",
-        """Easy to understand what to do next""",
+        "The goal of each task was clear",
+        "Test-application looks good",
+        "Use of colors helped with the tasks",
+        "Amount of information was adequate",
+        "Test-application is easy to to navigate",
+        "Appropriate choice of colors",
+        "Language used was easy to understand",
+        "Easy to understand what to do next",
       ]
 
       if not session.get('survey_done'):

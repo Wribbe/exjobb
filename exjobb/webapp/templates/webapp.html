@@ -20,11 +20,59 @@
           </div>
         {% else %}
           <div id='info'>
-            {% if data %}
-              {{data | safe}}
-              <form action='{{ url_for('webapp') }}' method='post'>
-                <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
-              </form>
+            {% if not session.survey_initial %}
+              <div id='initial_survey'>
+                <h3> Initial Survey </h3>
+                <form action='{{ url_for('webapp') }}' method='post'>
+                  <table>
+                    <tr>
+                      <td>Anonymous id:</td>
+                      <td>
+                        <input type='text' name='key_user' value='{{session.id_user}}' disabled required>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Age:</td>
+                      <td><input type='number' step="1" required></td>
+                    </tr>
+                  </table>
+                  <table id='initial_numbers'>
+                    <tr>
+                      {% for v in ["", 'Strongly Disagree', "","","", "Strongly Agree"] %}
+                        {% if loop.first %}
+                          <th class="noborder">{{v}}</th>
+                        {% else %}
+                          <th>{{v}}</th>
+                        {% endif %}
+                      {% endfor %}
+                    </tr>
+                    <tr>
+                      <td class="noborder"></td>
+                      {% for d in range(1,6) %}
+                        <td>{{ d }}</td>
+                      {% endfor %}
+                    </tr>
+                    {% for q in ["Q1"] %}
+                      <td class="noborder">{{q}}:</td>
+                      {% for _ in range(1,6) %}
+                        <td>
+                          <label>
+                            <div class="input_div">
+                              <input name="{{q}}" type='radio' required>
+                            </div>
+                          </label>
+                        </td>
+                      {% endfor %}
+                    {% endfor %}
+                  </table>
+                  <input type='submit' class='button_start' name="btn_initial_survey" value="Submit">
+                </form>
+              </div>
+            {% elif data %}
+                {{data | safe}}
+                <form action='{{ url_for('webapp') }}' method='post'>
+                  <input type='submit' class='button_start' name="btn_task_start" value="Start Task">
+                </form>
             {% else %}
               <div>
                 User key: {{ session.id_user }}
