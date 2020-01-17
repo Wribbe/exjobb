@@ -1,7 +1,7 @@
 #wrapper_page {
   height: 100%;
   width: 100%;
-  font-size: 1.3vw;
+  font-size: 2.0vmin;
   border: 1px solid black;
   display: flex;
 }
@@ -26,6 +26,7 @@ input {
 
 #info {
   align-self: center;
+  font-size: 2.5vmin;
 }
 
 #info div {
