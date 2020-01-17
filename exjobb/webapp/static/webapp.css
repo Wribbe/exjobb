@@ -176,3 +176,33 @@ svg .legend_title {
   margin: 0.2em;
   padding-left: 0.5em;
 }
+
+#initial_numbers {
+  border-collapse: collapse;
+  height: 1px;
+}
+
+#initial_numbers td, th {
+  padding-top, margin-top: 0;
+  width: 3em;
+  text-align: center;
+  border: 1px solid black;
+}
+
+#initial_numbers .noborder {
+  border: none;
+}
+
+#initial_numbers .input_div {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 50px;
+  cursor: pointer;
+}
+
+
+.input_div:hover {
+  background: lightgrey;
+}
