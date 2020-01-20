@@ -19,8 +19,15 @@ CREATE TABLE test_run (
   ,answer TEXT DEFAULT ""
   ,answer_correct TEXT DEFAULT ""
   ,success BOOLEAN DEFAULT FALSE
-  ,vars TEXT
   ,FOREIGN KEY(id_user) REFERENCES test_user(str_id)
+);
+
+CREATE TABLE test_run_vars (
+  id INTEGER PRIMARY KEY
+  ,id_test_run INTEGER NOT NULL
+  ,id_user TEXT NOT NULL
+  ,vars TEXT NOT NULL
+  ,FOREIGN KEY(id_test_run) REFERENCES test_run(id)
 );
 
 CREATE TABLE answer (
