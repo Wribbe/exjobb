@@ -121,7 +121,7 @@
               </td>
               {% for _ in range(5) %}
                 {% set id="%d" | format(loop.index) %}
-                  <td class='td_radio'>
+                  <td>
                     <label>
                       <div class='input_div'>
                         <input type="radio" id="{{id}}" name="QA{{index_q}}" value="{{id}}" required>

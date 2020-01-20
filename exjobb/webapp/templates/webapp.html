@@ -33,36 +33,63 @@
                     </tr>
                     <tr>
                       <td>Age:</td>
-                      <td><input type='number' step="1" min="0" value="25" required></td>
+                      <td><input type='number' name="initial_age" step="1" min="0" value="25" required></td>
+                    </tr>
+                  </table>
+                  <table>
+                    <tr>
+                      <td>Identifies as:</td>
+                      {% for val in ["Female", "Male", "Other"] %}
+                        <td>
+                          <label class='pointer'>
+                            <input name='intial_identifies' type="radio" value="{{val}}" required>
+                            {{val}}
+                          </label>
+                        </td>
+                      {% endfor %}
+                    </tr>
+                      <td>Device type:</td>
+                      {% for val in ["Desktop", "Laptop", "Other"] %}
+                        <td>
+                          <label class='pointer'>
+                            <input name='intial_device_type' type="radio" value="{{val}}" required>
+                            {{val}}
+                          </label>
+                        </td>
+                      {% endfor %}
                     </tr>
                   </table>
                   <table id='initial_numbers'>
                     <tr>
-                      {% for v in ["", 'Strongly Disagree', "","","", "Strongly Agree"] %}
-                        {% if loop.first %}
-                          <th class="noborder">{{v}}</th>
-                        {% else %}
-                          <th>{{v}}</th>
-                        {% endif %}
+                      {% for v in ['Strongly Disagree', "","","", "Strongly Agree"] %}
+                        <th class='noborder'>{{v}}</th>
                       {% endfor %}
                     </tr>
                     <tr>
-                      <td class="noborder"></td>
                       {% for d in range(1,6) %}
                         <td>{{ d }}</td>
                       {% endfor %}
                     </tr>
-                    {% for q in ["Q1"] %}
-                      <td class="noborder">{{q}}:</td>
-                      {% for _ in range(1,6) %}
-                        <td>
-                          <label>
-                            <div class="input_div">
-                              <input name="{{q}}" type='radio' required>
-                            </div>
-                          </label>
-                        </td>
-                      {% endfor %}
+                    {% for q in
+                      [
+                        "I feel comfortable using a computer",
+                        "I am interest in/have studied UI-design",
+                        "I often play pointer based games",
+                      ] %}
+                      <tr class='numbers_question'>
+                        <td class='noborder' colspan="5">Q{{loop.index}}: {{q}}</td>
+                      </tr>
+                      <tr>
+                        {% for i in range(1,6) %}
+                          <td>
+                            <label>
+                              <div class="input_div">
+                                <input name="{{q}}" type='radio' value="{{q}}_{{i}}" required>
+                              </div>
+                            </label>
+                          </td>
+                        {% endfor %}
+                      </tr>
                     {% endfor %}
                   </table>
                   <input type='submit' class='button_start' name="btn_initial_survey" value="Submit">
