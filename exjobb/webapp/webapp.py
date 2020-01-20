@@ -1014,6 +1014,7 @@ def create_app():
       elif 'btn_survey_cancel' in request.form:
         session['survey_take'] = False
       elif 'btn_survey_submit' in request.form:
+        db_submit_answers(request.form)
         session.clear()
       elif 'btn_initial_survey' in request.form:
         db_submit_answers(request.form)
