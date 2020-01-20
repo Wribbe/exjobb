@@ -177,6 +177,15 @@ svg .legend_title {
   padding-left: 0.5em;
 }
 
+table {
+  font-size: 1.7vw;
+}
+
+input[type='radio'] {
+  width: 1.7vw;
+  height: 1.7vw;
+}
+
 #initial_numbers {
   border-collapse: collapse;
   height: 1px;
@@ -184,9 +193,10 @@ svg .legend_title {
 
 #initial_numbers td, th {
   padding-top, margin-top: 0;
-  width: 3em;
+  width: 5em;
   text-align: center;
   border: 1px solid black;
+  height: 100%;
 }
 
 #initial_numbers .noborder {
@@ -200,9 +210,33 @@ svg .legend_title {
   width: 100%;
   min-height: 50px;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
 }
 
+td input {
+  cursor: pointer;
+}
+
+.input_div input {
+  margin-top: 0;
+  display: inline-block;
+  height: 100%;
+}
 
 .input_div:hover {
   background: lightgrey;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#initial_numbers .numbers_question td {
+  text-align: left;
+  font-weight: bold;
+}
+
+#initial_survey {
+  font-size: 3vw;
 }
