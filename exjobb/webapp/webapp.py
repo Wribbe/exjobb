@@ -896,6 +896,7 @@ def create_app():
       if 'btn_abort_delete' in request.form:
         db.execute("DELETE FROM test_user WHERE str_id = (?)", (id_user,))
         db.execute("DELETE FROM test_run WHERE id_user = (?)", (id_user,))
+        db.execute("DELETE FROM test_run_vars WHERE id_user = (?)", (id_user,))
         db.execute("DELETE FROM answer WHERE str_id = (?)", (id_user,))
         db.execute(
           "UPDATE test_user_ids SET used=FALSE WHERE str_id = (?)",
@@ -961,6 +962,21 @@ def create_app():
       cursor.close()
       return user_id
 
+    def db_submit_answers(data_form):
+      db = _db2()
+      cursor = db.cursor()
+      data = [
+        (session['id_user'], key, value )
+        for key,value in data_form.items() if not key.startswith('btn_')
+      ]
+      cursor.executemany(
+        """
+          INSERT INTO answer (str_id, question, answer)
+            VALUES (?,?,?)
+        """, data
+      )
+      db.commit()
+
     def stats_get():
       stats = {
         'num_types': {k:0 for k in buttons},
@@ -999,6 +1015,9 @@ def create_app():
         session['survey_take'] = False
       elif 'btn_survey_submit' in request.form:
         session.clear()
+      elif 'btn_initial_survey' in request.form:
+        db_submit_answers(request.form)
+        session['survey_initial'] = True
       elif 'not_correct' in request.form:
         cursor = db.cursor()
         now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
@@ -1323,8 +1342,8 @@ def create_app():
       vars += ';'+f'{data=}'
       cursor = db.cursor()
       cursor.execute(
-        'UPDATE test_run SET vars=(?) WHERE id=(?);',
-        (vars, seed)
+        "INSERT INTO test_run_vars (id_test_run, id_user, vars) VALUES (?,?,?)",
+        (seed, session['id_user'], vars)
       )
       db.commit()
       cursor.close()

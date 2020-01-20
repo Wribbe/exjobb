@@ -193,7 +193,7 @@ input[type='radio'] {
 
 #initial_numbers td, th {
   padding-top, margin-top: 0;
-  width: 5em;
+  width: 6em;
   text-align: center;
   border: 1px solid black;
   height: 100%;
