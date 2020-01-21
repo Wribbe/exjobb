@@ -49,9 +49,50 @@
         color: white;
         font-size: 2.0vmin;
       }
+      #messages {
+        position: absolute;
+        align-self: center;
+        top: 2%;
+      }
+
+      .msg_success {
+        background: green;
+      }
+
+      .msg_info {
+        background: gray;
+      }
+
+      #messages div {
+        -webkit-animation: fadeOut 2s forwards;
+        animation: fadeOut 2s forwards;
+        -webkit-animation-delay: 5s;
+        animation-delay: 5s;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-size: 3vw;
+        align-self: center;
+        border-radius: 10px;
+      }
+
+      @-webkit-keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0;}
+      }
+
+      @keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0;}
+      }
     </style>
   </head>
   <body>
+    <div id='messages'>
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class='msg_{{category}}'>{{category | title}}: {{ message }}</div>
+      {% endfor %}
+    </div>
     <div id="page">
       <h1>Introduction to this usability-study</h1>
       <p>

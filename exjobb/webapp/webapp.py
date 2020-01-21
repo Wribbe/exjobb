@@ -13,12 +13,16 @@ DATABASE = 'test_db.db'
 from pathlib import Path
 from flask_weasyprint import render_pdf, HTML
 from flask import \
-  Response, request, redirect, url_for, session, g, send_from_directory
+  Response, request, redirect, url_for, session, g, send_from_directory, \
+  flash
 
 import datetime
 import weasyprint
 
 DIR_OUT = os.path.join("exjobb", "out")
+
+def render_template_html(template, **data):
+  return flask.render_template(template, **data)
 
 def render_template(template, **data):
   html = flask.render_template(template, **data)
@@ -897,7 +901,9 @@ def create_app():
           (id_user,)
         )
         db.commit()
+        user = session['id_user']
         session.clear()
+        flash(f"All information about {user} deleted.", 'success')
 
       return redirect(url_for('webapp'))
 
@@ -970,6 +976,7 @@ def create_app():
         """, data
       )
       db.commit()
+      flash("Survey data successfully submitted.", 'success')
 
     def stats_get():
       stats = {
@@ -1005,6 +1012,7 @@ def create_app():
         session['id_user'] = id_user
       elif 'btn_survey' in request.form:
         session['survey_take'] = True
+        flash("Initial survey submitted", 'success');
       elif 'btn_survey_cancel' in request.form:
         session['survey_take'] = False
       elif 'btn_survey_submit' in request.form:
@@ -1019,7 +1027,14 @@ def create_app():
         now = now[:-3]
         now += '000UTC'
         cursor.execute(
-          'UPDATE test_run SET t_stop = (?), success = (?), answer = (?), answer_correct = (?) WHERE id = (?);',
+          """
+            UPDATE test_run SET
+              t_stop = (?)
+              ,success = (?)
+              ,answer = (?)
+              ,answer_correct = (?)
+            WHERE id = (?)
+          """,
           (
             now,
             'correct' in request.form,
@@ -1032,6 +1047,13 @@ def create_app():
         cursor.close()
         session['task_started'] = False
         session['task_type'] = ""
+
+        print(request.form)
+        if request.form.get('answer_correct') == request.form.get('answer'):
+          span = "<span class='answer_correct'>Correct</span>"
+        else:
+          span = "<span class='answer_wrong'>Wrong</span>"
+        flash(f'Result recorded, answer was: {span}.', 'info')
       elif 'btn_abort' in request.form:
         return redirect(url_for('abort'))
 
@@ -1106,7 +1128,7 @@ def create_app():
         color_overshot = pallet.pop(0)
         width = 3
         for i, (available, assigned) in enumerate(people):
-          command = f"document.getElementById('answer').value='{index_correct}';document.form_answer.submit()"
+          command = f"document.getElementById('answer').value='{i}';document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
@@ -1445,7 +1467,7 @@ def create_app():
       ]
 
       if not session.get('survey_done'):
-        html, pdf = render_template(
+        html = render_template_html(
           'survey.html',
           questions=questions,
         )
@@ -1453,7 +1475,7 @@ def create_app():
       else:
         session['survey_take'] = False
 
-    html, pdf = render_template(
+    html = render_template_html(
       'webapp.html',
       buttons=buttons,
       data=data,
