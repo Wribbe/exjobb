@@ -18,6 +18,7 @@ input {
 #main {
   flex-grow: 1;
   display: flex;
+  flex-direction: column;
   padding: 1em;
   border-left: 1px solid black;
   align-content: center;
@@ -239,4 +240,49 @@ td input {
 
 #initial_survey {
   font-size: 3vw;
+}
+
+#messages {
+  position: absolute;
+  align-self: center;
+  top: 2%;
+}
+
+.msg_success {
+  background: green;
+}
+
+.msg_info {
+  background: gray;
+}
+
+.answer_correct {
+  color: green;
+}
+
+.answer_wrong {
+  color: red;
+}
+
+#messages div {
+  -webkit-animation: fadeOut 2s forwards;
+  animation: fadeOut 2s forwards;
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 2vw;
+  align-self: center;
+  border-radius: 10px;
+}
+
+@-webkit-keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity: 0;}
 }

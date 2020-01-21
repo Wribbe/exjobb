@@ -14,6 +14,11 @@
         </form>
       </div>
       <div id='main'>
+        <div id='messages'>
+          {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class='msg_{{category}}'>{{category | title}}: {{ message | safe}}</div>
+          {% endfor %}
+        </div>
         {% if task_started %}
           <div id='data'>
             {{data | safe}}
@@ -48,8 +53,8 @@
                         </td>
                       {% endfor %}
                     </tr>
-                      <td>Device type:</td>
-                      {% for val in ["Desktop", "Laptop", "Other"] %}
+                      <td>Input type:</td>
+                      {% for val in ["Mouse", "Trackpad", "Touch", "Other"] %}
                         <td>
                           <label class='pointer'>
                             <input name='intial_device_type' type="radio" value="{{val}}" required>
