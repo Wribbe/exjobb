@@ -1048,8 +1048,9 @@ def create_app():
         session['task_started'] = False
         session['task_type'] = ""
 
-        print(request.form)
-        if request.form.get('answer_correct') == request.form.get('answer'):
+        answer_correct = request.form.get('answer_correct')
+        answer = request.form.get('answer')
+        if 'correct' in request.form or answer == answer_correct:
           span = "<span class='answer_correct'>Correct</span>"
         else:
           span = "<span class='answer_wrong'>Wrong</span>"
