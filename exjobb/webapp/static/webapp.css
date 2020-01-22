@@ -256,6 +256,10 @@ td input {
   background: gray;
 }
 
+.answer_correct, .answer_wrong {
+  font-weight: bold;
+}
+
 .answer_correct {
   color: green;
 }
