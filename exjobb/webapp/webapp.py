@@ -913,6 +913,7 @@ def create_app():
     )
     return html
 
+
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
     buttons = ['employee hours','team workload','task dependencies','team performance']
@@ -976,7 +977,6 @@ def create_app():
         """, data
       )
       db.commit()
-      flash("Survey data successfully submitted.", 'success')
 
     def stats_get():
       stats = {
@@ -1012,15 +1012,16 @@ def create_app():
         session['id_user'] = id_user
       elif 'btn_survey' in request.form:
         session['survey_take'] = True
-        flash("Initial survey submitted", 'success');
       elif 'btn_survey_cancel' in request.form:
         session['survey_take'] = False
       elif 'btn_survey_submit' in request.form:
         db_submit_answers(request.form)
         session.clear()
+        flash("Final survey submitted, thanks for your time!", 'success');
       elif 'btn_initial_survey' in request.form:
         db_submit_answers(request.form)
         session['survey_initial'] = True
+        flash("Initial survey submitted.", 'success');
       elif 'not_correct' in request.form:
         cursor = db.cursor()
         now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
