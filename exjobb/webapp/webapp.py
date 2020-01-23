@@ -1146,7 +1146,7 @@ def create_app():
             d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned}%" fill="{color}" stroke="black"/>')
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
-        d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
+        d("    <text class='legendx' x='50%' y='98.5%'>Assignment ratio per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
         d("  </svg>")
