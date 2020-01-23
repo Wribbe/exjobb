@@ -995,7 +995,8 @@ def create_app():
 
     if request.method == 'POST':
       if 'btn_task_type' in request.form:
-        session['task_started'] = False
+        if session.get('task_started'):
+          return redirect(url_for('webapp'))
         session['task_type'] = request.form['btn_task_type'].lower()
       elif 'btn_task_start' in request.form:
         session['task_run_id'] = new_run(session['task_type'])
