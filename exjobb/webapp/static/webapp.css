@@ -271,8 +271,8 @@ td input {
 #messages div {
   -webkit-animation: fadeOut 2s forwards;
   animation: fadeOut 2s forwards;
-  -webkit-animation-delay: 5s;
-  animation-delay: 5s;
+  -webkit-animation-delay: 8s;
+  animation-delay: 8s;
   color: white;
   padding: 10px;
   text-align: center;
