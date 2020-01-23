@@ -1078,7 +1078,7 @@ def create_app():
       random.seed(seed)
       data = [
         "<div id='information'>",
-        "  <span>Info</span>",
+        "  <span id='questionmark'>?</span>",
         f" <div id='info_message'>{descripiton}</div>",
         "</div>",
       ]

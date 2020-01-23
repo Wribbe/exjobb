@@ -194,7 +194,7 @@ input[type='radio'] {
 
 #initial_numbers td, th {
   padding-top, margin-top: 0;
-  width: 6em;
+  width: 7em;
   text-align: center;
   border: 1px solid black;
   height: 100%;
@@ -296,8 +296,18 @@ td input {
   cursor: help;
 }
 
+#questionmark {
+  font-size: 3vw;
+  font-weight: bold;
+  color: blue;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
 
-#information:hover #info_message {
+
+#questionmark:hover + #info_message {
   display: block;
 }
 
