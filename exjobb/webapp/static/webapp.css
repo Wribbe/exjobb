@@ -79,7 +79,7 @@ input {
 .button_start {
   margin-top: 10px;
   border-radius: 12px;
-  padding: 15px 32px;
+  padding: 1vmin 2vmin;
   background-color: #3e8e41;
   cursor: pointer;
   text-decoration: none;
@@ -179,12 +179,17 @@ svg .legend_title {
 }
 
 table {
-  font-size: 1.7vw;
+  font-size: 1.7vmin;
 }
 
 input[type='radio'] {
-  width: 1.7vw;
-  height: 1.7vw;
+  width: 1.5vmin;
+  height: 1.5vmin;
+}
+
+.input_div input[type='radio'] {
+  width: 2.5vmin;
+  height: 2.5vmin;
 }
 
 #initial_numbers {
@@ -194,7 +199,7 @@ input[type='radio'] {
 
 #initial_numbers td, th {
   padding-top, margin-top: 0;
-  width: 7em;
+  width: 12vmin;
   text-align: center;
   border: 1px solid black;
   height: 100%;
@@ -205,11 +210,13 @@ input[type='radio'] {
 }
 
 #initial_numbers .input_div {
-  display: inline-block;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  min-height: 5vmin;
   height: 100%;
   width: 100%;
-  min-height: 50px;
   cursor: pointer;
   padding: 0;
   margin: 0;
@@ -221,8 +228,8 @@ td input {
 
 .input_div input {
   margin-top: 0;
-  display: inline-block;
   height: 100%;
+  align-self: center;
 }
 
 .input_div:hover {
@@ -239,7 +246,7 @@ td input {
 }
 
 #initial_survey {
-  font-size: 3vw;
+  font-size: 3vmin;
 }
 
 #messages {
