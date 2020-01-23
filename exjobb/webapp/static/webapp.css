@@ -290,3 +290,21 @@ td input {
   from {opacity: 1;}
   to {opacity: 0;}
 }
+
+#information {
+  position: absolute;
+  cursor: help;
+}
+
+
+#information:hover #info_message {
+  display: block;
+}
+
+#information #info_message {
+  display: none;
+  background: white;
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 10px;
+}

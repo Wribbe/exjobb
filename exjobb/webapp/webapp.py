@@ -1073,9 +1073,14 @@ def create_app():
           '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
-    def data_generate(task_type, seed):
+    def data_generate(task_type, seed, descripiton):
       random.seed(seed)
-      data = []
+      data = [
+        "<div id='information'>",
+        "  <span>Info</span>",
+        f" <div id='info_message'>{descripiton}</div>",
+        "</div>",
+      ]
       d = lambda i: data.append(i)
 
       pallet = [
@@ -1448,7 +1453,11 @@ def create_app():
           <div>
         """
       else:
-        data = data_generate(task_type, task_run_id);
+        data = data_generate(
+          task_type,
+          task_run_id,
+          description.get(task_type, "")
+        )
     else:
       data = ""
 
