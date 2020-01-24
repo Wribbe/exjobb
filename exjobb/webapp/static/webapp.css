@@ -120,6 +120,11 @@ svg .legend_title {
   text-anchor: middle;
 }
 
+.legend_true {
+  font-size: 1.5vmin;
+  transform: translate(-1em);
+}
+
 .legend_title {
   text-anchor: middle;
 }

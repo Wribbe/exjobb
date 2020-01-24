@@ -53,6 +53,7 @@
                         </td>
                       {% endfor %}
                     </tr>
+                    <tr>
                       <td>Input type:</td>
                       {% for val in ["Mouse", "Trackpad", "Touch", "Other"] %}
                         <td>
@@ -63,6 +64,16 @@
                         </td>
                       {% endfor %}
                     </tr>
+                    <tr>
+                      <td>Screen size:</td>
+                      {% for val in ["Desktop", "Laptop", "Tablet", "Mobile"] %}
+                        <td>
+                          <label class='pointer'>
+                            <input name='initial_screen_size' type="radio" value="{{val}}" required>
+                            {{val}}
+                          </label>
+                        </td>
+                      {% endfor %}
                   </table>
                   <table id='initial_numbers'>
                     <tr>
@@ -78,7 +89,7 @@
                     {% for q in
                       [
                         "I feel comfortable using a computer",
-                        "I am interest in UI-design",
+                        "I have a interest in UI-design",
                         "I have studied UI-design",
                         "I play pointer based games (e.g. first persion
                         shooters)",

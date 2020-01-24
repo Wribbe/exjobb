@@ -1101,15 +1101,31 @@ def create_app():
       if task_type == 'employee hours':
 
         num_people = 25
+        min_over, max_over = [int(num_people/2), num_people-5]
+        get_available = lambda : random.choice(range(40,75)[::10])
+
         people = []
-        index_correct = random.choice(range(num_people))
-        for i in range(num_people):
-          available = random.choice(range(45,75)[::10])
-          if i == index_correct:
-            assigned = 1.3*available
-          else:
-            assigned = random.uniform(0.5,1.2)*available
-          people.append((available, assigned))
+        for i in range(num_people-1):
+          available = get_available()
+          people.append((available, available*random.uniform(0.5,0.9)))
+
+        num_over = random.randint(min_over, max_over)
+        for i in range(num_over):
+          multiplier = random.uniform(1.17, 1.2)
+          available, assigned = people[i]
+          assigned = available*multiplier
+          people[i] = (available, assigned)
+
+        random.shuffle(people)
+        current_max = max([ass-av for av,ass in people])
+
+        index_correct = random.choice(range(len(people)))
+        available = get_available()
+        max_is_larger_by = 0.7
+        people.insert(
+          index_correct,
+          (available, available+current_max+max_is_larger_by)
+        )
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
@@ -1129,7 +1145,7 @@ def create_app():
         d("    </defs>")
 #        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
         offset = 0
-        y_end = 95
+        y_end = 98
         increment = 90/num_people
         random.shuffle(pallet)
         color = pallet.pop(0)
@@ -1141,14 +1157,21 @@ def create_app():
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
             d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available}%" stroke="black" fill="{color}" />')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-2}%" stroke="black" fill="{color}" />')
           else:
-            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned}%" fill="{color}" stroke="black"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-2}%" fill="{color}" stroke="black"/>')
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
         d("    <text class='legendx' x='50%' y='98.5%'>Assignment ratio per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
+        d("    <text class='legend_true' x='89%' y='3%'>Legend:</text>")
+        d("    <text class='legend_true' x='92%' y='6%'>Overtime</text>")
+        d("    <text class='legend_true' x='92%' y='9%'>Free</text>")
+        d("    <text class='legend_true' x='92%' y='12%'>Booked</text>")
+        d(f'   <rect class="legend_true" x="89.5%" y="4.3%" width="2%" height="2%" stroke="black" fill="{color_overshot}"/>')
+        d(f'   <rect class="legend_true" x="89.5%" y="7.3%" width="2%" height="2%" stroke="black" fill="white"/>')
+        d(f'   <rect class="legend_true" x="89.5%" y="10.3%" width="2%" height="2%" stroke="black" fill="{color}"/>')
         d("  </svg>")
         d("</form>")
         vars = ';'.join([
@@ -1156,6 +1179,8 @@ def create_app():
           f'{color=}',
           f'{color_overshot=}',
           f'{people=}',
+          f'{max_is_larger_by=}',
+          f'{current_max=}',
         ])
 
       elif task_type == 'team workload':
