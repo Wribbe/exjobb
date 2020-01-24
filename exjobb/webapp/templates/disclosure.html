@@ -1,60 +1,180 @@
 <html>
   <head>
-    <title>Test information and agreement.</title>
-    <link rel='stylesheet' href="{{ url_for('static', filename='disclosure.css') }}"/>
+    <title>Usability test information.</title>
+    <style>
+      #ul_info_test span {
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        padding-bottom: 1em;
+      }
+
+      body {
+        display:flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        font-size: 2.0vmin;
+      }
+
+      #page {
+        align-self: center;
+        min-width: 20em;
+        max-width: 40em;
+      }
+
+      .button_sidebar:hover {
+        background-color: #4e9e51;
+      }
+
+      .button_sidebar {
+        width: 6em;
+        padding: 0.2em;
+        border: 1px solid black;
+        margin-top: 0.8em;
+        cursor: pointer;
+
+        border-radius: 8px;
+        background-color: #3e8e41;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 2.0vmin;
+      }
+      #messages {
+        position: absolute;
+        align-self: center;
+        top: 2%;
+      }
+
+      .msg_success {
+        background: green;
+      }
+
+      .msg_info {
+        background: gray;
+      }
+
+      #messages div {
+        -webkit-animation: fadeOut 2s forwards;
+        animation: fadeOut 2s forwards;
+        -webkit-animation-delay: 5s;
+        animation-delay: 5s;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-size: 3vw;
+        align-self: center;
+        border-radius: 10px;
+      }
+
+      @-webkit-keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0;}
+      }
+
+      @keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0;}
+      }
+    </style>
   </head>
   <body>
+    <div id='messages'>
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class='msg_{{category}}'>{{category | title}}: {{ message }}</div>
+      {% endfor %}
+    </div>
     <div id="page">
-      <h2>Test information</h2>
+      <h1>Introduction to this usability-study</h1>
+      <p>
+        First off, thank you for taking the time to participate in this
+        usability study! My goal is to take no more than fifteen minutes of your
+        time.
+      </p>
+      <p>
+        Since this script serves as a replacement for me overseeing the test-session
+        personally, I will keep the tone conversational and non-formal.
+      </p>
       <ul id='ul_info_test'>
         <li>
-          <span>What</span> -
-          This test consists of abstracted representations of pseudo-managerial
-          tasks, where the goal is to find a specific interface element as fast as
-          possible.
+          <span>What is this?</span> -
+          This usability study is part of my master's thesis at the Department
+          of Computer Science - Lund University - Faculty of Engineering.
         </li>
         <li>
-          <span>Why</span> -
-          The goal is to examine how different combinations of text, color,
-          contrast etc. impact reaction times of users.
-        </li>
-        <li>
-          <span>How</span> -
-          The server will keep track of when the task was started. When the
-          taks is finished, the final time and variables used to
-          generate the test-data are recorded.
+          <span>Purpose?</span> -
+          The goal is to examine how different stylistic elements, such as, color
+          and contrast impact the completion time of simple, pointer-based task.
         </li>
       </ul>
+      <h2>What are we doing exactly?</h2>
+        </p>
+          After pressing the Submit button below, you will be taken to the main
+          page and presented with four different types of tasks, together with
+          the stats for your session.
+        <p>
+          Each of the available tasks is an abstracted representation of what a
+          manager might want to know about their team: team-performance,
+          overbooked employees, etcetera.
+        </p>
+        <p>
+          Pressing a task button will take you to a more detailed description of
+          what the goal of each particular task is.
+        </p>
+      <h2>Getting cold feet</h2>
+        <p>
+          If you feel that you no longer want to participate, for any reason,
+          there is a 'Abort Test' button slightly below the task buttons.
+          Pressing this button and confirming on the next page will delete all
+          information about the session from the database, no hard feelings.
+        </p>
       <h2>Data collection and publication</h2>
       <div>
       </div>
       <ul>
         <li>
-          The goal is to record as little, ideally no, personally identifiable
+          My goal is to record as little, ideally no, personally identifiable
           information about the participants of this test.
         </li>
         <li>
-          If identifiable patterns emerge they will not be included in any
-          publicly distributed material.
+          If identifiable patterns emerge I will not be including any of that
+          information in anything that I make publicly available.
         </li>
         <li>
-          Any statistical reporting will be done in aggregate and
-          not focus on individual test-results.
+          I will do some statistical analysis on these results, but, any
+          results will be presented as an aggregate and not focus on individual
+          test-results.
         </li>
       </ul>
-      <h2>Post-test survey.</h2>
-      <p>
-        There it a short, less than ten questions, post-test survey, accessible
-        after completing five or more tasks. This survey needs to be completed
-        in order for the results of the tasks to be registered correctly.
-      </p>
+      <h2>Surveys</h2>
+      <h3>Pre-test</h3>
+        In order to know how you compare to other participants, there will be a
+        few questions about age, computer-literacy etcetera before you can start
+        doing the tasks.
+      <h3>Post-test</h3>
+        <p>
+          I've also included a short, less than ten questions, post-test
+          survey. This survey is accessible after completing five or more tasks
+          (but you are, of curse welcome to do as many as you like!). The
+          post-survey needs to be completed in order for the results of the
+          session to register correctly.
+        </p>
       <form action='{{ url_for("webapp") }}' method='POST'>
         <input id='check_accept' type='checkbox' required></input>
         <label for='check_accept'>
           I have read and understand what I'm participating in.
         </label>
         <div>
-          <input type='submit' name='btn_accept_disclosure' value="Submit"></input>
+          <input class="button_sidebar" type='submit' name='btn_accept_disclosure' value="Submit"></input>
         </div>
       </form>
     </div>

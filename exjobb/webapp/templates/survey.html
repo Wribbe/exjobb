@@ -3,61 +3,110 @@
     <title>Survey</title>
   </head>
   <body>
-<style>
-  th, td {
-    width: 70px;
-    text-align: center;
-    min-height: 50px;
-    height: 100%;
-  }
-  .question {
-    padding-left: 1em;
-    padding-right: 1em;
-    width: auto;
-    text-align: left;
-  }
-  table {
-    border-collapse: collapse;
-    height: 1px;
-  }
-  table, th, td {
-    border: 1px solid black;
-  }
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        font-size: 1.5vw;
+      }
+      th, td {
+        width: 5em;
+        text-align: center;
+        min-height: 50px;
+        height: 100%;
+        font-size: inherit;
+      }
+      .question {
+        padding-left: 1em;
+        padding-right: 1em;
+        width: auto;
+        text-align: left;
+        font-size: inherit;
+      }
+      .question_span {
+        font-size: 1.5vw;
+      }
+      table {
+        border-collapse: collapse;
+        height: 1px;
+      }
+      table, th, td {
+        border: 1px solid black;
+      }
 
-  td input {
-    margin-top: 0;
-    display: inline-block;
-    height: 100%;
-    cursor: pointer;
-  }
+      td input {
+        margin-top: 0;
+        display: inline-block;
+        height: 100%;
+        cursor: pointer;
+        align-self: center;
+      }
 
-  .input_div {
-    display: inline-block;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    min-height: 50px;
-    cursor: pointer;
-  }
+      input[type='radio'] {
+        width: 1.3em;
+        height: 1.3em;
+      }
 
-  .input_div:hover {
-    background: lightgrey;
-  }
+      .input_div {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        min-height: 50px;
+        cursor: pointer;
+      }
 
-  .hidden {
-    display: none;
-  }
+      .input_div:hover {
+        background: lightgrey;
+      }
 
-  #wrapper {
-    padding-left: 1em;
-  }
+      .hidden {
+        display: none;
+      }
 
-  .note {
-    width: 48em;
-    font-style: italic;
-  }
+      #wrapper {
+        align-self: center;
+      }
 
-</style>
+      .note {
+        width: 48em;
+        font-style: italic;
+      }
+
+      .button_sidebar {
+        width: 30%;
+        padding: 0.2em;
+        border: 1px solid black;
+        margin-bottom: 1em;
+        cursor: pointer;
+
+        border-radius: 8px;
+        background-color: #3e8e41;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: inherit;
+      }
+
+      .button_sidebar:hover {
+        background-color: #4e9e51;
+      }
+
+
+      .button_abort:hover {
+        background-color: #ff0000;
+      }
+
+      .button_abort {
+        background-color: #dd2222;
+      }
+    </style>
     <div id="wrapper">
       <h2>Task data submission survey</h2>
       <form action="{{ url_for('webapp') }}" method="POST">
@@ -76,15 +125,13 @@
             {% set index_q = loop.index %}
             <tr>
               <td class='question'>
-                {{question}}
-                <input class="hidden" name='Q{{index_q}}' type='text' value="{{question}}">
+                <span class='question_span'>{{question}}</span>
               </td>
-              {% for _ in range(5) %}
-                {% set id="%d" | format(loop.index) %}
-                  <td class='td_radio'>
+              {% for i in range(5) %}
+                  <td>
                     <label>
                       <div class='input_div'>
-                        <input type="radio" id="{{id}}" name="QA{{index_q}}" value="{{id}}" required>
+                        <input type="radio" name="{{question}}" value="{{i+1}}" required>
                       </div>
                     </label>
                   </td>
@@ -102,8 +149,8 @@
           </p>
         </div>
         <div>
-          <input class='submit' name="btn_survey_submit" type="submit" value="Submit"/>
-          <input class='submit' name="btn_survey_cancel" type="submit" value="Cancel" formnovalidate/>
+          <input class='submit button_sidebar' name="btn_survey_submit" type="submit" value="Submit"/>
+          <input class='submit button_sidebar button_abort' name="btn_survey_cancel" type="submit" value="Return to tests" formnovalidate/>
         </div>
       </form>
     </div>
