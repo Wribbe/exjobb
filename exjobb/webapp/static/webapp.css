@@ -191,6 +191,10 @@ table {
   font-size: 1.7vmin;
 }
 
+.table_padding td, th {
+  padding-top: 2em;
+}
+
 input[type='radio'] {
   width: 1.5vmin;
   height: 1.5vmin;
@@ -315,11 +319,10 @@ td input {
 #questionmark {
   font-size: 3vw;
   font-weight: bold;
-  color: blue;
   padding: 5px;
   border: 1px solid black;
   border-radius: 5px;
-  background-color: white;
+  background-color: lightgrey;
 }
 
 

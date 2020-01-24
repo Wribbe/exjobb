@@ -1454,27 +1454,28 @@ def create_app():
         <br>
         <br>
         <strong>How:</strong> <br>
-        You will be presented with circles, corresponding to tasks. There will
-        will be lines representing dependencies between the tasks.
+        You will be presented with circles, corresponding to tasks.
+        Dependencies between tasks are represented by straight lines.
         <br>
         <br>
         More lines &rarr; more dependencies.
       """,
       'team performance': """
         <strong>Goal:</strong><br>
-        Click the section where the most performant team did the most work.
+        Identify on which subtask the most productive team put most of their
+        time.
         <br>
         <br>
         <strong>How:</strong> <br>
-        You will presented with horizontal bars which length represent the
+        You will presented with horizontal bars. The bar length represent the
         total amount of work done by a team.
         <br>
         <br>
-        Each team-bar is sub-divided in smaller sections showcasing how much of
-        the total work went into that task-type.
+        Each bar is sub-divided in smaller sections. The width of the
+        sections represent the total work spent on that area.
         <br>
         <br>
-        Larger section &rarr; more work.
+        Larger section equals more work.
       """,
     }
 
@@ -1489,6 +1490,12 @@ def create_app():
           <div class='description'>
             <h2>{task_type.title()}</h2>
             {description.get(task_type, "")}
+            <br>
+            <br>
+            <em>
+              Hover over the '?' in the top left corner if you want to read
+              this again after starting the task.
+            </em>
           </div>
         """
       else:
