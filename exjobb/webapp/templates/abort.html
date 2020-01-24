@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        font-size: 2.0vmin;
+      }
+      .emphasis {
+        font-weight: bold;
+      }
+      .wrapper {
+        width: 40em;
+        align-self: center;
+      }
+      .button_sidebar {
+        padding: 10px;
+        border: 1px solid black;
+        margin-bottom: 1em;
+        cursor: pointer;
+
+        border-radius: 8px;
+        background-color: #3e8e41;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 2vmin;
+      }
+
+      .button_sidebar:hover {
+        background-color: #4e9e51;
+      }
+
+      .button_abort:hover {
+        background-color: #ff0000;
+      }
+
+      .button_abort {
+        background-color: #dd2222;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='wrapper'>
+      <h2>Abort test-session and delete user information.</h2>
+      <form action="{{ url_for('abort') }}" method='POST'>
+        <p>
+          This will <span class='emphasis'>delete all the information</span> about
+          the user-id: <span class='emphasis'>{{ id_user }}</span>.
+        </p>
+        <div>
+          <input class="button_sidebar button_abort" type='submit' value="Delete user data" name='btn_abort_delete'/>
+          <input class="button_sidebar" type='submit' value="Return to test" name='btn_abort_return'/>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

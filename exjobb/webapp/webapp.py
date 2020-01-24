@@ -13,12 +13,16 @@ DATABASE = 'test_db.db'
 from pathlib import Path
 from flask_weasyprint import render_pdf, HTML
 from flask import \
-  Response, request, redirect, url_for, session, g, send_from_directory
+  Response, request, redirect, url_for, session, g, send_from_directory, \
+  flash
 
 import datetime
 import weasyprint
 
 DIR_OUT = os.path.join("exjobb", "out")
+
+def render_template_html(template, **data):
+  return flask.render_template(template, **data)
 
 def render_template(template, **data):
   html = flask.render_template(template, **data)
@@ -870,20 +874,45 @@ def create_app():
 
   @app.route('/webapp/results', methods=['GET'])
   def webapp_results():
-    data = _db2().execute("""
-      SELECT
-        test.id AS id
-        ,t_start AS start
-        ,type.name AS type
-      FROM test_run AS test
-      JOIN type_data AS type
-      WHERE id_type_data = type.id
-    """).fetchall()
+    data = _db2().execute(
+      "SELECT t_start, t_stop, success FROM test_run"
+    ).fetchall()
     html, pdf = render_template(
       'webapp_results.html',
       data=[dict(d) for d in data],
     )
     return html
+
+  @app.route('/webapp/abort', methods=['GET','POST'])
+  def abort():
+
+    db = _db2()
+    if request.method == "POST":
+
+      id_user = session['id_user']
+
+      if 'btn_abort_delete' in request.form:
+        db.execute("DELETE FROM test_user WHERE str_id = (?)", (id_user,))
+        db.execute("DELETE FROM test_run WHERE id_user = (?)", (id_user,))
+        db.execute("DELETE FROM test_run_vars WHERE id_user = (?)", (id_user,))
+        db.execute("DELETE FROM answer WHERE str_id = (?)", (id_user,))
+        db.execute(
+          "UPDATE test_user_ids SET used=FALSE WHERE str_id = (?)",
+          (id_user,)
+        )
+        db.commit()
+        user = session['id_user']
+        session.clear()
+        flash(f"All information about {user} deleted.", 'success')
+
+      return redirect(url_for('webapp'))
+
+    html, pdf = render_template(
+      'abort.html',
+      id_user = session['id_user'],
+    )
+    return html
+
 
   @app.route('/webapp', methods=['GET','POST'])
   def webapp():
@@ -901,12 +930,12 @@ def create_app():
     def new_run(type_data):
       cursor = db.cursor()
       user = cursor.execute(
-        'SELECT id FROM test_user WHERE str_id = (?)',
+        'SELECT * FROM test_user WHERE str_id = (?)',
         (session['id_user'],)
       ).fetchone()
       cursor.execute(
         'INSERT INTO test_run (name, id_user) VALUES (?,?)',
-        (type_data, user['id'])
+        (type_data, user['str_id'])
       )
       db.commit()
       cursor.close()
@@ -923,14 +952,31 @@ def create_app():
         )
         """
       )
-      rowid = cursor.lastrowid
       db.commit()
       user_id = cursor.execute(
-        'SELECT * FROM test_user_ids WHERE id=(?)',
-        (rowid,)
-      ).fetchone()
+        """
+          SELECT str_id FROM test_user_ids
+            WHERE used=1
+            ORDER BY id DESC LIMIT 1
+        """
+      ).fetchone()['str_id']
       cursor.close()
-      return user_id['str_id']
+      return user_id
+
+    def db_submit_answers(data_form):
+      db = _db2()
+      cursor = db.cursor()
+      data = [
+        (session['id_user'], key, value )
+        for key,value in data_form.items() if not key.startswith('btn_')
+      ]
+      cursor.executemany(
+        """
+          INSERT INTO answer (str_id, question, answer)
+            VALUES (?,?,?)
+        """, data
+      )
+      db.commit()
 
     def stats_get():
       stats = {
@@ -939,12 +985,7 @@ def create_app():
       }
       cursor = db.cursor()
       tasks = cursor.execute(
-        """
-        SELECT * FROM test_run
-        WHERE id_user=(
-          SELECT id FROM test_user WHERE str_id=(?) AND t_stop!= ""
-        )
-        """,
+        "SELECT name FROM test_run WHERE id_user=(?) AND t_stop!= ''",
         (session['id_user'],)
       ).fetchall()
       stats['total'] = len(tasks)
@@ -954,7 +995,8 @@ def create_app():
 
     if request.method == 'POST':
       if 'btn_task_type' in request.form:
-        session['task_started'] = False
+        if session.get('task_started'):
+          return redirect(url_for('webapp'))
         session['task_type'] = request.form['btn_task_type'].lower()
       elif 'btn_task_start' in request.form:
         session['task_run_id'] = new_run(session['task_type'])
@@ -974,14 +1016,27 @@ def create_app():
       elif 'btn_survey_cancel' in request.form:
         session['survey_take'] = False
       elif 'btn_survey_submit' in request.form:
+        db_submit_answers(request.form)
         session.clear()
+        flash("Final survey submitted, thanks for your time!", 'success');
+      elif 'btn_initial_survey' in request.form:
+        db_submit_answers(request.form)
+        session['survey_initial'] = True
+        flash("Initial survey submitted.", 'success');
       elif 'not_correct' in request.form:
         cursor = db.cursor()
         now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
         now = now[:-3]
         now += '000UTC'
         cursor.execute(
-          'UPDATE test_run SET t_stop = (?), success = (?), answer = (?), answer_correct = (?) WHERE id = (?);',
+          """
+            UPDATE test_run SET
+              t_stop = (?)
+              ,success = (?)
+              ,answer = (?)
+              ,answer_correct = (?)
+            WHERE id = (?)
+          """,
           (
             now,
             'correct' in request.form,
@@ -994,6 +1049,17 @@ def create_app():
         cursor.close()
         session['task_started'] = False
         session['task_type'] = ""
+
+        answer_correct = request.form.get('answer_correct')
+        answer = request.form.get('answer')
+        if 'correct' in request.form or answer == answer_correct:
+          span = "<span class='answer_correct'>Correct</span>"
+        else:
+          span = "<span class='answer_wrong'>Wrong</span>"
+        flash(f'Result recorded, answer was: {span}.', 'info')
+      elif 'btn_abort' in request.form:
+        return redirect(url_for('abort'))
+
       return redirect(url_for('webapp'))
 
     task_run_id = session.get('task_run_id')
@@ -1008,9 +1074,14 @@ def create_app():
           '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
-    def data_generate(task_type, seed):
+    def data_generate(task_type, seed, description):
       random.seed(seed)
-      data = []
+      data = [
+        "<div id='information'>",
+        "  <span id='questionmark'>?</span>",
+        f" <div id='info_message'>{description}</div>",
+        "</div>",
+      ]
       d = lambda i: data.append(i)
 
       pallet = [
@@ -1030,15 +1101,31 @@ def create_app():
       if task_type == 'employee hours':
 
         num_people = 25
+        min_over, max_over = [int(num_people/2), num_people-5]
+        get_available = lambda : random.choice(range(40,75)[::10])
+
         people = []
-        index_correct = random.choice(range(num_people))
-        for i in range(num_people):
-          available = random.choice(range(45,75)[::10])
-          if i == index_correct:
-            assigned = 1.3*available
-          else:
-            assigned = random.uniform(0.5,1.2)*available
-          people.append((available, assigned))
+        for i in range(num_people-1):
+          available = get_available()
+          people.append((available, available*random.uniform(0.5,0.9)))
+
+        num_over = random.randint(min_over, max_over)
+        for i in range(num_over):
+          multiplier = random.uniform(1.17, 1.2)
+          available, assigned = people[i]
+          assigned = available*multiplier
+          people[i] = (available, assigned)
+
+        random.shuffle(people)
+        current_max = max([ass-av for av,ass in people])
+
+        index_correct = random.choice(range(len(people)))
+        available = get_available()
+        max_is_larger_by = 0.7
+        people.insert(
+          index_correct,
+          (available, available+current_max+max_is_larger_by)
+        )
 
         d(f"<form name='form_answer' action='{url_for('webapp')}' method='post'>")
         d("  <input id='checkbox-correct' class='hidden' name='correct' type='checkbox'/>")
@@ -1058,26 +1145,33 @@ def create_app():
         d("    </defs>")
 #        d("    <style> rect { cursor: pointer; } rect:hover { fill: lightgrey } </style>")
         offset = 0
-        y_end = 95
+        y_end = 98
         increment = 90/num_people
         random.shuffle(pallet)
         color = pallet.pop(0)
         color_overshot = pallet.pop(0)
         width = 3
         for i, (available, assigned) in enumerate(people):
-          command = f"document.getElementById('answer').value='{index_correct}';document.form_answer.submit()"
+          command = f"document.getElementById('answer').value='{i}';document.form_answer.submit()"
           if i == index_correct:
             command = f"document.getElementById('checkbox-correct').checked = true;{command}"
           if assigned > available:
             d(f'<rect class="clickable" x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-available}%" fill="{color_overshot}" stroke="black" onclick="{command}"/>')
-            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available}%" stroke="black" fill="{color}" />')
+            d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-2}%" stroke="black" fill="{color}" />')
           else:
-            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned}%" fill="{color}" stroke="black"/>')
+            d(f'<rect x="{5+offset}%" y="{y_end-assigned}%" width="{width}%" height="{assigned-2}%" fill="{color}" stroke="black"/>')
             d(f'<rect x="{5+offset}%" y="{y_end-available}%" width="{width}%" height="{available-assigned}%" stroke="black" fill="none"/>')
           offset += increment
-        d("    <text class='legendx' x='50%' y='96.5%'>Assignment ratio per employee</text>")
+        d("    <text class='legendx' x='50%' y='98.5%'>Assignment ratio per employee</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Employee Hours</text>")
         d("    <text class='legendy' x='-2.5%' y='-50%'>Assigned vs. Available Hours</text>")
+        d("    <text class='legend_true' x='89%' y='3%'>Legend:</text>")
+        d("    <text class='legend_true' x='92%' y='6%'>Overtime</text>")
+        d("    <text class='legend_true' x='92%' y='9%'>Free</text>")
+        d("    <text class='legend_true' x='92%' y='12%'>Booked</text>")
+        d(f'   <rect class="legend_true" x="89.5%" y="4.3%" width="2%" height="2%" stroke="black" fill="{color_overshot}"/>')
+        d(f'   <rect class="legend_true" x="89.5%" y="7.3%" width="2%" height="2%" stroke="black" fill="white"/>')
+        d(f'   <rect class="legend_true" x="89.5%" y="10.3%" width="2%" height="2%" stroke="black" fill="{color}"/>')
         d("  </svg>")
         d("</form>")
         vars = ';'.join([
@@ -1085,6 +1179,8 @@ def create_app():
           f'{color=}',
           f'{color_overshot=}',
           f'{people=}',
+          f'{max_is_larger_by=}',
+          f'{current_max=}',
         ])
 
       elif task_type == 'team workload':
@@ -1123,11 +1219,21 @@ def create_app():
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             d(f"<rect x='{offset_x/2+x*width}%' y='{offset_y/2+y*height}%' width='{width}%' height='{height}%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
         for i, y in enumerate(range(num_y), start=1):
-          d(f"<text x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
+          d(f"<text class='workload_text_week' x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
         for i, x in enumerate(range(num_x), start=0):
           d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Team Workload</text>")
         d("    <text class='legendy' x='-2.0%' y='-50%'>Work Week</text>")
+        d("    <defs>")
+        d("      <linearGradient id='Gradient1'>")
+        d("        <stop offset='0%' stop-color='white'/>")
+        d(f"       <stop offset='100%' stop-color='{color}'/>")
+        d("      </linearGradient>")
+        d("    </defs>")
+        d("    <rect x='80%' y='3%' width='10vmax' height='2%' fill='url(#Gradient1)'/>")
+        d("    <text class='legend_true workload_legend' x='85%' y='2%'>Legend:</text>")
+        d("    <text class='legend_true workload_legend' x='80%' y='4.5%'>Free</text>")
+        d("    <text class='legend_true workload_legend' x='92%' y='4.5%'>Busy</text>")
         d("  </svg>")
         d("</form>")
         vars = ';'.join([
@@ -1296,8 +1402,8 @@ def create_app():
       vars += ';'+f'{data=}'
       cursor = db.cursor()
       cursor.execute(
-        'UPDATE test_run SET vars=(?) WHERE id=(?);',
-        (vars, seed)
+        "INSERT INTO test_run_vars (id_test_run, id_user, vars) VALUES (?,?,?)",
+        (seed, session['id_user'], vars)
       )
       db.commit()
       cursor.close()
@@ -1310,62 +1416,66 @@ def create_app():
     description = {
       'employee hours': """
         <strong>Goal:</strong> <br>
-        Select the most over-booked employee.
+        Click the largest overtime-segment.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present a bar-chart (one bar per employee) <br>
-        where the bar represents their available time. <br>
+        You will be presented with a bar-graph, one bar per employee,
+        representing their available time.
         <br>
-        If their work-load is lower than the total available hours <br>
-        the bar will be partially filled, showing the white background. <br>
         <br>
-        If the planned work-load exceeds the total amount of available <br>
-        hour the fill will go beyond the bar and turn a different color. <br>
+        Each bar will can have three colors:
+        <ul>
+          <li>White for free time.
+          <li>Random for booked time.</li>
+          <li>Random for overtime.</li>
+        </ul>
+        <strong>Summary:</strong>
         <br>
-        Click the largest other-colored section in order to <br>
-        select the most over-booked employee.
+        No workload &rarr; all white.
+        <br>
+        Some workload &rarr; booked-color + white.
+        <br>
+        Overtime &rarr; booked-color + overtime-color.
       """,
       'team workload': """
         <strong>Goal:</strong> <br>
-        Select the busiest day in the calendar.
+        Click the busiest day in the calendar.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present a colored grid where each cell represents a day of <br>
-        a 5-day work week. The more intense the color, the more things <br>
-        are scheduled to be done at that day. <br>
-        <br>
-        Click the most color-intense cell in order to select the busiest day.
+        You will be presented with a calendar-grid where each cell represents a
+        different day. The fewer things that need to happen on that day, the
+        closer the color will be to white.
       """,
       'task dependencies': """
         <strong>Goal:</strong><br>
-        Select the task with the most connections.
+        Click the task with the most dependencies.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present several circles representing tasks. <br>
+        You will be presented with circles, corresponding to tasks.
+        Dependencies between tasks are represented by straight lines.
         <br>
-        The connected lines represent how many dependencies are linked <br>
-        to that task. More lines -> more dependencies. <br>
         <br>
-        Click the circle with the most lines attached to it.
+        More lines &rarr; more dependencies.
       """,
       'team performance': """
         <strong>Goal:</strong><br>
-        Select the area where the most performant team did the most work.
+        Identify on which subtask the most productive team put most of their
+        time.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present several horizontal bars representing the total <br>
-        work of different teams. Longer bar -> more work done. <br>
+        You will presented with horizontal bars. The bar length represent the
+        total amount of work done by a team.
         <br>
-        The bars are then divided into differently colored and labeled <br>
-        sections. These sections represent different type of work done by<br>
-        the team. Same thing here, larger section -> more done. <br>
         <br>
-        First find the team that did the most work (logest bar) then click <br>
-        the largest sub-section of that bar.
+        Each bar is sub-divided in smaller sections. The width of the
+        sections represent the total work spent on that area.
+        <br>
+        <br>
+        Larger section equals more work.
       """,
     }
 
@@ -1377,33 +1487,44 @@ def create_app():
     elif task_type:
       if not task_started:
         data = f"""
-          <div id='description'>
+          <div class='description'>
             <h2>{task_type.title()}</h2>
             {description.get(task_type, "")}
+            <br>
+            <br>
+            <em>
+              Hover over the '?' in the top left corner if you want to read
+              this again after starting the task.
+            </em>
           </div>
         """
       else:
-        data = data_generate(task_type, task_run_id);
+        data = data_generate(
+          task_type,
+          task_run_id,
+          description.get(task_type, "")
+        )
     else:
       data = ""
 
     stats = stats_get()
 
+
     if session.get('survey_take'):
 
       questions = [
-        """The goal of each task was clear""",
-        """Test-application looks good""",
-        """Use of colors helped with the tasks""",
-        """Amount of information was adequate""",
-        """Test-application is easy to to navigate""",
-        """Appropriate choice of colors""",
-        """Language used was easy to understand""",
-        """Easy to understand what to do next""",
+        "The goal of each task was clear",
+        "Test-application looks good",
+        "Use of colors helped with the tasks",
+        "Amount of information was adequate",
+        "Test-application is easy to to navigate",
+        "Appropriate choice of colors",
+        "Language used was easy to understand",
+        "Easy to understand what to do next",
       ]
 
       if not session.get('survey_done'):
-        html, pdf = render_template(
+        html = render_template_html(
           'survey.html',
           questions=questions,
         )
@@ -1411,7 +1532,7 @@ def create_app():
       else:
         session['survey_take'] = False
 
-    html, pdf = render_template(
+    html = render_template_html(
       'webapp.html',
       buttons=buttons,
       data=data,
