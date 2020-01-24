@@ -1121,7 +1121,7 @@ def create_app():
 
         index_correct = random.choice(range(len(people)))
         available = get_available()
-        max_is_larger_by = 0.7
+        max_is_larger_by = random.uniform(0.5, 1.1)
         people.insert(
           index_correct,
           (available, available+current_max+max_is_larger_by)
