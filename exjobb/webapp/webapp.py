@@ -1074,12 +1074,12 @@ def create_app():
           '%Y-%m-%d %H:%M:%S.%f%Z'
         )
 
-    def data_generate(task_type, seed, descripiton):
+    def data_generate(task_type, seed, description):
       random.seed(seed)
       data = [
         "<div id='information'>",
         "  <span id='questionmark'>?</span>",
-        f" <div id='info_message'>{descripiton}</div>",
+        f" <div id='info_message'>{description}</div>",
         "</div>",
       ]
       d = lambda i: data.append(i)
@@ -1416,62 +1416,65 @@ def create_app():
     description = {
       'employee hours': """
         <strong>Goal:</strong> <br>
-        Select the most over-booked employee.
+        Click the largest overtime-segment.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present a bar-chart (one bar per employee) <br>
-        where the bar represents their available time. <br>
+        You will be presented with a bar-graph, one bar per employee,
+        representing their available time.
         <br>
-        If their work-load is lower than the total available hours <br>
-        the bar will be partially filled, showing the white background. <br>
         <br>
-        If the planned work-load exceeds the total amount of available <br>
-        hour the fill will go beyond the bar and turn a different color. <br>
+        Each bar will can have three colors:
+        <ul>
+          <li>White for free time.
+          <li>Random for booked time.</li>
+          <li>Random for overtime.</li>
+        </ul>
+        <strong>Summary:</strong>
         <br>
-        Click the largest other-colored section in order to <br>
-        select the most over-booked employee.
+        No workload &rarr; all white.
+        <br>
+        Some workload &rarr; booked-color + white.
+        <br>
+        Overtime &rarr; booked-color + overtime-color.
       """,
       'team workload': """
         <strong>Goal:</strong> <br>
-        Select the busiest day in the calendar.
+        Click the busiest day in the calendar.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present a colored grid where each cell represents a day of <br>
-        a 5-day work week. The more intense the color, the more things <br>
-        are scheduled to be done at that day. <br>
-        <br>
-        Click the most color-intense cell in order to select the busiest day.
+        You will be presented with a calendar-grid where each cell represents a
+        different day. The fewer things that need to happen on that day, the
+        closer the color will be to white.
       """,
       'task dependencies': """
         <strong>Goal:</strong><br>
-        Select the task with the most connections.
+        Click the task with the most dependencies.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present several circles representing tasks. <br>
+        You will be presented with circles, corresponding to tasks. There will
+        will be lines representing dependencies between the tasks.
         <br>
-        The connected lines represent how many dependencies are linked <br>
-        to that task. More lines -> more dependencies. <br>
         <br>
-        Click the circle with the most lines attached to it.
+        More lines &rarr; more dependencies.
       """,
       'team performance': """
         <strong>Goal:</strong><br>
-        Select the area where the most performant team did the most work.
+        Click the section where the most performant team did the most work.
         <br>
         <br>
         <strong>How:</strong> <br>
-        This task present several horizontal bars representing the total <br>
-        work of different teams. Longer bar -> more work done. <br>
+        You will presented with horizontal bars which length represent the
+        total amount of work done by a team.
         <br>
-        The bars are then divided into differently colored and labeled <br>
-        sections. These sections represent different type of work done by<br>
-        the team. Same thing here, larger section -> more done. <br>
         <br>
-        First find the team that did the most work (longest bar) then click <br>
-        the largest sub-section of that bar.
+        Each team-bar is sub-divided in smaller sections showcasing how much of
+        the total work went into that task-type.
+        <br>
+        <br>
+        Larger section &rarr; more work.
       """,
     }
 
@@ -1483,10 +1486,10 @@ def create_app():
     elif task_type:
       if not task_started:
         data = f"""
-          <div id='description'>
+          <div class='description'>
             <h2>{task_type.title()}</h2>
             {description.get(task_type, "")}
-          <div>
+          </div>
         """
       else:
         data = data_generate(
