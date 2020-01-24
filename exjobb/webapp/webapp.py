@@ -1219,7 +1219,7 @@ def create_app():
               command = f"document.getElementById('checkbox-correct').checked = true;{command}"
             d(f"<rect x='{offset_x/2+x*width}%' y='{offset_y/2+y*height}%' width='{width}%' height='{height}%' fill='{color}' stroke='black' stroke-width='0.3' style='fill-opacity: {opacity};' onclick=\"{command}\"/>")
         for i, y in enumerate(range(num_y), start=1):
-          d(f"<text x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
+          d(f"<text class='workload_text_week' x='{offset_x/2}%' y='{offset_y/2+y*height+height/1.5}%'>W{i:02d}</text>")
         for i, x in enumerate(range(num_x), start=0):
           d(f"<text x='{offset_x/2+x*width+width/2.5}%' y='7%'>{days[i]}</text>")
         d("    <text class='legend_title' x='50%' y='3%'>Team Workload</text>")

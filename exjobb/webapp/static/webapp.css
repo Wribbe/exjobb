@@ -138,6 +138,10 @@ svg .legend_title {
   cursor: pointer;
 }
 
+.workload_text_week {
+  pointer-events: none;
+}
+
 .group_circle text {
   pointer-events: none;
   font-size: 1.7vw;
