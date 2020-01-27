@@ -820,7 +820,7 @@ def create_app():
     buffer.append('      </div>')
     return os.linesep.join(buffer)
 
-  @app.route('/report')
+  @app.route('/deprecated_report')
   def report():
     keywords = [f"keyword{i:02d}" for i in range(5)]
     today = datetime.date.today().strftime("%B %d, %Y")
@@ -1541,5 +1541,18 @@ def create_app():
       stats=stats,
     )
     return html
+
+  @app.route('/report')
+  @app.route('/report/<filename>')
+  def report_get(filename=None):
+    dir_reports = Path(app.static_folder, 'pdf', 'reports')
+    files = [(f.stat().st_ctime, f) for f in dir_reports.iterdir() if f.is_file()]
+    filename_latest =  max(files)[1].name
+    if not filename or filename != filename_latest:
+      return redirect(url_for('report_get', filename=filename_latest))
+    return send_from_directory(
+      Path(app.static_folder, 'pdf', 'reports'),
+      filename,
+    )
 
   return app
