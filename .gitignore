@@ -6,3 +6,7 @@ tags
 *.db
 blobby
 auth_hrtb.py
+*.aux 
+*.log 
+*.out 
+*.toc
