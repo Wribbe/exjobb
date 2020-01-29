@@ -10,3 +10,5 @@ auth_hrtb.py
 *.log 
 *.out 
 *.toc
+*.bbl
+*.blg
