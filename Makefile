@@ -4,7 +4,7 @@ DIR_REPORTS=${DIR_STATIC}/pdf/reports
 all: ${DIR_STATIC}/report.pdf
 
 msccls/report.aux : msccls/report.bib
-	cd msccls && pdflatex report && bibtex report && pdflatex report
+	cd msccls && rm *.aux && pdflatex report && pdflatex report && bibtex report
 
 ${DIR_STATIC}/report.pdf : msccls/report.tex msccls/report.aux | ${DIR_REPORTS}
 	cd msccls && pdflatex report.tex && cp report.pdf ../$@
