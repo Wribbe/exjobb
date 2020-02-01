@@ -12,3 +12,4 @@ auth_hrtb.py
 *.toc
 *.bbl
 *.blg
+*.guard
