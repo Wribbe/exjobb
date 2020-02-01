@@ -10,7 +10,7 @@
 \usepackage{transparent}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
-\listfiles % initialize
+%\listfiles % initialize
 
 %\geometry{showframe}
 %better like this?
@@ -43,24 +43,18 @@
 
 \keywords{key1, key2}
 
-%% Only used to display font sizes
-\makeatletter
-\newcommand\thefontsize[1]{{#1 \f@size pt\par}}
-\makeatother
-%%%%%%%%%%
-
 \begin{document}
 \renewcommand{\bibname}{References}
 
 \makefrontmatter
 
-\section{Introduction}
-\section{Theory}
-\section{Method}
-\section{Results}
-\section{Analysis}
-\section{Discussion}
-\section{Conclusion}
+\chapter{Introduction}
+\chapter{Theory}
+\chapter{Method}
+\chapter{Results}
+\chapter{Analysis}
+\chapter{Discussion}
+\chapter{Conclusion}
 
 % Should use consistent formatting when it comes to Names ("FirstName LastName", or "F. LastName")
 %\printbibliography
