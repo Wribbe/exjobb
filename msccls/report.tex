@@ -19,16 +19,23 @@
 
 \thesisnumber{LU-CS-EX: 2020-XX} % Birger Swahn will provide this number to you, once the thesis is ready for publication
 
-\title{Custom web-application for measuring impact of design related elements in}
+\title{
+  Usability testing on the web; Measuring how design impacts task performance
+  times.
+}
 
 %\onelinetitle
 %\twolinestitle
 \threelinestitle
 %\fourlinestitle
 
-\subtitle{A {\LaTeX} class}
+%\subtitle{A {\LaTeX} class}
 \company{MASSIVE}
-\supervisors{John Deer, \href{mailto:jdeer@company.com}{\texttt{jdeer@company.com}}}{Don Jeer, \href{mailto:djeer@xy.lth.se}{\texttt{djeer@xy.lth.se}}}
+\supervisors{
+  John Deer, \href{mailto:jdeer@company.com}{\texttt{jdeer@company.com}}
+}{
+  Don Jeer, \href{mailto:djeer@xy.lth.se}{\texttt{djeer@xy.lth.se}}
+}
 \examiner{Jane Doe, \href{mailto:jane.doe@cs.lth.se}{\texttt{jane.doe@cs.lth.se}}}
 
 \date{\today}
@@ -49,12 +56,47 @@
 \makefrontmatter
 
 \chapter{Introduction}
-\chapter{Theory}
-\chapter{Method}
-\chapter{Results}
-\chapter{Analysis}
-\chapter{Discussion}
-\chapter{Conclusion}
+  Introduction to user interface design and usability testing? \\
+
+  Figure out how much of an impact different design aspects have on tasks that
+  require distinguishing one element from another. And doing it in a
+  decentralised manner based on web-application. \\
+
+  \noindent
+  Don't make me think -> webdesign. \\
+  Design of everyday things -> webdesign. \\
+  Report based on distances / colors -> webdesign. \\
+  Usability-testing guide -> webapp suggesting + other. \\
+
+
+\chapter{Approach}
+  \section{Method}
+
+    Results by measuring the time and showing graphs + statistical grouping /
+    analyzis. \\
+
+
+  \section{Theory}
+
+    The theory contains color-theory and the experience from managerial
+    positions.
+
+  \section{Implementation}
+
+    Writing a web-application with Flask + python + sqlite3.
+    HTML5 and CSS with a dab javascript.
+
+\chapter{Evaluation}
+  \section{Results}
+    \noindent
+    Graphs for the specific tasks. \\
+    Summarizing graphs for all the participants.
+  \section{Discussion}
+    Probably should have done a more comprehensive literature study. \\
+\chapter{Conclusions}
+  Did it have an significant impact? Was the web the correct platform? What
+  could be done better over the internet? Recording screen and voice?
+  (Javascript, since it's already used, pull up some statistics?)
 
 % Should use consistent formatting when it comes to Names ("FirstName LastName", or "F. LastName")
 %\printbibliography
@@ -68,8 +110,8 @@
    \thispagestyle{empty}
    \mbox{ }
 \fi
-\begin{appendices}
+%\begin{appendices}
 %\includepdf[pages={1}]{popsci/popsci.pdf}
-\end{appendices}
+%\end{appendices}
 
 \end{document}
