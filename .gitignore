@@ -15,3 +15,6 @@ auth_hrtb.py
 *.guard
 */data_figures/*
 sync_db.json
+*-blx.bib
+*.bcf
+*.run.xml

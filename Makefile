@@ -9,12 +9,10 @@ figures=$(foreach d,\
 	$(subst ${PATH_FIGURES_DATA},${PATH_FIGURES},${d:%.csv=%.pdf}) \
 )
 
-#all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
-	echo ${figures}
 
 msccls/report.aux : msccls/report.bib
-	cd msccls && pdflatex report && bibtex report && pdflatex report
+	cd msccls && pdflatex report && biber report && pdflatex report
 
 msccls/toc.guard : msccls/report.tex
 	[ -z "$(shell diff -q $@ msccls/report.toc)" ] || { cd msccls && pdflatex report.tex; }
@@ -27,7 +25,7 @@ ${DIR_STATIC}/report.pdf : msccls/report.tex msccls/report.aux ${figures} | ${DI
 	# Copy report.pdf to timestamped report.
 	cp $@ ${DIR_REPORTS}/$(shell date '+%Y-%m-%d_%H:%M:%S')_report.pdf
 
-${DIR_REPORTS}, ${PATH_FIGURES} :
+${DIR_REPORTS}, ${PATH_FIGURES}, ${DIR_REPORTS} :
 	mkdir -p $@
 
 ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES_DATA}/%.csv csv_to_pdf.py sync_db.py | ${PATH_FIGURES}
