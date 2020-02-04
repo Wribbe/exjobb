@@ -389,6 +389,7 @@
 	\cleardoublepage
 	\phantomsection
 	\addcontentsline{toc}{chapter}{\bibname}
-	\bibliographystyle{plain}
-	\bibliography{#1}
+%	\bibliographystyle{plain}
+%	\bibliography{#1}
+	\printbibliography
 }%

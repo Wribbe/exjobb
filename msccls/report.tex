@@ -8,6 +8,14 @@
 \usepackage{graphicx}
 \usepackage[titletoc, header, page]{appendix}
 \usepackage{transparent}
+\usepackage{xcolor}
+\usepackage[
+	backend=biber,
+	style=numeric,
+	sorting=none,
+]{biblatex}
+\addbibresource{report.bib}
+\usepackage{parskip}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
 %\listfiles % initialize
@@ -42,86 +50,163 @@
 %\date{January 16, 2015}
 
 \acknowledgements{
-  \cite{try_again}
 }
 
 \theabstract{
 }
 
-\keywords{key1, key2}
+\keywords{
+	Usability testing,
+	Web-application,
+	Flask,
+	HTML
+}
 
 \begin{document}
 \renewcommand{\bibname}{References}
 
 \makefrontmatter
+\newcommand{\todo}[1]{\textcolor{blue}{\textbf{TODO:} #1}}
+\newcommand{\eatdot}[1]{}
+\newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
 
 \chapter{Introduction}
-  Introduction to user interface design and usability testing? \\
 
-  Figure out how much of an impact different design aspects have on tasks that
-  require distinguishing one element from another. And doing it in a
-  decentralised manner based on web-application. \\
+	Usability is traditionally done in person with the
+	\textit{over the shoulder} method which gives a good insight of what a
+	participant does during a test. Further more, if the
+	\textit{thinking out aloud - method} is utilized correctly, the
+	test-moderator should have a good insight into the participant
+	thought-process during the test.
 
-  \noindent
-  Don't make me think -> webdesign. \\
-  Design of everyday things -> webdesign. \\
-  Report based on distances / colors -> webdesign. \\
-  Usability-testing guide -> webapp suggesting + other. \\
+	\todo{Expand usability-testing introduction.}
+
+	While effective[?] this method scales poorly with a one to one ratio between
+	moderator and test participant. This project investigates the possibility of
+	alleviating this scale-constraint by using a internet-based platform for
+	usability-testing home-grown user interface.
+
+	\section{Usability testing, then and now}
+
+		\todo{Expand this section.}
+
+	\section{Report goals}
+
+		\begin{enumerate}
+			\item{Create a web based platform for usability testing.}
+			\item{Run one or several interface tests with real users on the platform.}
+			\item{
+				Verify that the collected data shows a significant[?] impact on the studied
+				variable(s) when parameters are changed. \todo{Shorten?}
+			}
+		\end{enumerate}
+
+	\section{Literary scope}
+
+		This report draws and builds on information from the fields of usability
+		testing, web design and interaction design.
+
+		Specifically, \ctitle{cite_handbook_usability} and
+		\ctitle{cite_usability_testing_essentials}, provide a contrast between
+		traditional and modern approaches to usability testing and how to perform
+		them.
+
+		\ctitle{cite_don_make_me_think} provides a concise and interesting
+		summary of no-nonsense approaches to web design from a usability perspective.
+		Last but not least \ctitle{cite_the_design_of_everyday_things} introduces
+		both \textit{user-centered-} and \textit{interaction-design} together
+		with the concept of \textit{affordances},
+
+	  %Introduction to user interface design and usability testing? \\
+	  %
+		%Figure out how much of an impact different design aspects have on tasks
+		%that require distinguishing one element from another. And doing it in a
+		%decentralised manner based on web-application. \\
+	  %
+	  %Don't make me think -> webdesign. \\
+	  %Design of everyday things -> webdesign. \\
+	  %Report based on distances / colors -> webdesign. \\
+	  %Usability-testing guide -> webapp suggesting + other. \\
 
 
-\chapter{Approach}
-  \section{Method}
+	\chapter{Approach}
 
-    Results by measuring the time and showing graphs + statistical grouping /
-    analyzis. \\
+		\section{Method}
+
+			Results by measuring the time and showing graphs + statistical grouping /
+			analyzis.
+
+			\subsection{Threats to validity}
+
+				network latency?
+				multiple runs with same person?
 
 
-  \section{Theory}
+		\section{Theory}
 
-    The theory contains color-theory and the experience from managerial
-    positions.
+			The theory contains color-theory and the experience from managerial
+			positions.
 
-  \section{Implementation}
+			\subsection{Information and color}
 
-    Writing a web-application with Flask + python + sqlite3.
-    HTML5 and CSS with a dab javascript.
+			\subsection{Measuring completion times}
 
-\chapter{Evaluation}
-  \section{Results}
-    \noindent
-    Graphs for the specific tasks. \\
-    Summarizing graphs for all the participants.
-    \begin{figure}[!h]
-      \centering
-      \includegraphics{figures/participants_over_time.pdf}
-      \caption{Total registered users over time.}
-    \end{figure}
-    \begin{figure}[!h]
-      \centering
-      \includegraphics{figures/runs_over_time.pdf}
-      \caption{Total runs over time.}
-    \end{figure}
-  \section{Discussion}
-    Probably should have done a more comprehensive literature study. \\
-\chapter{Conclusions}
-  Did it have an significant impact? Was the web the correct platform? What
-  could be done better over the internet? Recording screen and voice?
-  (Javascript, since it's already used, pull up some statistics?)
+			\subsection{Representative tasks}
 
-% Should use consistent formatting when it comes to Names ("FirstName LastName", or "F. LastName")
-%\printbibliography
-\makebibliography{report}
+		\section{Implementation}
 
-%make sure we're on even page with the pop-sci
-\checkoddpage
-\ifoddpage
-\else
-   \newpage
-   \thispagestyle{empty}
-   \mbox{ }
-\fi
-%\begin{appendices}
-%\includepdf[pages={1}]{popsci/popsci.pdf}
-%\end{appendices}
+			Writing a web-application with Flask + python + sqlite3.
+			HTML5 and CSS with a dab javascript.
+
+			\subsection{Platform software stack}
+
+			\subsection{Interface creation}
+
+			\subsection{Variable challenges}
+
+	\chapter{Evaluation}
+
+		\section{Results}
+
+			Graphs for the specific tasks. \\
+			Summarizing graphs for all the participants.
+
+			\begin{figure}[!h]
+				\centering
+				\includegraphics{figures/participants_over_time.pdf}
+				\caption{Total registered users over time.}
+			\end{figure}
+			\begin{figure}[!h]
+				\centering
+				\includegraphics{figures/runs_over_time.pdf}
+				\caption{Total runs over time.}
+			\end{figure}
+
+		\section{Discussion}
+
+			Probably should have done a more comprehensive literature study. \\
+
+			\subsection{Possible Improvements}
+
+	\chapter{Conclusions}
+
+		Did it have an significant impact? Was the web the correct platform? What
+		could be done better over the internet? Recording screen and voice?
+		(Javascript, since it's already used, pull up some statistics?)
+
+	% Should use consistent formatting when it comes to Names ("FirstName LastName", or "F. LastName")
+	\makebibliography{report}
+
+	%make sure we're on even page with the pop-sci
+	\checkoddpage
+	\ifoddpage
+	\else
+		 \newpage
+		 \thispagestyle{empty}
+		 \mbox{ }
+	\fi
+	%\begin{appendices}
+	%\includepdf[pages={1}]{popsci/popsci.pdf}
+	%\end{appendices}
 
 \end{document}
