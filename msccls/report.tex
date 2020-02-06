@@ -69,6 +69,7 @@
 \newcommand{\todo}[1]{\textcolor{blue}{\textbf{TODO:} #1}}
 \newcommand{\eatdot}[1]{}
 \newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
+\newcommand{\vv}[1]{\input{vars/#1.txt}\unskip}
 
 \chapter{Introduction}
 
@@ -168,23 +169,32 @@
 
 		\section{Results}
 
-			Graphs for the specific tasks. \\
-			Summarizing graphs for all the participants.
+			\subsection{Participation, tests and ratio correct answers}
 
-			\begin{figure}[!h]
-				\centering
-				\includegraphics{figures/participants_over_time.pdf}
-				\caption{Total registered users over time.}
-			\end{figure}
-			\begin{figure}[!h]
-				\centering
-				\includegraphics{figures/runs_over_time.pdf}
-				\caption{Total runs over time.}
-			\end{figure}
+				The test-site went live 2020-01-24 and the link was mainly shared on
+				Facebook in the following days. 2020-01-27 the link was shared on
+				the MASSIVE internal mailing list, boosting the participation
+				significantly, resulting in a total of
+				\vv{total_participants} participants.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/participants_over_time.pdf}
+					\caption{Total registered participants over time.}
+				\end{figure}
+
+				In total \vv{total_tests} tests were run, where
+				\vv{total_tests_correct} were answered correctly,
+				\vv{total_tests_uncompleted} never produced an answer, leaving
+				\vv{total_tests_incorrect} incorrect answers.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/runs_over_time.pdf}
+					\caption{Total test-runs over time with number of correct answer.}
+				\end{figure}
 
 		\section{Discussion}
-
-			Probably should have done a more comprehensive literature study. \\
 
 			\subsection{Possible Improvements}
 

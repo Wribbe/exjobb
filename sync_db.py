@@ -39,7 +39,7 @@ def db_dump_data(db_src):
   db.row_factory = sqlite3.Row
   cursor = db.cursor()
 
-  def dump_to_disk(parsing_code, name, data):
+  def dump_to_disk(parsing_code, name, data, legends):
 
     min_indent = min([
       len(re.findall(r'^\s+', line)[0])
@@ -61,7 +61,7 @@ def db_dump_data(db_src):
     header = ','.join([names_keys.get(k, k) for k in keys])
     data = [','.join([str(obj[k]) for k in keys]) for obj in data]
     current = path.read_text()
-    final_data = os.linesep.join([parsing_code, header] + data)
+    final_data = os.linesep.join([parsing_code, header, *legends] + data)
     if current == final_data:
       return
     path.write_text(final_data)
@@ -83,7 +83,8 @@ def db_dump_data(db_src):
         y.append(sum)
       datasets.append((x, y))
     """
-    dump_to_disk(parsing_code, name_output, data)
+    legends = ['', "Date of registration", "Registered participants", '']
+    dump_to_disk(parsing_code, name_output, data, legends)
 
   def num_runs(name_output):
     data = cursor.execute('SELECT t_start, id, t_stop, success FROM test_run').fetchall()
@@ -112,21 +113,14 @@ def db_dump_data(db_src):
 
       sum = 0
       x, y = [[], []]
-      for date, num_ids in sorted(dates_complete.items()):
-        x.append(date)
-        sum += num_ids
-        y.append(sum)
-      datasets.append((x, y))
-
-      sum = 0
-      x, y = [[], []]
       for date, num_ids in sorted(dates_success.items()):
         x.append(date)
         sum += num_ids
         y.append(sum)
       datasets.append((x, y))
     """
-    dump_to_disk(parsing_code, name_output, data)
+    legends = ['', "Date of test run", "Number of tests run", 'Answers,Correct Answers']
+    dump_to_disk(parsing_code, name_output, data, legends)
 
   outputs = {
     "participants_over_time": num_participants,
@@ -135,6 +129,37 @@ def db_dump_data(db_src):
 
   for name, method in outputs.items():
     method(name)
+
+  def len_table(name_table):
+    return len(db.execute(f"SELECT id FROM {name_table}").fetchall())
+
+  path_vars = Path('msccls', 'vars')
+  if not path_vars.is_dir():
+    path_vars.mkdir()
+
+  tests = db.execute(
+    f"SELECT answer_correct, answer, success, t_stop FROM test_run"
+  ).fetchall()
+  total_tests = len(tests)
+  def is_correct(t):
+    if t['success'] == 1:
+      return True
+    if t['answer_correct'] == t['answer']:
+      return True
+    return False
+  total_tests_correct = len([t for t in tests if is_correct(t)])
+  total_tests_uncompleted = len([t for t in tests if not t['t_stop']])
+  variables = [
+    ('total_participants', len_table('test_user')),
+    ('total_tests', total_tests),
+    ('total_tests_correct', total_tests_correct),
+    ('total_tests_uncompleted', total_tests_uncompleted),
+    ('total_tests_incorrect', total_tests-total_tests_uncompleted-total_tests_correct),
+  ]
+
+  for name_var, value in variables:
+    path_out = Path(path_vars, f"{name_var}.txt")
+    path_out.write_text(f"{value}")
 
   db.close()
   return ("", [], {})
