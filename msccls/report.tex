@@ -70,6 +70,7 @@
 \newcommand{\eatdot}[1]{}
 \newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
 \newcommand{\vv}[1]{\input{vars/#1.txt}\unskip}
+\newcommand{\cc}[0]{\textcolor{red}{(?)} }
 
 \chapter{Introduction}
 
@@ -82,14 +83,10 @@
 
 	\todo{Expand usability-testing introduction.}
 
-	While effective[?] this method scales poorly with a one to one ratio between
+	While effective\cc this method scales poorly with a one to one ratio between
 	moderator and test participant. This project investigates the possibility of
-	alleviating this scale-constraint by using a internet-based platform for
-	usability-testing home-grown user interface.
-
-	\section{Usability testing, then and now}
-
-		\todo{Expand this section.}
+	alleviating this scale constraint by utilizing a internet based platform
+	to conduct usability tests of user interfaces online.
 
 	\section{Report goals}
 
@@ -97,10 +94,14 @@
 			\item{Create a web based platform for usability testing.}
 			\item{Run one or several interface tests with real users on the platform.}
 			\item{
-				Verify that the collected data shows a significant[?] impact on the studied
+				Verify that the collected data shows a significant\cc impact on the studied
 				variable(s) when parameters are changed. \todo{Shorten?}
 			}
 		\end{enumerate}
+
+	\section{Usability testing, then and now}
+
+		\todo{Expand this section.}
 
 	\section{Literary scope}
 
@@ -169,13 +170,14 @@
 
 		\section{Results}
 
-			\subsection{Participation, tests and ratio correct answers}
+			\subsection{Participation, test runs and success ratio}
 
-				The test-site went live 2020-01-24 and the link was mainly shared on
-				Facebook in the following days. 2020-01-27 the link was shared on
+				The test-site went live 2020-01-24 and the link was initially shared
+				through Facebook. On 2020-01-27 the link was shared on
 				the MASSIVE internal mailing list, boosting the participation
-				significantly, resulting in a total of
-				\vv{total_participants} participants.
+				significantly. In a total,
+				\vv{total_participants} participants got past the initial information
+				page over a five day period.
 
 				\begin{figure}[h!]
 					\centering
@@ -186,13 +188,58 @@
 				In total \vv{total_tests} tests were run, where
 				\vv{total_tests_correct} were answered correctly,
 				\vv{total_tests_uncompleted} never produced an answer, leaving
-				\vv{total_tests_incorrect} incorrect answers.
+				\vv{total_tests_incorrect} incorrect answers. Looking only on the test
+				runs without any user- or task-correlation, the chance that any given test run
+				produces the correct answer is $\sim$\vv{var_total_ratio_success}\%.
 
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/runs_over_time.pdf}
-					\caption{Total test-runs over time with number of correct answer.}
+					\caption{Total number of tests run overt time.}
 				\end{figure}
+
+			\subsection{Test runs per user and participation activity}
+
+				The number of recommended test was five, which when completed, allowed
+				the participants to continue to the final survey. However, there was
+				nothing stopping each participant from doing more or less than the
+				suggested number.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/tests_per_user.pdf}
+					\caption{Number of users that performed a specific number of tests.
+						\textit{(Tabulated data available in appendix.)}}
+				\end{figure}
+
+        \ \\
+        Of the \vv{total_participants} number of participant sessions started,
+        \vv{val_num_any_tests_run}
+%				(\vv{val_num_any_tests_run_p})
+        of them ran at least one test, which means \vv{val_test_no_tests} ran
+        no tests. Further more, \vv{val_tests_five_to_ten} completed between
+        five and nine tests, and \vv{val_tests_eleven_or_more} completed ten or
+        more.
+%				(\vv{val_num_five_or_more_test_run_p})
+
+      \subsection{Test types, test order and task distribution}
+
+        Since the participants were free to choose any combination of tests,
+        it's interesting to know which of the tasks were run the most.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/tests_run_per_task.pdf}
+					\caption{Test run distributed on task-types.}
+				\end{figure}
+
+      \todo{
+        Continue exploring the data, time distribution? Which task was failed
+        the most? Are there thresholds in the variables where tasks start to
+        fail more often? Is there a most preferable order to do the tasks?
+        Which task is the most popular in the 5-run category? ...
+      }
+
 
 		\section{Discussion}
 

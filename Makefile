@@ -1,13 +1,10 @@
 DIR_STATIC=exjobb/webapp/static
 DIR_REPORTS=${DIR_STATIC}/pdf/reports
 
-PATH_FIGURES_DATA=msccls/data_figures
 PATH_FIGURES=msccls/figures
+FIGUTILS:=$(wildcard msccls/figures/utils/*.py)
 
-figures=$(foreach d,\
-	$(wildcard ${PATH_FIGURES_DATA}/*.csv), \
-	$(subst ${PATH_FIGURES_DATA},${PATH_FIGURES},${d:%.csv=%.pdf}) \
-)
+figures=$(foreach d,$(wildcard ${PATH_FIGURES}/*.py),${d:%.py=%.pdf})
 
 all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 
@@ -28,8 +25,8 @@ ${DIR_STATIC}/report.pdf : msccls/report.tex msccls/report.aux ${figures} | ${DI
 ${DIR_REPORTS}, ${PATH_FIGURES}, ${DIR_REPORTS} :
 	mkdir -p $@
 
-${PATH_FIGURES}/%.pdf : ${PATH_FIGURES_DATA}/%.csv csv_to_pdf.py sync_db.py | ${PATH_FIGURES}
-	python csv_to_pdf.py $(filter %.csv,$^) $@
+${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.py csv_to_pdf.py ${FIGUTILS} | ${PATH_FIGURES}
+	python csv_to_pdf.py ${@:%.pdf=%.py} $@
 
 clean:
 	rm -rf ${PATH_FIGURES} ${PATH_FIGURES_DATA}
