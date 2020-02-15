@@ -6,3 +6,16 @@ tags
 *.db
 blobby
 auth_hrtb.py
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.guard
+*/data_figures/*
+sync_db.json
+*-blx.bib
+*.bcf
+*.run.xml
+msccls/vars
