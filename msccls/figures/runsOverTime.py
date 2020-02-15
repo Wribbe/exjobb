@@ -6,7 +6,7 @@ def get_data():
 
   dates = {
     'total': {},
-    'not_completed': {},
+    'notCompleted': {},
     'successful': {},
   }
 
@@ -15,27 +15,27 @@ def get_data():
     dates['total'].setdefault(date, 0)
     dates['total'][date] += 1
     if not run['t_stop'].strip():
-      dates['not_completed'].setdefault(date, 0)
-      dates['not_completed'][date] += 1
+      dates['notCompleted'].setdefault(date, 0)
+      dates['notCompleted'][date] += 1
     if run_successful(run):
       dates['successful'].setdefault(date, 0)
       dates['successful'][date] += 1
 
   users = db.execute("SELECT * FROM test_user").fetchall()
-  total_participants = len(users)
-  total_tests = sum(dates['total'].values())
-  total_tests_correct = sum(dates['successful'].values())
-  total_tests_uncompleted = sum(dates['not_completed'].values())
-  ratio_success = (total_tests_correct-total_tests_uncompleted)/total_tests*100
-  ratio_success = f"{ratio_success:.1f}"
+  totalParticipants = len(users)
+  totalTests = sum(dates['total'].values())
+  totalTestsCorrect = sum(dates['successful'].values())
+  totalTestsUncompleted = sum(dates['notCompleted'].values())
+  ratioSuccess = (totalTestsCorrect-totalTestsUncompleted)/totalTests*100
+  ratioSuccess = f"{ratioSuccess:.1f}"
 
   dump_vars([
-    ('total_participants', total_participants),
-    ('total_tests', total_tests),
-    ('total_tests_correct', total_tests_correct),
-    ('total_tests_uncompleted', total_tests_uncompleted),
-    ('total_tests_incorrect', total_tests-total_tests_uncompleted-total_tests_correct),
-    ('var_total_ratio_success', ratio_success)
+    ('totalParticipants', totalParticipants),
+    ('totalTests', totalTests),
+    ('totalTestsCorrect', totalTestsCorrect),
+    ('totalTestsUncompleted', totalTestsUncompleted),
+    ('totalTestsIncorrect', totalTests-totalTestsUncompleted-totalTestsCorrect),
+    ('varTotalRatioSuccess', ratioSuccess)
   ])
 
 
