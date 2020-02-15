@@ -1,4 +1,4 @@
-\documentclass[nofilelist]{cslthse-msc}
+\documentclass[nofilelist,dvipsnames]{cslthse-msc}
 % to show a list of used packages at the end of the document, delete the nofilelist option
 %\documentclass{cslthse-msc}
 \usepackage[utf8]{inputenc}
@@ -8,7 +8,6 @@
 \usepackage{graphicx}
 \usepackage[titletoc, header, page]{appendix}
 \usepackage{transparent}
-\usepackage{xcolor}
 \usepackage[
 	backend=biber,
 	style=numeric,
@@ -16,6 +15,7 @@
 ]{biblatex}
 \addbibresource{report.bib}
 \usepackage{parskip}
+\usepackage{textcomp}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
 %\listfiles % initialize
@@ -67,26 +67,64 @@
 
 \makefrontmatter
 \newcommand{\todo}[1]{\textcolor{blue}{\textbf{TODO:} #1}}
+\newcommand{\todoMaybe}[1]{\textcolor{OliveGreen}{\textbf{?TODO:} #1?}}
 \newcommand{\eatdot}[1]{}
 \newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
-\newcommand{\vv}[1]{\input{vars/#1.txt}\unskip}
-\newcommand{\cc}[0]{\textcolor{red}{(?)} }
+\newcommand{\varHere}[1]{\input{vars/#1.txt}\unskip}
+\newcommand{\checkTruth}[0]{\textcolor{red}{(?)} }
+\newcommand{\findref}[0]{\textcolor{orange}{[!]}}%
 
 \chapter{Introduction}
 
-	Usability is traditionally done in person with the
-	\textit{over the shoulder} method which gives a good insight of what a
-	participant does during a test. Further more, if the
-	\textit{thinking out aloud - method} is utilized correctly, the
-	test-moderator should have a good insight into the participant
-	thought-process during the test.
+  As the gaming industry continue to grow{\findref\findref} so do the reported
+  number of stress-related issues reported by the people working in the
+  sector{\findref\findref\findref}. The initial idea for this report came from a managers
+  observation that co-workers would abandon the digital communication software
+  for a more hands-on approaches, such as post-it notes on a whiteboard, when
+  the pressure got to a certain point.
 
-	\todo{Expand usability-testing introduction.}
+  Asking why, people stated that the software they were supposed to use for
+  communicating and propagating the projects status throughout the team got in
+  their way. Which is why they opted to use post-it notes, even though it has
+  significantly worse communication bandwidth and is less accessible,
+  at-least-it-works\texttrademark.
 
-	While effective\cc this method scales poorly with a one to one ratio between
-	moderator and test participant. This project investigates the possibility of
-	alleviating this scale constraint by utilizing a internet based platform
-	to conduct usability tests of user interfaces online.
+  \section[MASSIVE Entertainment | A Ubisoft studio]{MASSIVE}
+
+  {\vspace{-0.7cm}{\hspace{1.85cm}\small MASSIVE ENTERTAINMENT | A UBISOFT STUDIO}}
+
+    \todo{Expand section.}
+
+  \section{Why usability testing?}
+
+    Initially, the plan was to make interface changes to the organization-software
+    itself, but a question remained, how do you prove that it actually makes a
+    difference?
+
+    \todo{Describe why usability testing, add scaling problem.}
+
+  \section{Usability testing}
+
+    \subsection{Introduction}
+
+      Usability is traditionally done in person with the \textit{over the
+        shoulder} method which gives a good insight of what a participant does
+      during a test. Further more, if the \textit{thinking out aloud - method} is
+      utilized correctly, the test-moderator should have a good insight into the
+      participant thought-process during the test.
+
+    \subsection{Evolution and state of the art}
+
+      While effective\checkTruth this method scales poorly with a one to one ratio
+      between moderator and test participant. This project investigates the
+      possibility of alleviating this scale constraint by utilizing a internet
+      based platform to conduct usability tests of user interfaces online.
+
+      \todo{Expand this section.}
+
+  \section{Running usability tests at larger scales}
+
+    \todo{Expand this section.}
 
 	\section{Report goals}
 
@@ -94,28 +132,24 @@
 			\item{Create a web based platform for usability testing.}
 			\item{Run one or several interface tests with real users on the platform.}
 			\item{
-				Verify that the collected data shows a significant\cc impact on the studied
-				variable(s) when parameters are changed. \todo{Shorten?}
+				Verify that the collected data shows a significant\checkTruth impact on the studied
+				variable(s) when parameters are changed. \todoMaybe{Shorten}
 			}
 		\end{enumerate}
-
-	\section{Usability testing, then and now}
-
-		\todo{Expand this section.}
 
 	\section{Literary scope}
 
 		This report draws and builds on information from the fields of usability
 		testing, web design and interaction design.
 
-		Specifically, \ctitle{cite_handbook_usability} and
-		\ctitle{cite_usability_testing_essentials}, provide a contrast between
+		Specifically, \ctitle{citeHandbookUsability} and
+		\ctitle{citeUsabilityTestingEssentials}, provide a contrast between
 		traditional and modern approaches to usability testing and how to perform
 		them.
 
-		\ctitle{cite_don_make_me_think} provides a concise and interesting
+		\ctitle{citeDonMakeMeThink} provides a concise and interesting
 		summary of no-nonsense approaches to web design from a usability perspective.
-		Last but not least \ctitle{cite_the_design_of_everyday_things} introduces
+		Last but not least \ctitle{citeTheDesignOfEverydayThings} introduces
 		both \textit{user-centered-} and \textit{interaction-design} together
 		with the concept of \textit{affordances},
 
@@ -135,25 +169,86 @@
 
 		\section{Method}
 
-			Results by measuring the time and showing graphs + statistical grouping /
-			analyzis.
+      This section expands on the methodology behind the initial concept and
+      creation of the testing platform, as well as the process of generating
+      and evaluating data from the usability tests performed by the participants.
 
-			\subsection{Threats to validity}
+      \subsection{Software development methodology}
 
-				network latency?
-				multiple runs with same person?
+        The goal was to adopt an agile development process{\findref} for the
+        creation, evaluation and improvement of the usability testing platform.
 
+        \begin{figure}[h!]
+          \centering
+          \includegraphics{figures/method.pdf}
+          \caption{Concept, development, testing and improvement cycle.}
+        \end{figure}
+
+        This methodology is centered around creating a minimal
+        working prototype{\findref} is put in front of real users as soon as
+        possible. The feedback-data generated from the users should then be
+        feed back into the design to improve the next prototype version, which
+        is tested again, and the cycle continues until the software is
+        satisfactory or time is up.
+
+%      The goal was to perform several full iteration cycles, but in the
+%      end
+%      While this was the goal, it only completed one whole full cycle, with
+%      smaller iterations within the larger cycle. \todo{Reword}
+
+      \subsection{Initial concept}
+
+        In order to perform usability tests that can be measured and validated,
+        there needs to something for users to interact with. Since the subject
+        of communication under pressure was the initial focus, the suggestion
+        of helping managers reduce the stress for their team came up.
+
+        After interviewing a couple of managers, the following ideas were
+        gathered:
+
+        \begin{itemize}
+          \item{
+            An easy way to see if a co-worker is assigned more work than they
+            have available hours.
+          }
+          \item{
+            Calendar overview where it is possible to determine if there are
+            hot-spots where lots of results need to be produced at the same
+            time.
+          }
+          \item{
+            A concise way to identify if there are critical tasks that, if
+            delayed, would delay other tasks that depend on it.
+          }
+          \item{
+            The possibility to identify a group or teams strengths and assign
+            task types accordingly.
+          }
+        \end{itemize}
+
+      \subsection{Paper prototypes and first-draft interface}
+
+      \subsection{Selecting and storing data for evaluation}
+
+      \subsection{Identifying improvements}
+
+
+%			Results by measuring the time and showing graphs + statistical grouping /
+%			analysis.
 
 		\section{Theory}
 
 			The theory contains color-theory and the experience from managerial
 			positions.
 
-			\subsection{Information and color}
+			\subsection{Information presentation and color}
 
-			\subsection{Measuring completion times}
+			\subsection{Representative simplified task models}
 
-			\subsection{Representative tasks}
+			\subsection{Measuring time to task completion}
+
+			\subsection{Threshold for failure}
+
 
 		\section{Implementation}
 
@@ -166,6 +261,7 @@
 
 			\subsection{Variable challenges}
 
+      \addtocontents{toc}{\pagebreak}
 	\chapter{Evaluation}
 
 		\section{Results}
@@ -176,25 +272,25 @@
 				through Facebook. On 2020-01-27 the link was shared on
 				the MASSIVE internal mailing list, boosting the participation
 				significantly. In a total,
-				\vv{total_participants} participants got past the initial information
+				\varHere{totalParticipants} participants got past the initial information
 				page over a five day period.
 
 				\begin{figure}[h!]
 					\centering
-					\includegraphics{figures/participants_over_time.pdf}
+					\includegraphics{figures/participantsOverTime.pdf}
 					\caption{Total registered participants over time.}
 				\end{figure}
 
-				In total \vv{total_tests} tests were run, where
-				\vv{total_tests_correct} were answered correctly,
-				\vv{total_tests_uncompleted} never produced an answer, leaving
-				\vv{total_tests_incorrect} incorrect answers. Looking only on the test
+				In total \varHere{totalTests} tests were run, where
+				\varHere{totalTestsCorrect} were answered correctly,
+				\varHere{totalTestsUncompleted} never produced an answer, leaving
+				\varHere{totalTestsIncorrect} incorrect answers. Looking only on the test
 				runs without any user- or task-correlation, the chance that any given test run
-				produces the correct answer is $\sim$\vv{var_total_ratio_success}\%.
+				produces the correct answer is $\sim$\varHere{varTotalRatioSuccess}\%.
 
 				\begin{figure}[h!]
 					\centering
-					\includegraphics{figures/runs_over_time.pdf}
+					\includegraphics{figures/runsOverTime.pdf}
 					\caption{Total number of tests run overt time.}
 				\end{figure}
 
@@ -207,20 +303,20 @@
 
 				\begin{figure}[h!]
 					\centering
-					\includegraphics{figures/tests_per_user.pdf}
+					\includegraphics{figures/testsPerUser.pdf}
 					\caption{Number of users that performed a specific number of tests.
 						\textit{(Tabulated data available in appendix.)}}
 				\end{figure}
 
         \ \\
-        Of the \vv{total_participants} number of participant sessions started,
-        \vv{val_num_any_tests_run}
-%				(\vv{val_num_any_tests_run_p})
-        of them ran at least one test, which means \vv{val_test_no_tests} ran
-        no tests. Further more, \vv{val_tests_five_to_ten} completed between
-        five and nine tests, and \vv{val_tests_eleven_or_more} completed ten or
+        Of the \varHere{totalParticipants} number of participant sessions started,
+        \varHere{valNumAnyTestsRun}
+%				(\varHere{valNumAnyTestsRunP})
+        of them ran at least one test, which means \varHere{valTestNoTests} ran
+        no tests. Further more, \varHere{valTestsFiveToTen} completed between
+        five and nine tests, and \varHere{valTestsElevenOrMore} completed ten or
         more.
-%				(\vv{val_num_five_or_more_test_run_p})
+%				(\varHere{valNumFiveOrMoreTestRunP})
 
       \subsection{Test types, test order and task distribution}
 
@@ -229,7 +325,7 @@
 
 				\begin{figure}[h!]
 					\centering
-					\includegraphics{figures/tests_run_per_task.pdf}
+					\includegraphics{figures/testsRunPerTask.pdf}
 					\caption{Test run distributed on task-types.}
 				\end{figure}
 
@@ -243,7 +339,14 @@
 
 		\section{Discussion}
 
-			\subsection{Possible Improvements}
+			\subsection{Possible improvements}
+
+			\subsection{Threats to validity}
+
+%				network latency?
+%				multiple runs with same person?
+
+
 
 	\chapter{Conclusions}
 

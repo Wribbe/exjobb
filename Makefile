@@ -4,7 +4,9 @@ DIR_REPORTS=${DIR_STATIC}/pdf/reports
 PATH_FIGURES=msccls/figures
 FIGUTILS:=$(wildcard msccls/figures/utils/*.py)
 
-figures=$(foreach d,$(wildcard ${PATH_FIGURES}/*.py),${d:%.py=%.pdf})
+figures_py=$(foreach d,$(wildcard ${PATH_FIGURES}/*.py),${d:%.py=%.pdf})
+figures_pyx=$(foreach d,$(wildcard ${PATH_FIGURES}/*.pyx),${d:%.pyx=%.pdf})
+figures=${figures_py} ${figures_pyx}
 
 all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 
@@ -27,6 +29,9 @@ ${DIR_REPORTS}, ${PATH_FIGURES}, ${DIR_REPORTS} :
 
 ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.py csv_to_pdf.py ${FIGUTILS} | ${PATH_FIGURES}
 	python csv_to_pdf.py ${@:%.pdf=%.py} $@
+
+${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.pyx | ${PATH_FIGURES}
+	python $^ $@
 
 clean:
 	rm -rf ${PATH_FIGURES} ${PATH_FIGURES_DATA}
