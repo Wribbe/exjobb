@@ -383,23 +383,37 @@
         \ \\
         Of the \varHere{totalParticipants} number of participant sessions started,
         \varHere{valNumAnyTestsRun}
-%				(\varHere{valNumAnyTestsRunP})
         of them ran at least one test, which means \varHere{valTestNoTests} ran
         no tests. Further more, \varHere{valTestsFiveToTen} completed between
         five and nine tests, and \varHere{valTestsElevenOrMore} completed ten or
-        more.
-%				(\varHere{valNumFiveOrMoreTestRunP})
+        more. (\varHere{valTestTenOrLessP}) (\varHere{valTestsElevenOrMoreP})
+
+        \begin{figure}
+          \centering
+          \varHere{tablePrecentageOfUsers}
+          \caption{Figure things out}
+        \end{figure}
 
       \subsection{Test types, test order and task distribution}
 
         Since the participants were free to choose any combination of tests,
-        it's interesting to know which of the tasks were run the most.
+        it's interesting to know which of the task was most frequently run.
 
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/testsRunPerTask.pdf}
-					\caption{Test run distributed on task-types.}
+          \caption{
+            Test runs distributed per task-types for all participants,
+            participants that did ten or fewer and participants that did more
+            than ten tests.
+          }
 				\end{figure}
+
+        Overall, \textit{employee hours} was the most executed test by a wide
+        margin when looking all the participants as one group and isolating the
+        group consisting of participants that did ten or fewer tests. Looking at
+        the outliers, participants that did eleven or more tests, the
+        difference was not as stark with a more even distribution.
 
       \todo{
         Continue exploring the data, time distribution? Which task was failed
@@ -414,6 +428,7 @@
 			\subsection{Possible improvements}
 
 			\subsection{Threats to validity}
+
 
 %				network latency?
 %				multiple runs with same person?
