@@ -4,7 +4,7 @@ DIR_REPORTS=${DIR_STATIC}/pdf/reports
 PATH_FIGURES=msccls/figures
 FIGUTILS:=$(wildcard msccls/figures/utils/*.py)
 
-figures_py=$(foreach d,$(wildcard ${PATH_FIGURES}/*.py),${d:%.py=%.pdf})
+figures_py=$(foreach d,$(filter-out %__.py,$(wildcard ${PATH_FIGURES}/*.py)),${d:%.py=%.pdf})
 figures_pyx=$(foreach d,$(wildcard ${PATH_FIGURES}/*.pyx),${d:%.pyx=%.pdf})
 figures=${figures_py} ${figures_pyx}
 
