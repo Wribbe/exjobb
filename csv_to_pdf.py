@@ -24,7 +24,7 @@ def main(name_module, path_out):
   colors = d.get('colors', [])
   markers = d.get('markers', [])
 
-  for (xs, ys), marker in zip(d['data'], iter_marker(method)):
+  for (xs, ys), marker in zip(d['data'], iter_markers(method)):
     method_kwargs = kwargs.get(method, {})
     if method in ['barh', 'bar']:
       if widths:
