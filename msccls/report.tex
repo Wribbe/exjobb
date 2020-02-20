@@ -74,6 +74,7 @@
 \newcommand{\checkTruth}[0]{\textcolor{red}{(?)} }
 \newcommand{\findref}[0]{\textcolor{orange}{[!]}}%
 \newcommand{\todoInsert}[1]{\textcolor{purple}{\textit{<insert #1 here>}}}%
+\newcommand{\numRuns}[1]{\texttt{\#r=#1}}%
 
 \chapter{Introduction}
 
@@ -338,7 +339,7 @@
 
 		\section{Results}
 
-			\subsection{Participation, test runs and success ratio}
+			\subsection{Participation and success ratio}
 
 				The test-site went live 2020-01-24 and the link was initially shared
 				through Facebook. On 2020-01-27 the link was shared on
@@ -366,7 +367,7 @@
 					\caption{Total number of tests run overt time.}
 				\end{figure}
 
-			\subsection{Test runs per user and participation activity}
+			\subsection{Tests per user and outliers}
 
 				The number of recommended test was five, which when completed, allowed
 				the participants to continue to the final survey. However, there was
@@ -376,8 +377,7 @@
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/testsPerUser.pdf}
-					\caption{Number of users that performed a specific number of tests.
-						\textit{(Tabulated data available in appendix.)}}
+					\caption{Participants grouped on how many test they performed.}
 				\end{figure}
 
         \ \\
@@ -391,10 +391,10 @@
         \begin{figure}
           \centering
           \varHere{tablePrecentageOfUsers}
-          \caption{Figure things out}
+          \caption{Tabulated values of test-run groupings and corresponding .}
         \end{figure}
 
-      \subsection{Test types, test order and task distribution}
+      \subsection{Task type distribution}
 
         Since the participants were free to choose any combination of tests,
         it's interesting to know which of the task was most frequently run.
@@ -412,16 +412,66 @@
         Overall, \textit{employee hours} was the most executed test by a wide
         margin when looking all the participants as one group and isolating the
         group consisting of participants that did ten or fewer tests. Looking at
-        the outliers, participants that did eleven or more tests, the
+        the outliers, participants that did sixteen or more tests, the
         difference was not as stark with a more even distribution.
 
-      \todo{
-        Continue exploring the data, time distribution? Which task was failed
-        the most? Are there thresholds in the variables where tasks start to
-        fail more often? Is there a most preferable order to do the tasks?
-        Which task is the most popular in the 5-run category? ...
-      }
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/testsRunPerTaskOutliers.pdf}
+          \caption{
+            Detailed breakdown of task distribution for the outliers, 16 or
+            more tests run, and their task distribution, multiples of identical
+            distributions removed.
+          }
+          \label{testsRunPerTaskOutliers}
+				\end{figure}
 
+        Observing the outlier distribution in figure
+        \ref{testsRunPerTaskOutliers}, there is only two \numRuns{20} runs
+        when the total was four. This is due to three of the four runs having
+        the exact same distribution, which is why only one of them, the last in
+        the series above, was included.
+
+        Additionally, it is interesting to note that neither of \numRuns{100},
+        \numRuns{32} or the last \numRuns{20} impacts the total distribution
+        since those groupings of completed tests are evenly spread among all the
+        test task types.
+
+      \newpage
+      \subsection{Preferential task order}
+
+        It is interesting to see if there are any discernible preferences
+        of how a participant chooses in witch order to run the tests in their
+        session. This is done by pulling out all the test runs that had a
+        completion time from the database and grouping them by the order in
+        which they were run by the participants.
+
+        Splitting the grouped values into type-groups and dividing the type-sum
+        with the total sum on that test-run index gives the percentage of that
+        task type on the corresponding task-index, result presented below.
+				\begin{figure}[ht!]
+					\centering
+					\includegraphics{figures/testsRunOrder.pdf}
+          \caption{
+            Percentage of task type grouped by test-run order for users that ran
+            fifteen tests or less.
+          }
+				\end{figure}
+				\begin{figure}[ht!]
+					\centering
+					\includegraphics{figures/testsRunOrderOutliers.pdf}
+          \caption{
+            test
+          }
+				\end{figure}
+
+%      \todo{
+%        Continue exploring the data, time distribution? Which task was failed
+%        the most? Are there thresholds in the variables where tasks start to
+%        fail more often? Is there a most preferable order to do the tasks?
+%        Which task is the most popular in the 5-run category? ...
+%      }
+%
 
 		\section{Discussion}
 

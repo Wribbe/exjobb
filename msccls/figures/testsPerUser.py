@@ -41,13 +41,14 @@ def get_data():
   tx, ty = incremental_sum(numberOfRuns)
   tabular = [(
     "\\# Tests run",
-    "\\# Users",
-    '\\% of participating users'
+    '\\# participants',
+    "Sum participants",
+    '\\% of total participating'
   )]
   tabular += [
-    (fr"$\#r\leq{k}$", f"${v}$", f"${v/numUsersDidTests*100:.2f}\%$") for k,v in zip(tx, ty)
+    (fr"$\#r\leq{k}$", f"${numberOfRuns[k]}$", f"${v}$", f"${v/numUsersDidTests*100:.2f}\%$") for k,v in zip(tx, ty)
   ]
-  tablePrecentageOfUsers = [rf"\begin{{tabular}}{{| l | c | c |}}"]
+  tablePrecentageOfUsers = [rf"\begin{{tabular}}{{| l | c | c | c |}}"]
   tabular[1] = ('$\\#r=1$', *tabular[1][1:])
   for line in tabular:
     tablePrecentageOfUsers.append(f"\\hline {'&'.join(line)}\\\\")
