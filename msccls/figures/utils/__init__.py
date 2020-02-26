@@ -74,3 +74,14 @@ def run_to_datetimes(run):
   fmt = "%Y-%m-%d %H:%M:%S.%f%Z"
   start, stop = run['t_start'], run['t_stop']
   return [datetime.strptime(d, fmt) for d in [start, stop]]
+
+figure_units = {
+  'size': (6, 2.3),
+}
+
+def figure_setup(figure, size=figure_units['size']):
+  figure.set_size_inches(size)
+  figure.tight_layout()
+
+def figure_save(figure, path_out):
+  figure.savefig(path_out, bbox_inches='tight')

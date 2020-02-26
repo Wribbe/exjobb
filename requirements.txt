@@ -3,3 +3,4 @@ weasyprint
 Flask-WeasyPrint
 pyx
 matplotlib
+scipy
