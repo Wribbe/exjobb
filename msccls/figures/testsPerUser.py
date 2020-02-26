@@ -49,7 +49,7 @@ def get_data():
     (fr"$\#r\leq{k}$", f"${numberOfRuns[k]}$", f"${v}$", f"${v/numUsersDidTests*100:.2f}\%$") for k,v in zip(tx, ty)
   ]
   tablePrecentageOfUsers = [rf"\begin{{tabular}}{{| l | c | c | c |}}"]
-  tabular[1] = ('$\\#r=1$', *tabular[1][1:])
+#  tabular[1] = ('$\\#r=1$', *tabular[1][1:])
   for line in tabular:
     tablePrecentageOfUsers.append(f"\\hline {'&'.join(line)}\\\\")
   tablePrecentageOfUsers.append(rf"\hline\end{{tabular}}")
@@ -71,9 +71,9 @@ def get_data():
     'data': [(x,y)],
     'method': 'bar',
     'xticks': [1,5,10]+list(numberOfRuns.keys())[-5:],
-    'yticks': list(set(numberOfRuns.values()))[-3:],
-    'xlabel': "Number of test run",
-    'ylabel': "Number of users in category",
+    'yticks': [1,4,9,43],
+    'xlabel': "Total number of tests",
+    'ylabel': "Users in category",
 #    'table': {
 #      'cellText': [(f"{x}:", y) for x,y in zip(x,y)],
 #      'colLabels': ['Tests Run','#Users'],

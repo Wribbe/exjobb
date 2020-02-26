@@ -40,14 +40,12 @@ def get_data():
     ys = [dic[l] for l in labels]
     data.append(([height*-i-ii for ii,_ in enumerate(ys)], ys))
 
-
-  print(data)
   return {
     'data': data,
     'method': 'barh',
     'yticks': [-x-height/2 for x in range(len(labels))],
-    'ylabel': "Task type",
-    'xlabel': "Number of test run",
+    'ylabel': "Test task type",
+    'xlabel': "Total number of tests run per category",
     'legend': ['#$r>0$', '#$r\leq15$', '#$r\geq16$'],
     'kwargs': {
       'legend': {

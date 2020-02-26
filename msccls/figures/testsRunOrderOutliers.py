@@ -17,7 +17,7 @@ def get_data():
 
   tests_per_user = [(u,n) for u,n in tests_per_user.items() if len(n) > 15]
   types = {}
-  data, widths, xticks, xlabels, colors, markings = [], [], [], [], [], []
+  data, widths, xticks, xlabels, colors, markers = [], [], [], [], [], []
 
   group_width = 0.8
 
@@ -34,7 +34,8 @@ def get_data():
     'team performance'
   ]
 
-  mappings_style = dict(zip(order, zip(iter_colors, iter_markers)))
+  method = 'bar'
+  mappings_style = dict(zip(order, zip(iter_colors, iter_markers(method))))
   handlers_for_legend = {n: 0 for n in order}
 
   bar_num = 0
@@ -42,8 +43,8 @@ def get_data():
     total = sum(dict_types.values())
     sum_prev = 0
     bars_at_x = []
-    for name in order:
-      value = dict_types.get(name, 0)/total*100
+    for name, value in sorted(dict_types.items(), key=lambda x:-x[1]):
+      value = value/total*100
       bars_at_x.append((name, value+sum_prev))
       sum_prev += value
 
@@ -60,19 +61,22 @@ def get_data():
 
   return {
     'data': data,
-    'method': 'bar',
+    'method': method,
     'legend': handlers_for_legend,
     'markers': markers,
     'colors': colors,
     'yticks': range(110)[::10],
     'xticks': [1] + list(range(10, 110)[::10]),
-    'ylabel': "Stacked task-type percentages",
-    'xlabel': "Test run number",
+    'ylabel': "Task-type percentages",
+    'xlabel': "Test index, from the first test-run and onwards",
     'kwargs': {
       'legend': {
         'bbox_to_anchor': (1.0, 0.5),
         'loc': 'center right',
         'fontsize': 'small',
+      },
+      'bar': {
+        'linewidth': 1,
       }
     }
   }
