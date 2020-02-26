@@ -37,7 +37,7 @@ def get_data():
     for x, l in enumerate(labels):
       times = sorted(run_per_type[l])
       len_times = len(times)
-      average = sum([d.seconds for d in times])/len_times
+      average = sum([d.seconds+d.microseconds/1e6 for d in times])/len_times
       if len_times-1%2:
         mean = times[int((len_times-1)/2)].seconds
       else:
@@ -62,7 +62,12 @@ def get_data():
     'method': 'barh',
     'data': data,
     'yticks': ([x-0.9/4 for x in range(len(labels))], [l.title() for l in labels]),
-    'legend': ['Average','Median','Average (outliers)', 'Median (outliers)'],
+    'legend': [
+      'Average #$r\leq15$',
+      'Median #$r\leq15$',
+      'Average #$r\geq16$',
+      'Median #$r\geq16$',
+    ],
     'ylabel': "Task type",
     'xlabel': "Seconds",
     'kwargs': {

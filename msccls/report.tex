@@ -463,13 +463,13 @@
           \label{label_testsRunOrder}
         \end{figure}
 
-        Since the legend in figure \ref{label_testsRunOrder} reflects the order in which the
-        tasks appear in the user interface for the participants, it is apparent
-        that the majority of participants choose to do the tasks in the
-        presented order, top to bottom. As for the fifth test run, the majority
-        choose do an extra of the last one (Team Performance), and after that,
-        most participants opted to go back and do the first one again (Employee
-        Hours).
+        Since the legend in figure \ref{label_testsRunOrder} reflects the order
+        in which the tasks appear in the user interface for the participants,
+        it is apparent that the majority of participants choose to do the tasks
+        in the presented order, top to bottom. As for the fifth test run, the
+        majority choose do an extra of the last one (Team Performance), and
+        after that, most participants opted to go back and do the first one
+        again (Employee Hours).
 
         \newpage
         Given the wider range of the data coming from the outlier group (1-100)
@@ -485,12 +485,12 @@
           }
 				\end{figure}
 
-        Initially the going-by-order tendency from figure \ref{label_testsRunOrder}
-        holds for index one and two, but breaks down on the third, with the
-        second option being the most prevalent. Interestingly, the sequential
-        does appears between run five and nine, then disappears. Apart from
-        that, it seems the preferable way to do thirty or more tests is to do
-        them in batches.
+        Initially the going-by-order tendency from figure
+        \ref{label_testsRunOrder} holds for index one and two, but breaks down
+        on the third, with the second option being the most prevalent.
+        Interestingly, the sequential does appears between run five and nine,
+        then disappears. Apart from that, it seems the preferable way to do
+        thirty or more tests is to do them in batches.
 
         Exact values this figure and number of users in each group can be found
         tabulated in the appendix. \todo{Add table and reference}
@@ -550,30 +550,37 @@
 %
 
       \newpage
-      \subsection{Task types and completion times}
+      \subsection{Completion times: Task types and distribution}
 
-				\begin{figure}[h!]
-					\centering
-          \includegraphics{figures/testsTimesPerTaskType.pdf}
-          \caption{
-            Average and median completion times over all test runs.
-          }
-				\end{figure}
+        Computing the mean and average completion time for the task-runs is
+        simply a matter of gathering all the start and stop times from the
+        database and perform the corresponding arithmetics. The resulting times,
+        split in regular and outliers, is shown below.
 
         \begin{figure}[h!]
           \centering
           \includegraphics{figures/testsTimesPerTaskTypeOutliers.pdf}
           \caption{
-            Percentages of correct task answers split on ordinary and outlier
-            groups.
+            Average and median completion times for regulars and outliers
+            groupings.
           }
           \label{label_testsTimesPerTaskTypeOutliers}
         \end{figure}
 
-        Separating into regular and outlier did not impact the result
-        significantly, see figure \ref{label_testsTimesPerTaskTypeOutliers} in
-        Appendix.
+        According to the data \textit{Employee Hours} has the longest average
+        and median completion time of all the task types, which holds for both
+        groupings. This makes sense since the earlier data, looking at the
+        overall success-rate split on the tasks types, points to
+        \textit{Employee Hours} being the hardest task type of the four.
 
+        \begin{figure}[h!]
+          \centering
+          \includegraphics{figures/testsTimeGroupings.pdf}
+          \caption{
+            Histograms showing groupings of completion-times rounded to nearest
+            second for; all, regular and outliers user-groups.
+          }
+        \end{figure}
 
 
 		\section{Discussion}
