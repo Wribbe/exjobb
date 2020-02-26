@@ -1,3 +1,5 @@
 flask
 weasyprint
 Flask-WeasyPrint
+pyx
+matplotlib
