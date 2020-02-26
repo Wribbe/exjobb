@@ -367,7 +367,7 @@
 					\caption{Total number of tests run overt time.}
 				\end{figure}
 
-			\subsection{Tests per user and outliers}
+			\subsection{Tests per user and defining outliers}
 
 				The number of recommended test was five, which when completed, allowed
 				the participants to continue to the final survey. However, there was
@@ -391,10 +391,12 @@
         \begin{figure}
           \centering
           \varHere{tablePrecentageOfUsers}
-          \caption{Tabulated values of test-run groupings and corresponding .}
+          \caption{Tabulated values of test-run groups and corresponding
+            percentage of total participants (participants with zero runs
+            discarded).}
         \end{figure}
 
-      \subsection{Task type distribution}
+      \subsection{Participant task type distribution}
 
         Since the participants were free to choose any combination of tests,
         it's interesting to know which of the task was most frequently run.
@@ -446,24 +448,51 @@
         completion time from the database and grouping them by the order in
         which they were run by the participants.
 
-        Splitting the grouped values into type-groups and dividing the type-sum
-        with the total sum on that test-run index gives the percentage of that
-        task type on the corresponding task-index, result presented below.
+        By furthering splitting the index-groups by task type it is possible to
+        calculate the relative percentage of the n-th task being a specific
+        type. The result for the standard group of fifteen or less tests shown
+        below.
 				\begin{figure}[ht!]
 					\centering
 					\includegraphics{figures/testsRunOrder.pdf}
           \caption{
-            Percentage of task type grouped by test-run order for users that ran
-            fifteen tests or less.
+            Percentage of task type grouped by the order in which they were
+            run for participants that ran a total of fifteen tests or less.
           }
-				\end{figure}
+          \label{testsRunOrder}
+        \end{figure}
+
+        Since the legend in figure \ref{testsRunOrder} reflects the order in which the
+        tasks appear in the user interface for the participants, it is apparent
+        that the majority of participants choose to do the tasks in the
+        presented order, top to bottom. As for the fifth test run, the majority
+        choose do an extra of the last one (Team Performance), and after that,
+        most participants opted to go back and do the first one again (Employee
+        Hours).
+
+        \newpage
+        Given the wider range of the data coming from the outlier group (1-100)
+        the visualization needs to be altered slightly. Since there is not
+        enough room to have the bars side by side, they have been stacked by
+        size, with the largest bar at the bottom.
 				\begin{figure}[ht!]
 					\centering
 					\includegraphics{figures/testsRunOrderOutliers.pdf}
           \caption{
-            test
+            Percentage of task type grouped by the order in which they were
+            run for participants that ran a total of sixteen tests or more.
           }
 				\end{figure}
+
+        Initially the going-by-order tendency from figure \ref{testsRunOrder}
+        holds for index one and two, but breaks down on the third, with the
+        second option being the most prevalent. Interestingly, the sequential
+        does appears between run five and nine, then disappears. Apart from
+        that, it seems the preferable way to do thirty or more tests is to do
+        them in batches.
+
+        Exact values this figure and number of users in each group can be found
+        tabulated in the appendix. \todo{Add table and reference}
 
 %      \todo{
 %        Continue exploring the data, time distribution? Which task was failed
@@ -472,6 +501,55 @@
 %        Which task is the most popular in the 5-run category? ...
 %      }
 %
+      \newpage
+      \subsection{Success-rates for task types}
+
+        Next, the percentage of answered that are correct per task type are
+        extracted out from the results. The data is split into two groups, one
+        for the ordinary group with fifteen or less total tests, and one for
+        the outliers with sixteen or more, result is displayed below.
+
+				\begin{figure}[ht!]
+					\centering
+          \includegraphics{figures/testsResultsByType.pdf}
+          \caption{
+            Percentages of correct task answers split on ordinary and outlier
+            groups.
+          }
+				\end{figure}
+
+        According to the data, the difficulty of the test type in order of
+        hardest to easiest is: \textit{Employee Hours}, \textit{Team
+          Performance}, \textit{Team Workload} and \textit{Task Dependencies}.
+        The data also shows that the outlier group have a tendency to be more
+        correct, on average, than the ordinary group.
+
+        Given that the data seems to suggest that success-rate increases with
+        the number of performed tasks, the data is re-arranged to show the
+        percentage of correct answer mapped against the task run index, shown
+        below:
+
+				\begin{figure}[ht!]
+					\centering
+          \includegraphics{figures/testsResultsByTaskIndex.pdf}
+          \caption{
+            Percentages of correct task answers split on ordinary and outlier
+            groups.
+          }
+				\end{figure}
+
+%				\begin{figure}[ht!]
+%					\centering
+%          \includegraphics{figures/testsResultsByTaskIndexAndTestType.pdf}
+%          \caption{
+%            Percentages of correct task answers split on ordinary and outlier
+%            groups.
+%          }
+%				\end{figure}
+%
+
+      \subsection{Task type impact on time to completion}
+
 
 		\section{Discussion}
 

@@ -32,10 +32,12 @@ def main(name_module, path_out):
       if colors:
         method_kwargs['color'] = colors.pop(0)
       if markers:
-        method_kwargs['marker'] = markers.pop(0)
+        method_kwargs['hatch'] = markers.pop(0)
+      else:
+        method_kwargs['hatch'] = marker
       lines.append(
         getattr(plt, method)(
-          xs, ys, hatch=marker, alpha=.99, edgecolor='black', **method_kwargs
+          xs, ys, alpha=.99, edgecolor='black', **method_kwargs
         )
       )
     elif method == 'scatter':
@@ -81,7 +83,7 @@ def main(name_module, path_out):
       pass
 
 
-  f.set_size_inches(d.get('size', (6, 3)))
+  f.set_size_inches(d.get('size', (6, 2.3)))
   f.tight_layout()
   f.savefig(path_out, bbox_inches='tight')
 

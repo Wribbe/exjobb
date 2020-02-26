@@ -30,12 +30,13 @@ def get_data():
     'method': 'barh',
     'yticks': [-x+height/2-0.9/2 for x in range(len(labels))],
     'ylabel': "Task type",
-    'xlabel': "Number of test run",
-    'xticks': range(0,45)[::5],
+    'xlabel': "Total number of tests",
+    'xticks': range(0,40)[::5],
     'legend': [f'#$r={sum(d.values())}$' for d in dicts],
     'kwargs': {
       'legend': {
         'title': "Runs/User:",
+        'fontsize': "x-small",
       },
       'barh': {
         'height': height,

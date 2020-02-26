@@ -14,7 +14,7 @@ def get_data():
 
   tests_per_user = [(u,n) for u,n in tests_per_user.items() if len(n) < 16]
   types = {}
-  data, widths, xticks, xlabels, colors, markings = [], [], [], [], [], []
+  data, widths, xticks, xlabels, colors, markers = [], [], [], [], [], []
   group_width = 0.8
 
   for _, names in tests_per_user:
@@ -30,7 +30,8 @@ def get_data():
     'team performance'
   ]
 
-  mappings_style = dict(zip(order, zip(iter_colors, iter_markers)))
+  method = "bar"
+  mappings_style = dict(zip(order, zip(iter_colors, iter_markers(method))))
   handlers_for_legend = {}
   num_bar = 0
   for x, dict_types in types.items():
@@ -56,7 +57,7 @@ def get_data():
 
   return {
     'data': data,
-    'method': 'bar',
+    'method': method,
     'xticks': (xticks, xlabels),
     'yticks': range(110)[::10],
     'widths': widths,
@@ -65,9 +66,11 @@ def get_data():
     'legend': handlers_for_legend,
     'kwargs': {
       'legend': {
-        'fontsize': 'small',
+        'fontsize': 'x-small',
+        'loc': 'upper left',
+        'bbox_to_anchor': [.22, 1.0],
       },
     },
-   'ylabel': "Type percentage per task-run",
-   'xlabel': "Test index, from the first test and onwards",
+   'ylabel': "Task percentage",
+   'xlabel': "Test index, from the first test-run and onwards",
   }

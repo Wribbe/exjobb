@@ -49,15 +49,14 @@ def as_percent(f):
 
 
 def iter_markers(method):
-  hashchars = ['\\','/','x','o','.',':','*']
+  hashchars = ['\\','.','/','x','o','*']
   hatchings = [''] + [c*5 for c in hashchars]
   markers = {
-    'plot': ['o-', 'v--'],
+    'plot': ['o-', 'v--', 'x:', '+-.'],
     'barh': hatchings,
     'bar': hatchings,
   }
-  return itertools.cycle(markers[method])
+  return itertools.cycle(markers.get(method, [""]))
 
 
-def iter_colors():
-  return itertools.cycle(plt.rcParams['axes.prop_cycle'].by_key()['color'])
+iter_colors = itertools.cycle(plt.rcParams['axes.prop_cycle'].by_key()['color'])
