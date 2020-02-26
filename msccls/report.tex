@@ -425,11 +425,11 @@
             more tests run, and their task distribution, multiples of identical
             distributions removed.
           }
-          \label{testsRunPerTaskOutliers}
+          \label{label_testsRunPerTaskOutliers}
 				\end{figure}
 
         Observing the outlier distribution in figure
-        \ref{testsRunPerTaskOutliers}, there is only two \numRuns{20} runs
+        \ref{label_testsRunPerTaskOutliers}, there is only two \numRuns{20} runs
         when the total was four. This is due to three of the four runs having
         the exact same distribution, which is why only one of them, the last in
         the series above, was included.
@@ -459,10 +459,10 @@
             Percentage of task type grouped by the order in which they were
             run for participants that ran a total of fifteen tests or less.
           }
-          \label{testsRunOrder}
+          \label{label_testsRunOrder}
         \end{figure}
 
-        Since the legend in figure \ref{testsRunOrder} reflects the order in which the
+        Since the legend in figure \ref{label_testsRunOrder} reflects the order in which the
         tasks appear in the user interface for the participants, it is apparent
         that the majority of participants choose to do the tasks in the
         presented order, top to bottom. As for the fifth test run, the majority
@@ -484,7 +484,7 @@
           }
 				\end{figure}
 
-        Initially the going-by-order tendency from figure \ref{testsRunOrder}
+        Initially the going-by-order tendency from figure \ref{label_testsRunOrder}
         holds for index one and two, but breaks down on the third, with the
         second option being the most prevalent. Interestingly, the sequential
         does appears between run five and nine, then disappears. Apart from
@@ -502,7 +502,7 @@
 %      }
 %
       \newpage
-      \subsection{Success-rates for task types}
+      \subsection{Task types and success-rate}
 
         Next, the percentage of answered that are correct per task type are
         extracted out from the results. The data is split into two groups, one
@@ -548,7 +548,31 @@
 %				\end{figure}
 %
 
-      \subsection{Task type impact on time to completion}
+      \newpage
+      \subsection{Task types and completion times}
+
+				\begin{figure}[h!]
+					\centering
+          \includegraphics{figures/testsTimesPerTaskType.pdf}
+          \caption{
+            Average and median completion times over all test runs.
+          }
+				\end{figure}
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics{figures/testsTimesPerTaskTypeOutliers.pdf}
+          \caption{
+            Percentages of correct task answers split on ordinary and outlier
+            groups.
+          }
+          \label{label_testsTimesPerTaskTypeOutliers}
+        \end{figure}
+
+        Separating into regular and outlier did not impact the result
+        significantly, see figure \ref{label_testsTimesPerTaskTypeOutliers} in
+        Appendix.
+
 
 
 		\section{Discussion}
@@ -583,5 +607,9 @@
 	%\begin{appendices}
 	%\includepdf[pages={1}]{popsci/popsci.pdf}
 	%\end{appendices}
+
+  \chapter{Appendix}
+
+
 
 \end{document}

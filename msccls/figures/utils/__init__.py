@@ -3,6 +3,15 @@ from pathlib import Path
 import itertools
 import matplotlib as plt
 
+from datetime import datetime
+
+order = [
+  'employee hours',
+  'team workload',
+  'task dependencies',
+  'team performance'
+]
+
 def get_db():
   path_dir = Path(__file__).parents[2]
   db_name = 'db2.sqlite3.db'
@@ -60,3 +69,8 @@ def iter_markers(method):
 
 
 iter_colors = itertools.cycle(plt.rcParams['axes.prop_cycle'].by_key()['color'])
+
+def run_to_datetimes(run):
+  fmt = "%Y-%m-%d %H:%M:%S.%f%Z"
+  start, stop = run['t_start'], run['t_stop']
+  return [datetime.strptime(d, fmt) for d in [start, stop]]
