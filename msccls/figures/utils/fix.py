@@ -24,7 +24,7 @@ def testruns(testruns):
   for (_, (run, start, stop)) in found_total:
     run = dict(run)
     stop = stop.replace(tzinfo=timezone.utc)
-    run['t_stop'] = datetime.strftime(stop, '%Y-%d-%m %H:%M:%S.%f%Z')
+    run['t_stop'] = datetime.strftime(stop, '%Y-%m-%d %H:%M:%S.%f%Z')
     ret.append(run)
   return ret
 
