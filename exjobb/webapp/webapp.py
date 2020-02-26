@@ -1025,7 +1025,7 @@ def create_app():
         flash("Initial survey submitted.", 'success');
       elif 'not_correct' in request.form:
         cursor = db.cursor()
-        now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%f')
+        now = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%S.%f')
         now = now[:-3]
         now += '000UTC'
         cursor.execute(
