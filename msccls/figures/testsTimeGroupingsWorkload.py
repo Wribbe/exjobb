@@ -36,6 +36,8 @@ def get_data(path_out):
     for run in testruns:
       if not run['id_user'] in valid_users:
         continue
+      if not run['name'] == 'team workload':
+        continue
       start, stop = run_to_datetimes(run)
       diff = (stop-start)
       diff = round(diff.seconds + diff.microseconds/1e6)
@@ -92,8 +94,9 @@ def get_data(path_out):
   xticks = [1]+list(range(10, 150)[::10])
   lines_90 = []
   lines_50 = []
+  y_max = 50
   for i, ((d, largest), color, hatch) in enumerate(list_data):
-    axs[i].set_ylim(top=100)
+    axs[i].set_ylim(top=y_max)
     line_90 = 0
     line_50 = 0
     sum_y = 0
@@ -115,9 +118,9 @@ def get_data(path_out):
       edgecolor='black'
     ))
     yticks = []
-    for tick in list(range(0, 120)[::20])[1:]:
+    for tick in list(range(0, y_max+10)[::10])[1:]:
       diff = abs(largest[1]-tick)
-      if diff < 10:
+      if diff < 8:
         yticks.append(largest[1])
       else:
         yticks.append(tick)
@@ -126,11 +129,11 @@ def get_data(path_out):
   h90 = ""
   h50 = ""
   for i, line in enumerate(lines_90):
-    ys = range(0,120)[::20]
+    ys = range(0,y_max+10)[::10]
     h90 = axs[i].plot([line]*len(ys), ys, "--", zorder=-10, alpha=0.8,
                   linewidth=1)[0]
   for i, line in enumerate(lines_50):
-    ys = range(0,120)[::20]
+    ys = range(0,y_max+10)[::10]
     h50 = axs[i].plot([line]*len(ys), ys, "-.", zorder=-10, alpha=0.8,
                   linewidth=1)[0]
   fig.legend(
@@ -151,7 +154,7 @@ def get_data(path_out):
     fontsize='small',
   )
   for i in range(len(list_data)):
-    axs[i].vlines(xticks, 0, 100, alpha=0.2, linestyles='dotted', linewidth=1,
+    axs[i].vlines(xticks, 0, 100, alpha=0.3, linestyles='dotted', linewidth=1,
                   zorder=-20)
     axs[i].vlines([v+5 for v in xticks[:-1]], 0, 100, alpha=0.1,
                   linestyles='dotted', linewidth=1, zorder=-20)
@@ -162,7 +165,7 @@ def get_data(path_out):
                   left=False)
   plt.xlabel('First second and onwards')
   plt.ylabel('Units in group')
-  plt.title('Histogram of completion times, all test types')
+  plt.title('Histogram of completion times, Team Workload')
   #fig.tight_layout()
   figure_save(fig, path_out)
 

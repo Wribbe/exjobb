@@ -76,7 +76,7 @@ def run_to_datetimes(run):
   return [datetime.strptime(d, fmt) for d in [start, stop]]
 
 figure_units = {
-  'size': (6, 2.3),
+  'size': (0.7*8.3, 2.3),
 }
 
 def figure_setup(figure, size=figure_units['size']):
