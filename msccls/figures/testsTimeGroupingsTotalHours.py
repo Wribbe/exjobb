@@ -61,9 +61,9 @@ def get_data(path_out):
     runs_per_type[test_type][diff] += 1
 
   list_data = [data_get(valid=l) for l in [
-#    lambda num: True,
-    lambda num: num<16,
-    lambda num: num>15,
+    lambda num: True,
+#    lambda num: num<16,
+#    lambda num: num>15,
   ]]
 
   largest = list_data[0][1]
@@ -87,74 +87,54 @@ def get_data(path_out):
   fig, axs = plt.subplots(len(list_data), 1, sharex=True)
   fig.subplots_adjust(hspace=0)
 
-  handlers = []
   list_data = list(zip(list_data, iter_colors, iter_markers('bar')))
   xticks = [1]+list(range(10, 150)[::10])
-  lines_90 = []
-  lines_50 = []
+  line_95 = 0
+  line_90 = 0
+  line_50 = 0
   for i, ((d, largest), color, hatch) in enumerate(list_data):
-    axs[i].set_ylim(top=100)
-    line_90 = 0
-    line_50 = 0
     sum_y = 0
     xs, ys = zip(*d)
     total_y = sum(ys)
-    for x,y in sorted(d):
+    for x,y in d:
       sum_y += y
+      if sum_y/total_y >= 0.95 and not line_95:
+        line_95 = x+1
       if sum_y/total_y >= 0.9 and not line_90:
         line_90 = x+1
-        lines_90.append(line_90)
       if sum_y/total_y >= 0.5 and not line_50:
         line_50 = x+1
-        lines_50.append(line_50)
-    handlers.append(axs[i].bar(
+
+    axs.set_ylim(top=100)
+    bars = axs.bar(
       xs, ys,
       color=color,
       hatch=hatch,
       alpha=0.99,
       edgecolor='black'
-    ))
-    yticks = []
-    for tick in list(range(0, 120)[::20])[1:]:
-      diff = abs(largest[1]-tick)
-      if diff < 10:
-        yticks.append(largest[1])
-      else:
-        yticks.append(tick)
+    )
+    yticks = [v for v in list(range(0, 110))[::10] if v != 90]
+    yticks.append(largest[1])
+    axs.set_yticks(yticks)
 
-    axs[i].set_yticks(yticks)
-  h90 = ""
-  h50 = ""
-  for i, line in enumerate(lines_90):
-    ys = range(0,120)[::20]
-    h90 = axs[i].plot([line]*len(ys), ys, "--", zorder=-10, alpha=0.8,
-                  linewidth=1)[0]
-  for i, line in enumerate(lines_50):
-    ys = range(0,120)[::20]
-    h50 = axs[i].plot([line]*len(ys), ys, "-.", zorder=-10, alpha=0.8,
-                  linewidth=1)[0]
+  ys = range(0,120)[::20]
+  axs.plot([line_95]*len(ys), ys, "-" , zorder=-10, alpha=0.8, markersize=4, linewidth=1)[0]
+  axs.plot([line_90]*len(ys), ys, "-.", zorder=-10, alpha=0.8, markersize=4, linewidth=1)[0]
+  axs.plot([line_50]*len(ys), ys, "--", zorder=-10, alpha=0.8, markersize=4, linewidth=1)[0]
   fig.legend(
     [
-      *handlers,
-      h90,
-      h50,
-    ],
-    [
+      '95th precentile',
+      '90th precentile',
+      '50th precentile',
 #      'All users',
-      '#$r\leq15$',
-      '#$r\geq16$',
-      '90th percentile',
-      '50th percentile',
+#      '#$r\leq15$',
+#      '#$r\geq16$',
     ],
     loc='upper right',
-    bbox_to_anchor=(0.88, 1.00),
-    fontsize='small',
+    bbox_to_anchor=(0.88, 1.00)
   )
-  for i in range(len(list_data)):
-    axs[i].vlines(xticks, 0, 100, alpha=0.2, linestyles='dotted', linewidth=1,
-                  zorder=-20)
-    axs[i].vlines([v+5 for v in xticks[:-1]], 0, 100, alpha=0.1,
-                  linestyles='dotted', linewidth=1, zorder=-20)
+#  for i in range(len(list_data)):
+#    axs.vlines(xticks, 0, 100, alpha=0.5, linestyles='dotted', linewidth=1)
   fig.set_size_inches(figure_units['size'])
   plt.xticks(xticks)
   fig.add_subplot(111, frameon=False)
