@@ -63,7 +63,7 @@ def get_data(path_out):
 #        continue
       results.setdefault(f"Q{n}", []).append(d.get(i, 0))
 
-  results = {'Q1': results['Q1']}
+  results = {'Q4': results['Q4']}
 #  results_old = {
 #    'Q1': [10, 15, 17, 32, 26],
 #    'Q2': [10, 10, 10, 26, 13],
