@@ -602,7 +602,7 @@
           }
 				\end{figure}
 
-        Looking at type-distribution over all participants together
+        Examining the types distributed over all participants together
         with the different groupings, \textit{Employee Hours} is the most
         executed test type, regardless of categorization.
 
@@ -625,47 +625,40 @@
         comparatively, do not impact the type distribution since a symmetrical
         distribution cancels itself out in this case.
 
-      \subsection{Preferential task order}
+      \subsection{Checking for preferential task order}
 
-        It is interesting to see if there are any discernible preferences
-        of how a participant chooses in witch order to run the tests in their
-        session. This is done by pulling out all the test runs that had a
-        completion time from the database and grouping them by the order in
-        which they were run by the participants.
-
-        By furthering splitting the index-groups by task type it is possible to
-        calculate the relative percentage of the n-th task being a specific
-        type. The result for the standard group of fifteen or less tests shown
-        below.
+        As with the task-types, there are no no restrictions on in what order a
+        participant can preform tasks. Grouping the tasks for each participant
+        and sorting them in chronological order results in a view into what
+        order each participant choose to run the different tasks.
 
 				\begin{figure}[ht!]
 					\centering
 					\includegraphics{figures/testsRunOrder.pdf}
           \caption{
-            Percentage of task type grouped by the order in which they were
-            run for participants that ran a total of fifteen tests or less.
+            Bar-graph showing the ratio of specific task-types depending on the
+            the chronological order of the run.
           }
           \label{label_testsRunOrder}
         \end{figure}
 
         Since the legend in figure \ref{label_testsRunOrder} reflects the order
-        in which the tasks appear in the user interface for the participants,
-        it is apparent that the majority of participants choose to do the tasks
-        in the presented order, top to bottom. As for the fifth test run, the
-        majority choose do an extra of the last one (Team Performance), and
-        after that, most participants opted to go back and do the first one
-        again (Employee Hours).
+        in which the tasks appear in the user interface for participants, the
+        majority choose to do the tasks in the presented order, top to bottom.
+        As for the fifth test run, the majority choose do an extra of the last
+        one (Team Performance), and after that, most participants opted to go
+        back and do the first one again (Employee Hours).
 
         Given the wider range of the data coming from the outlier group (1-100)
         the visualization needs to be altered slightly. Since there is not
-        enough room to have the bars side by side, they have been stacked by
-        size, with the largest bar at the bottom.
+        enough room to have the bars side by side, they have been stacked, with
+        the largest bar being at the bottom.
 				\begin{figure}[ht!]
 					\centering
 					\includegraphics{figures/testsRunOrderOutliers.pdf}
           \caption{
-            Percentage of task type grouped by the order in which they were
-            run for participants that ran a total of sixteen tests or more.
+            Stacked bars showing relation between task order and task type for
+            the outlier group.
           }
 				\end{figure}
 
@@ -687,41 +680,42 @@
 %      }
 %
 
-      \subsection{Task types and success-rate}
+      \subsection{Success-rates and task type}
 
-        Next, the percentage of answered that are correct per task type are
-        extracted out from the results. The data is split into two groups, one
-        for the ordinary group with fifteen or less total tests, and one for
-        the outliers with sixteen or more, result is displayed below.
+        When completing a test-run the application marks the result as
+        either correct or wrong in the underlying database. Extracting
+        those answers and grouping them by the task-type makes it possible to
+        compare the relative success- and failure-rates for each task-type.
 
 				\begin{figure}[h!]
 					\centering
           \includegraphics{figures/testsResultsByType.pdf}
           \caption{
-            Percentages of correct task answers split on ordinary and outlier
-            groups.
+            Bars showing percentages of all answers that are correct for a
+            given task-type for regular and outlier groupings.
           }
 				\end{figure}
 
-        According to the data, the difficulty of the test type in order of
-        hardest to easiest is: \textit{Employee Hours}, \textit{Team
-          Performance}, \textit{Team Workload} and \textit{Task Dependencies}.
-        The data also shows that the outlier group have a tendency to be more
-        correct, on average, than the ordinary group.
+        Reading the graph, the difficulty of the task-types in order of hardest
+        to easiest is as follows: \textit{Employee Hours} is the hardest to get
+        correct, followed by \textit{Team Performance}, \textit{Team Workload}
+        and finally, the easiest to get a correct answer on, \textit{Task
+          Dependencies}. According to the same data, the outlier group seems to
+        be on average, more correct than the regular group.
 
-        Given that the data seems to suggest that success-rate increases with
-        the number of performed tasks, the data is re-arranged to show the
-        percentage of correct answer mapped against the task run index, shown
-        below:
+%        Given that the data seems to suggest that success-rate increases with
+%        the number of performed tasks, the data is re-arranged to show the
+%        percentage of correct answer mapped against the task run index, shown
+%        below:
 
-				\begin{figure}[ht!]
-					\centering
-          \includegraphics{figures/testsResultsByTaskIndex.pdf}
-          \caption{
-            Percentages of correct task answers split on ordinary and outlier
-            groups.
-          }
-				\end{figure}
+%				\begin{figure}[ht!]
+%					\centering
+%          \includegraphics{figures/testsResultsByTaskIndex.pdf}
+%          \caption{
+%            Percentages of correct task answers split on ordinary and outlier
+%            groups.
+%          }
+%				\end{figure}
 
 %				\begin{figure}[ht!]
 %					\centering
@@ -732,30 +726,33 @@
 %          }
 %				\end{figure}
 %
-
+      \newpage
       \subsection{Completion times - Task types and distribution}
 
         Computing the mean and average completion time for the task-runs is
         simply a matter of gathering all the start and stop times from the
         database and perform the corresponding arithmetics. The resulting times,
         split in regular and outliers, is shown below.
+
         \begin{figure}[h!]
           \centering
           \includegraphics{figures/testsTimesPerTaskTypeOutliers.pdf}
-          \caption{Average and median completion times for regulars and outliers groupings. }
+          \vspace{-0.3cm}
+          \caption{Average and median completion times for task-types. }
           \label{label_testsTimesPerTaskTypeOutliers}
         \end{figure}
 
-        According to the data \textit{Employee Hours} has the longest average
+
+        \textit{Employee Hours} has, according to the data, the longest average
         and median completion time of all the task types, which holds for both
-        groupings. This makes sense since the earlier data, looking at the
-        overall success-rate split on the tasks types, points to
+        groupings. This makes sense since that the earlier analysis, looking at
+        the overall success-rate for different tasks-types, points to
         \textit{Employee Hours} being the hardest task type of the four.
 
-        Generating a histogram based on the completion times for all the
-        participants together with percentiles, shows that 50\% of all
-        tasks-runs were completed in 7 seconds or less, 90\% in 10 seconds or
-        less and 95\% of all runs completed below 42 seconds.
+        By adding a few percentiles to a histogram based on the completion times for all
+        tasks and participants, it is possible to determine that that 50\% of
+        all tasks-runs were completed in 7 seconds or less, 90\% in 10 seconds
+        or less and 95\% of all runs completed below 42 seconds.
 
         \begin{figure}[h!]
           \centering
@@ -766,9 +763,10 @@
           }
         \end{figure}
 
-
-        Creating the same histogram, but splitting the data into the regular
-        and outlier groups results in a slightly different picture.
+        Reusing the previous data by splitting it and creating one histogram
+        each for the regular and outlier group gives a better view of how the
+        completion times are distributed for each of the groups respectably,
+        result shown below.
 
         \begin{figure}[h!]
           \centering

@@ -160,9 +160,9 @@ def get_data(path_out):
   fig.add_subplot(111, frameon=False)
   plt.tick_params(labelcolor='none', top=False, bottom=False, right=False,
                   left=False)
-  plt.xlabel('First second and onwards')
-  plt.ylabel('Units in group')
-  plt.title('Histogram of completion times, all test types')
+  plt.title('Histogram for all completion times, regular and outlier')
+  plt.xlabel('Seconds')
+  plt.ylabel('Size of group')
   #fig.tight_layout()
   figure_save(fig, path_out)
 
