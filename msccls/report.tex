@@ -2,7 +2,7 @@
 % to show a list of used packages at the end of the document, delete the nofilelist option
 %\documentclass{cslthse-msc}
 \addbibresource{report.bib}
-\setlength{\textfloatsep}{1pt plus 1.0pt minus 2.0pt}
+%\setlength{\textfloatsep}{1pt plus 1.0pt minus 2.0pt}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -15,7 +15,7 @@
 	style=numeric,
 	sorting=none,
 ]{biblatex}
-\setlength{\belowcaptionskip}{0pt}
+%\setlength{\belowcaptionskip}{0pt}
 \usepackage{parskip}
 \usepackage{textcomp}
 
@@ -73,7 +73,7 @@
 \newcommand{\eatdot}[1]{}
 \newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
 \newcommand{\varHere}[1]{\input{vars/#1.txt}\unskip}
-\newcommand{\checkTruth}[0]{\textcolor{red}{(?)} }
+\newcommand{\checkTruth}[0]{\textcolor{red}{(?)}}%
 \newcommand{\findref}[0]{\textcolor{orange}{[!]}}%
 \newcommand{\todoInsert}[1]{\textcolor{purple}{\textit{<insert #1 here>}}}%
 \newcommand{\numRuns}[1]{\texttt{\#r=#1}}%
@@ -341,6 +341,82 @@
 
 		\section{Results}
 
+			\subsection{Pre-questionnaire}
+
+        Before being able to perform the tests, each participant has to fill
+        out and submit a pre-questionnaire. This is done in order to get
+        a rough demographical overview of the people participating in this
+        study. Initially they are asked about age, used input device, type of
+        screen category the test were conducted on, and what binary gender, if
+        any, they identify as.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/preQuestionnaireAnswers.pdf}
+					\caption{Answers for the pre-questionnaire.}
+				\end{figure}
+
+        With each dot representing one answer no one participating was
+        twenty or below, most of the  participants were between twenty
+        one and thirty five, with fourteen being thirty six and older. Since a
+        large part of the participants came from MASSIVE, this seems to fit the
+        mean age at the company, which is at thirty two{\findref} at the time
+        of this writing.
+
+        It's is worth mentioning however, that the most represented single age
+        was twenty-five, which is the default value set for the field. More on
+        this specifically in \todoInsert{Link to threats to validity}.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/preQuestionnaireAnswersIdentify.pdf}
+					\caption{Answers for the pre-questionnaire.}
+				\end{figure}
+
+        Asking people for what gender they identify as results in the largest
+        group, 52 participants, identify as male. Again, as a large portion of
+        participants came from MASSIVE, this is expected since the gender
+        distribution in businesses related game-development tend to be weighted
+        toward men\findref\findref.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/preQuestionnaireAnswersInputs.pdf}
+					\caption{Answers for the pre-questionnaire.}
+				\end{figure}
+
+        Continuing the trend, most workstations at MASSIVE consist of a
+        desktop PC where the main peripherals used for input are a mouse and a
+        keyboard with the occasional drawing tablet mixed in.
+
+        In general it was assumed that most of the participants were going to
+        user a mouse and keyboard, with trackpads as a probable second place.
+        The turnout of nearly twenty participants using touch as their main
+        input for these tests was a bit of a surprise.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics{figures/preQuestionnaireAnswersScreen.pdf}
+					\caption{Answers for the pre-questionnaire.}
+				\end{figure}
+
+        The pre-questionnaire also included \todo{Find the actual name} five '1-5
+        questions':
+
+          \begin{enumerate}
+            \item[Q1:]{I feel comfortable using a computer.}
+            \item[Q2:]{I have a interest in UI-design.}
+            \item[Q3:]{I have studied UI-design.}
+            \item[Q4:]{I play pointer based games (e.g. first person shooters).}
+            \item[Q5:]{I have trouble distiguishing some colors from each other.}
+          \end{enumerate}
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFive.pdf}
+					\caption{Answers for the pre-questionnaire.}
+				\end{figure}
+
 			\subsection{Participation and success ratio}
 
 				The test-site went live 2020-01-24 and the link was initially shared
@@ -442,7 +518,7 @@
         since those groupings of completed tests are evenly spread among all the
         test task types.
 
-      \newpage
+
       \subsection{Preferential task order}
 
         It is interesting to see if there are any discernible preferences
@@ -474,7 +550,6 @@
         after that, most participants opted to go back and do the first one
         again (Employee Hours).
 
-        \newpage
         Given the wider range of the data coming from the outlier group (1-100)
         the visualization needs to be altered slightly. Since there is not
         enough room to have the bars side by side, they have been stacked by
@@ -505,7 +580,7 @@
 %        Which task is the most popular in the 5-run category? ...
 %      }
 %
-      \newpage
+
       \subsection{Task types and success-rate}
 
         Next, the percentage of answered that are correct per task type are
@@ -552,7 +627,6 @@
 %				\end{figure}
 %
 
-      \newpage
       \subsection{Completion times - Task types and distribution}
 
         Computing the mean and average completion time for the task-runs is
@@ -586,7 +660,7 @@
           }
         \end{figure}
 
-        \newpage
+
         Creating the same histogram, but splitting the data into the regular
         and outlier groups results in a slightly different picture.
 
@@ -676,7 +750,5 @@
             second for; all, regular and outliers user-groups.
           }
         \end{figure}
-
-
 
 \end{document}
