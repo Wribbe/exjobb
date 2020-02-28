@@ -1,7 +1,6 @@
 \documentclass[nofilelist,dvipsnames]{cslthse-msc}
 % to show a list of used packages at the end of the document, delete the nofilelist option
 %\documentclass{cslthse-msc}
-\addbibresource{report.bib}
 %\setlength{\textfloatsep}{1pt plus 1.0pt minus 2.0pt}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -15,6 +14,7 @@
 	style=numeric,
 	sorting=none,
 ]{biblatex}
+\addbibresource{report.bib}
 %\setlength{\belowcaptionskip}{0pt}
 \usepackage{parskip}
 \usepackage{textcomp}
@@ -236,22 +236,22 @@
         still important to get it in front of users, in this case, test
         participants, as soon as possible.
 
-%        \begin{figure}[h!]
-%          \centering
-%          \begin{minipage}{.49\textwidth}
-%            \includegraphics[width=\linewidth]{ui11.pdf}
-%          \end{minipage}
-%          \begin{minipage}{.49\textwidth}
-%            \includegraphics[width=\linewidth]{ui12.pdf}
-%          \end{minipage}
-%          \begin{minipage}{.49\textwidth}
-%            \includegraphics[width=\linewidth]{ui13.pdf}
-%          \end{minipage}
-%          \begin{minipage}{.49\textwidth}
-%            \includegraphics[width=\linewidth]{ui14.pdf}
-%          \end{minipage}
-%          \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4.}
-%        \end{figure}
+        \begin{figure}[h!]
+          \centering
+          \begin{minipage}{.49\textwidth}
+            \includegraphics[width=\linewidth]{ui11.pdf}
+          \end{minipage}
+          \begin{minipage}{.49\textwidth}
+            \includegraphics[width=\linewidth]{ui12.pdf}
+          \end{minipage}
+          \begin{minipage}{.49\textwidth}
+            \includegraphics[width=\linewidth]{ui13.pdf}
+          \end{minipage}
+          \begin{minipage}{.49\textwidth}
+            \includegraphics[width=\linewidth]{ui14.pdf}
+          \end{minipage}
+          \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4.}
+        \end{figure}
 
         \todoMaybe{These figures should probably be under result?}
 
@@ -341,7 +341,7 @@
 
 		\section{Results}
 
-			\subsection{Pre-questionnaire}
+			\subsection{Pre-questionnaire Itemizations}
 
         Before being able to perform the tests, each participant has to fill
         out and submit a pre-questionnaire. This is done in order to get
@@ -356,16 +356,17 @@
 					\caption{Answers for the pre-questionnaire.}
 				\end{figure}
 
-        With each dot representing one answer no one participating was
-        twenty or below, most of the  participants were between twenty
-        one and thirty five, with fourteen being thirty six and older. Since a
-        large part of the participants came from MASSIVE, this seems to fit the
-        mean age at the company, which is at thirty two{\findref} at the time
-        of this writing.
+        Beginning with age, with each dot representing one answer no one
+        participating was twenty or below, most of the  participants were
+        between twenty one and thirty five, with fourteen being thirty-six and
+        older. Since a large part of the participants came from MASSIVE, this
+        seems to fit the mean age at the company, which is at
+        thirty-two{\findref} at the time of this writing.
 
         It's is worth mentioning however, that the most represented single age
-        was twenty-five, which is the default value set for the field. More on
-        this specifically in \todoInsert{Link to threats to validity}.
+        was twenty-five, which is the default value set for the age input
+        field. More on this specifically in \todoInsert{Link to threats to
+          validity}.
 
 				\begin{figure}[h!]
 					\centering
@@ -390,9 +391,17 @@
         keyboard with the occasional drawing tablet mixed in.
 
         In general it was assumed that most of the participants were going to
-        user a mouse and keyboard, with trackpads as a probable second place.
-        The turnout of nearly twenty participants using touch as their main
-        input for these tests was a bit of a surprise.
+        use a mouse and keyboard, with trackpads as a probable second place,
+        making the turnout of nearly twenty participants using touch as their
+        main input a bit of a surprise.
+
+        Even though the assumed main input method for these tests is a keyboard
+        and mouse at a stationary desktop computer, the overarching goal of the
+        project, as stated earlier, is to be a pre-cursor to o more generalized
+        usability testing framework. In order to align with this goal, it is
+        important to explore the possibility of scaling the interface and
+        related tests to different screen sizes, and analyze what, if any,
+        impact is has on participant performance.
 
 				\begin{figure}[h!]
 					\centering
@@ -400,31 +409,113 @@
 					\caption{Answers for the pre-questionnaire.}
 				\end{figure}
 
-        The pre-questionnaire also included \todo{Find the actual name} five '1-5
-        questions':
+        Requiring actual screen-sizes was seen as to cumbersome of a task to
+        ask of the participants, especially if using devices other than a
+        somewhat standard desktop monitor. Here the categories roughly equate
+        to; \textit{Desktop}: 18" or larger, \textit{Laptop}: 13"-17", \textit{Tablet}:
+        11"-12" and \textit{Mobile}: 10" and below.
 
-          \begin{enumerate}
-            \item[Q1:]{I feel comfortable using a computer.}
-            \item[Q2:]{I have a interest in UI-design.}
-            \item[Q3:]{I have studied UI-design.}
-            \item[Q4:]{I play pointer based games (e.g. first person shooters).}
-            \item[Q5:]{I have trouble distiguishing some colors from each other.}
-          \end{enumerate}
+			\subsection{Pre-questionnaire 1-5 questions}
+
+        Aside from the physical setup, there are relevant knowledges and
+        experience that could become interesting when analyzing free-form
+        answers and test-results gathered from the participants. As an example,
+        is the free-form feedback different from someone that is interested in
+        usability-design? Does the level of computer literacy or experience
+        with mouse-driven games impact completion times? Etcetera.
+
+        In order to evaluate these aspects the second half of the
+        pre-questionnaire included five self-evaluation-1-to-5 questions
+        \todo{Find the actual name}, questions and answer distribution
+        displayed below:
 
 				\begin{figure}[h!]
-					\centering
-					\includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFive.pdf}
-					\caption{Answers for the pre-questionnaire.}
+          \textbf{Q1: I feel comfortable using a computer.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFive.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the pre-questionnaire Q1.}
+          \end{center}
 				\end{figure}
 
-			\subsection{Participation and success ratio}
+        The clear majority of participants feel that they are very comfortable
+        using a computer. Since this question is so heavily skewed towards
+        \textit{Strongly agree}, it would be interesting to add an additional
+        \textit{I see myself as an advanced computer user} or similar in order
+        to try to separate out more divisions.
 
-				The test-site went live 2020-01-24 and the link was initially shared
-				through Facebook. On 2020-01-27 the link was shared on
-				the MASSIVE internal mailing list, boosting the participation
-				significantly. In a total,
-				\varHere{totalParticipants} participants got past the initial information
-				page over a five day period.
+				\begin{figure}[h!]
+          \textbf{Q2: I have a interest in UI-design.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFiveQ2.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the pre-questionnaire Q2.}
+          \end{center}
+				\end{figure}
+
+        Looking at the general interest in regards to user interface design,
+        most participants either do not care about it, or find it somewhat to
+        very interesting. If this was a non-anonymous study, it would be
+        interesting to follow up on the seven participants that strongly
+        disagree to this question. Mostly in order to differentiate if they do
+        not like user interfaces an input method in general, or if it is more
+        related to them not wanting to be involved in user interface design.
+
+				\begin{figure}[h!]
+          \textbf{Q3: I have studied UI-design.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFiveQ3.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the pre-questionnaire Q3.}
+          \end{center}
+				\end{figure}
+
+        In terms of having studied user interface design, the majority of
+        participants have not. Since this is a pure self-assessment, the
+        definition of what \textit{studied} means in this context is up for
+        grabs. A follow up question in regards to what type of study;
+        self-learnt, online-course, university etcetera would be needed clarify
+        this information further.
+
+				\begin{figure}[h!]
+          \textbf{Q4: I play pointer based games (e.g. first person shooters).}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFiveQ4.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the pre-questionnaire Q4.}
+          \end{center}
+				\end{figure}
+
+        A slight majority agree, in some capacity, that they play games where
+        the main form of input is pointer movements. Following this question
+        with one that seeks to answer the underlying reason why disagreeing
+        participants do not interact more with this kind of games could be
+        interesting from a interface design standpoint. Additional questions or
+        follow-up would be needed to determine if the disagreement it is a
+        matter of taste, design faults, available time, or something completely
+        different.
+
+        \newpage
+				\begin{figure}[h!]
+          \textbf{Q5: I have trouble distinguishing some colors from each other.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFiveQ5.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the pre-questionnaire Q5.}
+          \end{center}
+				\end{figure}
+
+        All of the available tests incorporates different color pallets to
+        varying degree, which makes it interesting to know if any of the
+        participants have trouble making out the difference between colors.
+
+			\subsection{Launch, participation and overall success ratio}
+
+        The test-site went live 2020-01-24 with the link initially shared only
+        through Facebook. On 2020-01-27 the link was shared on the MASSIVE
+        internal mailing list, boosting the participation significantly.
+        In total, \varHere{totalParticipants} participants moved past the
+        initial information over a five day period.
 
 				\begin{figure}[h!]
 					\centering

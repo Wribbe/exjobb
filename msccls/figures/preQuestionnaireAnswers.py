@@ -66,6 +66,11 @@ def get_data(path_out):
   fig, ax = plt.subplots()
 
   color = iter_colors.__next__()
+  xticks = range(1, max(categories.values())+1)
+  ax.vlines(xticks, 0, 7, alpha=0.4, linestyles='dotted', linewidth=1,
+                zorder=-20)
+#  ax.vlines([v+5 for v in xticks[:-1]], 0, 7, alpha=0.1,
+#                linestyles='dotted', linewidth=1, zorder=-20)
   for y, (category, num) in enumerate(categories.items(), start=1):
     plt.plot(range(1, num+1), [y]*num, 'o', color=color)
 
