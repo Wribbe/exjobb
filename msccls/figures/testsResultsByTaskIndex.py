@@ -63,6 +63,6 @@ def get_data():
         'width': dx,
       }
     },
-   'ylabel': "Task percentage",
+   'ylabel': "Percentage",
    'xlabel': "Test index, from the first test-run and onwards",
   }

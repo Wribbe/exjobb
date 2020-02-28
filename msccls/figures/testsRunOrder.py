@@ -64,6 +64,7 @@ def get_data():
     'markers': markers,
     'colors': colors,
     'legend': handlers_for_legend,
+    'size': (0.7*8.3, 2.5),
     'kwargs': {
       'legend': {
         'fontsize': 'x-small',
@@ -71,6 +72,7 @@ def get_data():
         'bbox_to_anchor': [.22, 1.0],
       },
     },
-   'ylabel': "Task percentage",
+   'ylabel': "Percentage",
    'xlabel': "Test index, from the first test-run and onwards",
+    'title': "Relation task order and task type, regular",
   }

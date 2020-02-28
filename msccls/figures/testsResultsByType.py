@@ -77,6 +77,7 @@ def get_data():
       '#$r\geq16$',
     ],
     'xticks': range(0,110)[::10],
-    'xlabel': 'Percentage of answers that are correct',
+    'xlabel': 'Percentage',
     'ylabel': 'Task type',
+    'title': 'Success-rates for different task-types',
   }

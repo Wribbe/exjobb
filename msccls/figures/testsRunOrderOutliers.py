@@ -67,8 +67,9 @@ def get_data():
     'colors': colors,
     'yticks': range(110)[::10],
     'xticks': [1] + list(range(10, 110)[::10]),
-    'ylabel': "Task-type percentages",
+    'ylabel': "Percentage",
     'xlabel': "Test index, from the first test-run and onwards",
+    'title': "Relation task order and task type, outliers",
     'kwargs': {
       'legend': {
         'bbox_to_anchor': (1.0, 0.5),
