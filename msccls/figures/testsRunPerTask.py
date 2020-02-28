@@ -44,9 +44,10 @@ def get_data():
     'data': data,
     'method': 'barh',
     'yticks': [-x-height/2 for x in range(len(labels))],
-    'ylabel': "Test task type",
-    'xlabel': "Total number of tests run per category",
+    'ylabel': "Task type",
+    'xlabel': "Number of test-runs",
     'legend': ['#$r>0$', '#$r\leq15$', '#$r\geq16$'],
+    'title': 'Test-runs grouped by test type',
     'kwargs': {
       'legend': {
         'title': "Runs/User:",
