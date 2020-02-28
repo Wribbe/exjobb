@@ -71,9 +71,10 @@ def get_data():
     'data': [(x,y)],
     'method': 'bar',
     'xticks': [1,5,10]+list(numberOfRuns.keys())[-5:],
-    'yticks': [1,4,9,43],
-    'xlabel': "Total number of tests",
-    'ylabel': "Users in category",
+    'yticks': [4,9,43],
+    'xlabel': "Number of tests in group",
+    'ylabel': "Participants in category",
+    'title': "Participants grouped on number of test-runs",
 #    'table': {
 #      'cellText': [(f"{x}:", y) for x,y in zip(x,y)],
 #      'colLabels': ['Tests Run','#Users'],

@@ -10,5 +10,6 @@ def get_data():
   return {
     'data': [incremental_sum(dates)],
     'xlabel': 'Date of registration',
-    'ylabel': 'Number user registered',
+    'ylabel': 'Number of participants',
+    'title': 'Total amount of participants over time',
   }

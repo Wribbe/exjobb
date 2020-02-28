@@ -42,6 +42,7 @@ def get_data():
   return {
     'data': [incremental_sum(dates[k]) for k in ['total','successful']],
     'legend': ['Answers', 'Correct Answers'],
-    'xlabel': "Date of test run",
-    'ylabel': "Number of tests run",
+    'xlabel': "Date of test-run",
+    'ylabel': "Number of test-runs",
+    'title': "Total number test-runs",
   }

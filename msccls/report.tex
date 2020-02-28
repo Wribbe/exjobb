@@ -356,12 +356,12 @@
 					\caption{Answers for the pre-questionnaire.}
 				\end{figure}
 
-        Beginning with age, with each dot representing one answer no one
-        participating was twenty or below, most of the  participants were
-        between twenty one and thirty five, with fourteen being thirty-six and
-        older. Since a large part of the participants came from MASSIVE, this
-        seems to fit the mean age at the company, which is at
-        thirty-two{\findref} at the time of this writing.
+        Beginning with age, with each dot representing one answer, no
+        participant was twenty or below, most of the  participants were between
+        twenty-one and thirty-five, with fourteen being thirty-six and older.
+        Since a large part of the participants came from MASSIVE, this seems to
+        fit the mean age at the company, which is at thirty-two{\findref} at
+        the time of this writing.
 
         It's is worth mentioning however, that the most represented single age
         was twenty-five, which is the default value set for the age input
@@ -502,12 +502,14 @@
             \includegraphics[width=\linewidth]{figures/preQuestionnaireAnswersOneToFiveQ5.pdf}
             \vspace{-1cm}
             \caption{Answers for the pre-questionnaire Q5.}
+            \vspace{-0.4cm}
           \end{center}
 				\end{figure}
 
         All of the available tests incorporates different color pallets to
         varying degree, which makes it interesting to know if any of the
         participants have trouble making out the difference between colors.
+        \vspace{-0.6cm}
 
 			\subsection{Launch, participation and overall success ratio}
 
@@ -517,10 +519,15 @@
         In total, \varHere{totalParticipants} participants moved past the
         initial information over a five day period.
 
+        \vspace{-0.55cm}
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/participantsOverTime.pdf}
-					\caption{Total registered participants over time.}
+          \vspace{-0.3cm}
+          \caption{
+            Total amount of participants that got past the initial
+            information screen and did not abort the tests.
+          }
 				\end{figure}
 
 				In total \varHere{totalTests} tests were run, where
@@ -532,16 +539,21 @@
 
 				\begin{figure}[h!]
 					\centering
-					\includegraphics{figures/runsOverTime.pdf}
-					\caption{Total number of tests run overt time.}
+					\includegraphics[width=0.95\linewidth]{figures/runsOverTime.pdf}
+          \vspace{-0.3cm}
+          \caption{Lines representing total amount of test-runs together with
+            the total of runs that produces the correct answer.}
+          \vspace{-0.4cm}
 				\end{figure}
 
 			\subsection{Tests per user and defining outliers}
 
 				The number of recommended test was five, which when completed, allowed
-				the participants to continue to the final survey. However, there was
-				nothing stopping each participant from doing more or less than the
-				suggested number.
+				the participant to continue to the final survey. However, there was
+				nothing stopping each participant from doing more or less than five.
+        By generating a histogram for the number of performed tests per
+        participant it is possible to determine which of tests was most
+        popular.
 
 				\begin{figure}[h!]
 					\centering
@@ -549,66 +561,69 @@
 					\caption{Participants grouped on how many test they performed.}
 				\end{figure}
 
-        \ \\
-        Of the \varHere{totalParticipants} number of participant sessions started,
-        \varHere{valNumAnyTestsRun}
-        of them ran at least one test, which means \varHere{valTestNoTests} ran
-        no tests.
+        In total, of the \varHere{totalParticipants} number of participant that
+        started a session, \varHere{valNumAnyTestsRun} of them ran at least one
+        test, which means \varHere{valTestNoTests} ran no tests. Retrieving and
+        tabulating additional values, discarding users with no test-runs,
+        produces the following table.
         %Further more, \varHere{valTestsFiveToTen} completed between
         %five and nine tests, and \varHere{valTestsElevenOrMore} completed ten or
         %more. (\varHere{valTestTenOrLessP}) (\varHere{valTestsElevenOrMoreP})
 
-        \begin{figure}
+        \begin{figure}[h!]
           \centering
           \varHere{tablePrecentageOfUsers}
-          \caption{Tabulated values of test-run groups and corresponding
-            percentage of total participants (participants with zero runs
-            discarded).}
+          \caption{
+            Tabulated values of test-run groups with corresponding percentage
+            of total active participants.
+          }
         \end{figure}
 
-      \subsection{Participant task type distribution}
+        Participants that have run at most fifteen tests make up slightly more
+        than 91\% of the total number of participants and will be the regular
+        group, denoted as $\#r\leq15$. Inversely the remaining participants
+        that have run sixteen or more tests in total, $\sim$9\% of the total
+        amount of participant will be seen as the outlier group, denoted as
+        $\#r\geq16$.
 
-        Since the participants were free to choose any combination of tests,
-        it's interesting to know which of the task was most frequently run.
+      \subsection{Test type distribution among participants}
+
+        There are no restrictions in place in regards to how a participant
+        can choose which task types to preform in what order. By grouping all
+        the task-runs based on the type of the task, it is possible to see if
+        any type is more popular than the others.
 
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/testsRunPerTask.pdf}
           \caption{
-            Test runs distributed per task-types for all participants,
-            participants that did ten or fewer and participants that did more
-            than ten tests.
+            Distribution of task types among all total runs together with the
+            total for the regular- and outlier-grouping respectively.
           }
 				\end{figure}
 
-        Overall, \textit{employee hours} was the most executed test by a wide
-        margin when looking all the participants as one group and isolating the
-        group consisting of participants that did ten or fewer tests. Looking at
-        the outliers, participants that did sixteen or more tests, the
-        difference was not as stark with a more even distribution.
+        Looking at type-distribution over all participants together
+        with the different groupings, \textit{Employee Hours} is the most
+        executed test type, regardless of categorization.
 
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/testsRunPerTaskOutliers.pdf}
           \caption{
-            Detailed breakdown of task distribution for the outliers, 16 or
-            more tests run, and their task distribution, multiples of identical
-            distributions removed.
+            Detailed breakdown of task distribution for the outliers, multiples
+            of identical distributions removed.
           }
           \label{label_testsRunPerTaskOutliers}
 				\end{figure}
 
-        Observing the outlier distribution in figure
-        \ref{label_testsRunPerTaskOutliers}, there is only two \numRuns{20} runs
-        when the total was four. This is due to three of the four runs having
-        the exact same distribution, which is why only one of them, the last in
-        the series above, was included.
-
-        Additionally, it is interesting to note that neither of \numRuns{100},
-        \numRuns{32} or the last \numRuns{20} impacts the total distribution
-        since those groupings of completed tests are evenly spread among all the
-        test task types.
-
+        Taking a closer look at the distribution in the outlier group,
+        $\#r\geq16$, reveals that almost all of them, six out of the total seven,
+        are symmetrically split between all four task-types. Out of the sums
+        [20, 20, 20, 32, 49, 100], it is only 49 that is not evenly divisible
+        by four. This has the added effect that the participants in the
+        outlier grouping, even though they might have ran the most total tests
+        comparatively, do not impact the type distribution since a symmetrical
+        distribution cancels itself out in this case.
 
       \subsection{Preferential task order}
 

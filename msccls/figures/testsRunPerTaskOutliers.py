@@ -30,9 +30,10 @@ def get_data():
     'method': 'barh',
     'yticks': [-x+height/2-0.9/2 for x in range(len(labels))],
     'ylabel': "Task type",
-    'xlabel': "Total number of tests",
+    'xlabel': "Number of test-runs",
     'xticks': range(0,40)[::5],
     'legend': [f'#$r={sum(d.values())}$' for d in dicts],
+    'title': 'Distribution of test types per outlier sub-grouping',
     'kwargs': {
       'legend': {
         'title': "Runs/User:",
