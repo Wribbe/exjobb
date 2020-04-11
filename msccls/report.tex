@@ -117,7 +117,7 @@
       utilized correctly, the test-moderator should have a good insight into the
       participant thought-process during the test.
 
-    \subsection{Evolution and state of the art}
+    \subsection{Evolution and current use}
 
       While effective\checkTruth this method scales poorly with a one to one ratio
       between moderator and test participant. This project investigates the
@@ -126,9 +126,16 @@
 
       \todo{Expand this section.}
 
+%    \subsection{State of the art}
+%
+%      \todo{Expand this section.}
+
   \section{Running usability tests at larger scales}
 
-    \todo{Expand this section.}
+    \subsection{Notable usability tests}
+
+      \todo{See if there are any notable large-scale usability tests, does A/B
+        testing for large websites count?}
 
 	\section{Report goals}
 
@@ -207,7 +214,7 @@
         of communication under pressure was the initial focus, the suggestion
         of helping managers reduce the stress for their team came up.
 
-        After interviewing a couple of managers, the following ideas were
+        After interviewing a few managers, the following ideas were
         gathered:
 
         \begin{itemize}
@@ -306,42 +313,116 @@
 
       \subsection{Evaluating impact and effectiveness}
 
-        \todo{expand this section}
+        First the test-measurements and feedback is recorded from the
+        participants and stored to the underlying database. This data can then
+        be processed in order to find interesting correlations between
+        different application variables, such as the test types impact on the
+        overall completion time.
+
+        The data is accumulated and processed using Python, specifically Python
+        3.8.1 as of the time of this writing. The graphs included in this paper
+        are generated through matplotlib, and numpy was used in select
+        instances.
+
+%        Since the data is stored in real-time and is available
 
 %			Results by measuring the time and showing graphs + statistical grouping /
 %			analysis.
 
 		\section{Theory}
 
-			The theory contains color-theory and the experience from managerial
-			positions.
-
 			\subsection{Information presentation and color}
 
-			\subsection{Representative simplified task models}
+        This looks into the interaction between the Human Visual System (HVS)
+        and Graphical User Interfaces (GUIs), specifically the impact of color
+        on this interaction.
 
-			\subsection{Measuring time to task completion}
+        \todo{Expand section}
 
-			\subsection{Threshold for failure}
+			\subsection{Representative high fidelity prototypes}
+
+        User-Centered design and other iterative methods place a large
+        importance on creating a high fidelity prototyp\findref that users can interact
+        with, the sooner the better\findref.
+
+        In order to create a high fidelity prototype from the paper prototypes
+        presented earlier, each task had to be broken down into its essential
+        component. All the given examples given from the managers revolved
+        around identifying a specific piece of information, surrounded by
+        similar data in order to act on it.
+
+        \todo{Expand on 'finding a needle' approach with all the tasks, easy to
+        time and evaluate.}
+
+
+%			\subsection{Measuring time to task completion}
+%
+%
+%        \todo{Expand section}
+
+			\subsection{Thresholds for test failures}
+
+        Is there a clear limit to when a participant should no longer be able
+        to detect differences in color and relative sizes?
+
+        \todo{Expand section}
 
 
 		\section{Implementation}
 
-			Writing a web-application with Flask + python + sqlite3.
-			HTML5 and CSS with a dab javascript.
+      This section specifies how the user-facing web-application and its
+      backend was constructed, and what the thought behind some of the
+      decisions were.
+
+%			Writing a web-application with Flask + python + sqlite3.
+%			HTML5 and CSS with a dab javascript.
 
 			\subsection{Platform software stack}
 
+        The main user interfacing application is written in Python together
+        with the Flask web-framework running on top of an Apache web-server.
+        On the backend sqlite3 is used in order to store the results and
+        feedback from participants for easy retrieval.
+
+        While trying to keep the amount of JavaScript to a minimum, in order to
+        have the highest possible interoperability rate, some snippets were
+        required in order to make it possible to submit a web-form by clicking
+        a SVG-graphic.
+
 			\subsection{Interface creation}
+
+        Interface wise the application is built in plain HTML5 markup to
+        organize the main structure and buttons. All the various interfaces for
+        the different tasks are constructed using Scalable Vector Graphics
+        (SVG).
 
 			\subsection{Variable challenges}
 
-      \addtocontents{toc}{\pagebreak}
+        Randomness provides a good source of test-material but is not a good
+        fit for reproducibility. Fortunately this can be omitted by giving the
+        random number generator a pre-determined seed as a parameter to its
+        initialization call. Since the generator uses this seed as the basis
+        for all the random number sequences it produces, in other words, the
+        sequence of variables produced by two random number generators given
+        the same seed should be identical.
+
+        In this setup, the initial generator uses a hard-coded seed to to
+        produce a few thousand unique alpha-numeric sequences that are then
+        used as the anonymous ids for the participants. It is also these
+        anonymous-ids that are used as the seeds when generating the different
+        data-sets for each use.
+
+        This makes it possibility to reconstruct a participants test by
+        re-supplying the same anonymous-id and test-type to the application and
+        it should return the same test-setup.
+
+
+\addtocontents{toc}{\pagebreak}
 	\chapter{Evaluation}
 
 		\section{Results}
 
-			\subsection{Pre-questionnaire Itemizations}
+			\subsection{Pre-questionnaire -- itemizations}
 
         Before being able to perform the tests, each participant has to fill
         out and submit a pre-questionnaire. This is done in order to get
@@ -415,7 +496,7 @@
         to; \textit{Desktop}: 18" or larger, \textit{Laptop}: 13"-17", \textit{Tablet}:
         11"-12" and \textit{Mobile}: 10" and below.
 
-			\subsection{Pre-questionnaire 1-5 questions}
+			\subsection{Pre-questionnaire -- 1-5 questions}
 
         Aside from the physical setup, there are relevant knowledges and
         experience that could become interesting when analyzing free-form
@@ -495,7 +576,6 @@
         matter of taste, design faults, available time, or something completely
         different.
 
-        \newpage
 				\begin{figure}[h!]
           \textbf{Q5: I have trouble distinguishing some colors from each other.}
           \begin{center}
@@ -726,7 +806,6 @@
 %          }
 %				\end{figure}
 %
-      \newpage
       \subsection{Completion times - Task types and distribution}
 
         Computing the mean and average completion time for the task-runs is
@@ -783,11 +862,171 @@
         the tests in the outlier group were completed in 9 seconds or less,
         compared to 35 seconds or less in the regular group.
 
+			\subsection{Effect of color pallet on completion times}
+
+        \todo{Figure out a good way to calculate and visualize this.}
+
+			\subsection{Largest impact on completion times}
+
+        \todo{Possible multi variat analysis? Possible? Worth it?}
+
+			\subsection{Post-survey questions}
+
+        In order to gather feedback for evaluation and possible incorporation
+        into the next design iterations, the test concludes with a second
+        questionnaire with eight '1-5 questions'. These questions are ment to
+        evaluate what participants thought about the setup, and if they have
+        any suggestions, comments or improvements.
+
+				\begin{figure}[h!]
+          \textbf{Q1: The goal of each task was clear.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ1.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q1.}
+          \end{center}
+				\end{figure}
+
+        One of the main goals was to only challenge the participants in the
+        time it took them to complete a task and make it as easy for them every
+        where else. This means that there should be as little confusion to what
+        needs to be done in order to satisfy a test, and the challenge should
+        come from selecting one of many well understood options. And since a
+        clear majority at least agree that each task goal was clear, this goal
+        was accomplished.
+
+				\begin{figure}[h!]
+          \textbf{Q2: Test-application looks good.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ2.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q2.}
+          \end{center}
+				\end{figure}
+
+        While appreciating that the majority of participants was either
+        indifferent or liked the design of the application, it was not one of
+        the goals for this project. The main goal was to be usable and scaling
+        well to different media sizes, not looking good.
+
+        This reads either as the participants being nice since the tone of the
+        project is personal, or the design was too polished. If the latter case
+        is true, it indicates that this first iteration should have been in the
+        hands of participants sooner.
+
+				\begin{figure}[h!]
+          \textbf{Q3: Use of colors helped with the tasks.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ3.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q3.}
+          \end{center}
+				\end{figure}
+
+        Most people agreed that the color helped them preform their tasks.
+        This question could be augmented with additional questions that asks
+        more specifically about the perceived help. Additionally, it could be
+        complemented with a permutation of runs that do not contain any color,
+        in order to gather some test-data about runs without color.
+
+				\begin{figure}[h!]
+          \textbf{Q4: Amount of information was adequate.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ4.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q4.}
+          \end{center}
+				\end{figure}
+
+        The Majority answered that the information that they were provided was
+        adequate. Again, it would be very interesting to ask the participants
+        that disagree what they felt was missing.
+
+				\begin{figure}[h!]
+          \textbf{Q5: Test-application is easy to to navigate.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ5.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q5.}
+          \end{center}
+				\end{figure}
+
+        As stated earlier, participants should only need to apply them self
+        when doing the actual tests. The goal is that the navigation should be
+        easily traversable, which the majority of participants seem to agreed with.
+
+				\begin{figure}[h!]
+          \begin{center}
+            \textbf{Q6: Appropriate choice of colors.}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ6.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q6.}
+          \end{center}
+				\end{figure}
+
+        The questionnaire shows that most participant thought that choice of
+        colors were appropriate.
+
+				\begin{figure}[h!]
+          \textbf{Q7: Language used was easy to understand.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ7.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q7.}
+          \end{center}
+				\end{figure}
+
+        A majority of participants agreed that the language used in the
+        application was easy to understand, with none of the participants
+        strongly disagreeing with the statement.
+
+				\begin{figure}[h!]
+          \textbf{Q8: Easy to understand what to do next.}
+          \begin{center}
+            \includegraphics[width=\linewidth]{figures/postQuestionnaireAnswersOneToFiveQ8.pdf}
+            \vspace{-1cm}
+            \caption{Answers for the post-questionnaire Q8.}
+          \end{center}
+				\end{figure}
+
+        It is encouraging that most participants felt that they knew what to do
+        next when performing the tests. It would of course be preferable if
+        every one felt they knew what to do, but the result is encouraging.
+
 		\section{Discussion}
 
 			\subsection{Possible improvements}
 
+        What could be improved if this was done again?
+
+        \subsubsection{Multiple design iterations}
+
+          Should have had multiple smaller iterations, easy to get stuck.
+
+        \subsubsection{Opt-in followup}
+
+          Some questions reveled answers that didn't match what I had
+          anticipated, would be interesting to at least have a chance to follow
+          up on those observations.
+
+        \subsubsection{Leverage more frameworks?}
+
+          Didn't have the foundational expertise to deicide on a good
+          framework, would be easier now.
+          Build upon frameworks for faster iteration?
+
 			\subsection{Threats to validity}
+
+        \subsubsection{Online testing and latency}
+
+          Latency should be minimal, but it would be better to measure and
+          verify than simply guess.
+
+        \subsubsection{Seeding with user-id}
+
+          Might be a quirk in that re-seeding with the same user-id could
+          possibly create 'easy' anonymous id's.
+
 
 
 %				network latency?
