@@ -18,6 +18,7 @@
 %\setlength{\belowcaptionskip}{0pt}
 \usepackage{parskip}
 \usepackage{textcomp}
+\usepackage{pdfpages}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
 %\listfiles % initialize
@@ -67,7 +68,7 @@
 \begin{document}
 \renewcommand{\bibname}{References}
 
-\makefrontmatter
+%\makefrontmatter
 \newcommand{\todo}[1]{\textcolor{blue}{\textbf{TODO:} #1}}
 \newcommand{\todoMaybe}[1]{\textcolor{OliveGreen}{\textbf{?TODO:} #1?}}
 \newcommand{\eatdot}[1]{}
@@ -77,6 +78,8 @@
 \newcommand{\findref}[0]{\textcolor{orange}{[!]}}%
 \newcommand{\todoInsert}[1]{\textcolor{purple}{\textit{<insert #1 here>}}}%
 \newcommand{\numRuns}[1]{\texttt{\#r=#1}}%
+
+\includepdf[pages=-]{preface.pdf}
 
 \chapter{Introduction}
 
@@ -176,7 +179,23 @@
 	  %Usability-testing guide -> webapp suggesting + other. \\
 
 
-	\chapter{Approach}
+%	\chapter{Approach}
+	\chapter{Background theory}
+
+    \section{Usability}
+
+    \section{Python}
+
+    \section{Flask}
+
+
+	\chapter{Development process}
+
+		\section{Brain Storming Session}
+
+		\section{Lo-fi prototype}
+
+    \section{Implementation}
 
 		\section{Method}
 
@@ -419,6 +438,38 @@
 
 \addtocontents{toc}{\pagebreak}
 	\chapter{Evaluation}
+
+	  \chapter{Participants}
+
+      Where from? \\
+
+      How many? \\
+
+      Section male / female / other. \\
+
+      Average arg. \\
+
+      Average test-session. \\
+
+
+      \section{Participants where from?}
+
+      \section{?}
+
+    \section{Setup}
+
+      \begin{itemize}
+        \item{Upplägg på tester / vart gjordes de?}
+      \end{itemize}
+
+    \section{Procedure}
+
+      \begin{itemize}
+        \item{Informed Consent}
+        \item{Number of tests}
+        \item{question ares etc.}
+        \item{picture of 'test-flow'}
+      \end{itemize}
 
 		\section{Results}
 
@@ -994,6 +1045,25 @@
         every one felt they knew what to do, but the result is encouraging.
 
 		\section{Discussion}
+
+      \subsection{The development process}
+
+
+        \begin{itemize}
+          \item{Discuss the process. Good bad? Done anything differently?}
+          \item{}
+          \item{}
+          \item{}
+        \end{itemize}
+
+      \subsection{Results}
+
+        \begin{itemize}
+          \item{Discuss the results.}
+          \item{Anything weird?}
+          \item{Everything as planned?}
+          \item{Outliers, why?}
+        \end{itemize}
 
 			\subsection{Possible improvements}
 

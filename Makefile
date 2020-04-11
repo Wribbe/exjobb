@@ -38,4 +38,10 @@ ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.pyx | ${PATH_FIGURES}
 clean:
 	rm -rf ${PATH_FIGURES} ${PATH_FIGURES_DATA}
 
+
+${DIR_STATIC}/report.pdf : msccls/preface.pdf
+
+msccls/preface.pdf : msccls/preface.tex
+	cd msccls && ${pdflatex} preface.tex
+
 .PHONY: all clean
