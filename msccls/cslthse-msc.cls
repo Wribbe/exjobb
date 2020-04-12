@@ -26,7 +26,7 @@
 % other useful packages
 \usepackage{overpic}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{hyperref}
+\usepackage[hidelinks=true]{hyperref}
 \usepackage{pdfpages}
 \usepackage{ifoddpage}
 \usepackage{textpos}
