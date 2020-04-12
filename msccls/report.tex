@@ -19,6 +19,7 @@
 \usepackage{parskip}
 \usepackage{textcomp}
 \usepackage{pdfpages}
+\usepackage{enumitem}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
 %\listfiles % initialize
@@ -34,7 +35,6 @@
   Usability testing on the web; Measuring how design impacts task performance
   times.
 }
-
 %\onelinetitle
 %\twolinestitle
 \threelinestitle
@@ -80,6 +80,7 @@
 \newcommand{\numRuns}[1]{\texttt{\#r=#1}}%
 
 \includepdf[pages=-]{preface.pdf}
+\tableofcontents
 
 \chapter{Introduction}
 
@@ -188,258 +189,401 @@
 
     \section{Flask}
 
-
 	\chapter{Development process}
 
-		\section{Brain Storming Session}
+    The overall process took inspiration from agile software development with a
+    touch of 'design-school'. \todo{Fix this section.}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics{figures/method.pdf}
+      \caption{Concept, development, testing and improvement cycle.}
+    \end{figure}
+
+		\section{Brainstorming-sessions and interviews}
+
+      In order to figure out a interesting approach, two brainstorming-sessions
+      were conducted. One with Patric, in order to figure out what could be
+      beneficial to the team and studio at large. And one with Günter,
+      discussing possible academic applications and results.
+
+      After hearing about the communication regression, it was decided that
+      it would be interesting to see if there are certain design elements and
+      theories that hold up better under stressful scenarios than others. A
+      secondary goal included trying to make a testing platform 'from-scratch'
+      in order to see if it would be feasible for a smaller research- or
+      developer-team to conduct similar evaluations in-house on a small budget.
+
+      To deicide what type of mock-assignments the tests should be constructed
+      from, three in-person interviews were conducted. The managers were asked
+      about what they would like to see implemented in order to make their
+      day-to-day work easier, producing the following ideas:
+
+      \begin{itemize}
+        \item{
+          An easy way to see if a co-worker is assigned more work than they
+          have available hours.
+        }
+        \item{
+          Calendar overview where it is possible to determine if there are
+          hot-spots where lots of results need to be produced at the same
+          time.
+        }
+        \item{
+          A concise way to identify if there are critical tasks that, if
+          delayed, would delay other tasks that depend on it.
+        }
+        \item{
+          The possibility to identify a group or teams strengths and assign
+          task types accordingly.
+        }
+      \end{itemize}
 
 		\section{Lo-fi prototype}
 
+      After taking some pointers from \findref, together with the suggestions
+      gathered from the manager-interviews, four simple paper prototypes, shown
+      below, were printed and presented to a second group of interviewees for
+      evaluation.
+
+        \begin{figure}[h!]
+          \center
+          \includegraphics[width=.40\linewidth]{ui11.pdf}
+          \includegraphics[width=.40\linewidth]{ui12.pdf}
+          \includegraphics[width=.40\linewidth]{ui13.pdf}
+          \includegraphics[width=.40\linewidth]{ui14.pdf}
+          \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4}
+          \label{label_mockupInterfaces}
+        \end{figure}
+
+      The main difference is the placement of the main interface elements, with
+      the first group having them on top, and the second one the left side.
+      Lager versions of prototypes and itemized result from the interviews are
+      found in \todoInsert{result link for interviews and larger prototypes.}
+
+      \subsection{Lo-fi interview structure}
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[trim={0 0 0 0},crop]{figures/lofi_method.pdf}
+          \caption{Overall structure of Lo-Fi interviews.}
+        \end{figure}
+
+        These interviews were conducted in-person, with five team members, on
+        the premises of Massive. The interview started with a description of
+        what was happening; an evaluation of four different mock-up interfaces
+        to determine which one was the most suitable for further testing.
+
+        After confirming that there were no immediate questions, the
+        interviewee was presented with the printed mockups in the same
+        arrangement as shown in figure \ref{label_mockupInterfaces}. They were
+        then asked to evaluate, out loud, the interfaces in any order they
+        wished, and to ask if there was anything unclear about the assumed
+        functionality.
+
+        When the participant felt they were done and any questions they had
+        about the interface were sorted out, they were asked to sort the
+        prototypes from best- to least-suited for the upcoming test purpose.
+        Again, the participant was asked to voice their thought process out
+        aloud as they did the sorting.
+
+        Again, after confirming that the interviewee was satisfied with their
+        ordering, a set of ten flash-cards were introduced. These cards
+        represent the combined key-words-attributes from ISO 9241-11 and ISO
+        9241-12, concerning usability and presentation of information
+        respectively.
+
+            \begin{description}[style=nextline]
+              \item[Effectiveness]{
+                Usability is measured by the extend to which the
+                intended goals of use of the overall system are achieved.
+              }
+              \item[Efficiency]{
+                The resources that have to be expended to achieved the indented
+                goals.
+              }
+              \item[Satisfaction]{
+                The extent to which the user finds the overall system
+                acceptable.
+              }
+              \item[Clarity]{
+                  The information content is conveyed quickly and accurately.
+              }
+              \item[Discriminability]{
+                  The displayed information can be distinguished
+                  accurately.
+              }
+              \item[Conciseness]{
+                  Users are not overloaded with extraneous information.
+              }
+              \item[Consistency]{
+                  A unique design, conformity with user's expectation.
+              }
+              \item[Detectability]{
+                  The user's attention is directed towards information
+                  required.
+              }
+              \item[Legibility]{
+                  Information is easy to read.
+              }
+              \item[Comprehensibility]{
+                  The maning is clearly understandable, unambiguous,
+                  interpretable, and recognizable.
+              }
+            \end{description}
+
+        Where the top three terms come from ISO 9241-11 and the remaining
+        from ISO 9241-12.
+
+        The next task was for each participant to order the keywords
+        in order of how important they thought that specific quality was for a
+        well-functioning user interfacing software. There were no restrictions
+        in regards to the number of times a participant could ask about the
+        definition or clarification of each term.
+
+        When the participant acknowledged that they were finished with their
+        selection, it was recorded, and the were asked to do the final task.
+        Each participant was asked to re-evaluate their previously selected
+        order of the prototype interfaces based on the key-word order they
+        arranged, changing the order if they felt another one was more
+        appropriate.
+
+%        evaluation. The evaluation was conducted as an in-person interview
+%        where the interviewee was asked to voiced their thoughts out aloud.
+%        After the initial reaction and thought about each of the designs, the
+%        interviewee was asked to pick, according to them, the most suitable
+%        design.
+%
+%        After the initial pick, the interviewee was presented with
+%        \todoInsert{part about ISO-standard design}, which they had to arrange
+%        in order of most to least important according to their own views.
+%        After prioritizing the different design attributes, the participant was
+%        again asked to pick what they felt was the most suitable design.
+%
+%
+%        \todo{Expand with information about ISO design standard}
+%
+
     \section{Implementation}
 
-		\section{Method}
-
-      This section expands on the methodology behind the initial concept and
-      creation of the testing platform, as well as the process of generating
-      and evaluating data from the usability tests performed by the participants.
-
-      \subsection{Software development methodology}
-
-        The goal was to adopt an agile development process{\findref} for the
-        creation, evaluation and improvement of the usability testing platform.
-
-        \begin{figure}[h!]
-          \centering
-          \includegraphics{figures/method.pdf}
-          \caption{Concept, development, testing and improvement cycle.}
-        \end{figure}
-
-        This methodology is centered around creating a minimal
-        working prototype{\findref} that is put in front of real users as soon
-        as possible. The feedback data generated by the users should then be
-        feed back into the design to improve the next prototype version, which
-        is tested again. This cycle should then be repeated until either the
-        software is satisfactory or the time is up.
-
-%      The goal was to perform several full iteration cycles, but in the
-%      end
-%      While this was the goal, it only completed one whole full cycle, with
-%      smaller iterations within the larger cycle. \todo{Reword}
-
-      \subsection{Defining the initial concept}
-
-        In order to perform usability tests that can be measured and validated,
-        there needs to something for users to interact with. Since the subject
-        of communication under pressure was the initial focus, the suggestion
-        of helping managers reduce the stress for their team came up.
-
-        After interviewing a few managers, the following ideas were
-        gathered:
-
-        \begin{itemize}
-          \item{
-            An easy way to see if a co-worker is assigned more work than they
-            have available hours.
-          }
-          \item{
-            Calendar overview where it is possible to determine if there are
-            hot-spots where lots of results need to be produced at the same
-            time.
-          }
-          \item{
-            A concise way to identify if there are critical tasks that, if
-            delayed, would delay other tasks that depend on it.
-          }
-          \item{
-            The possibility to identify a group or teams strengths and assign
-            task types accordingly.
-          }
-        \end{itemize}
-
-      \subsection{Paper prototypes for a first-draft interface}
-
-        Even though the initial interface setup was very bare-bones, it was
-        still important to get it in front of users, in this case, test
-        participants, as soon as possible.
-
-        \begin{figure}[h!]
-          \centering
-          \begin{minipage}{.49\textwidth}
-            \includegraphics[width=\linewidth]{ui11.pdf}
-          \end{minipage}
-          \begin{minipage}{.49\textwidth}
-            \includegraphics[width=\linewidth]{ui12.pdf}
-          \end{minipage}
-          \begin{minipage}{.49\textwidth}
-            \includegraphics[width=\linewidth]{ui13.pdf}
-          \end{minipage}
-          \begin{minipage}{.49\textwidth}
-            \includegraphics[width=\linewidth]{ui14.pdf}
-          \end{minipage}
-          \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4.}
-        \end{figure}
-
-        \todoMaybe{These figures should probably be under result?}
-
-        Four mock-up interfaces were created based on \todoInsert{part about
-          ui design reference} and presented to five\checkTruth colleagues for
-        evaluation. The evaluation was conducted as an in-person interview
-        where the interviewee were asked to voiced their thoughts out aloud.
-        After the initial reaction and thought about each of the designs, the
-        interviewee was asked to pick, according to them, the most suitable
-        design.
-
-        After the initial pick, the interviewee was presented with
-        \todoInsert{part about ISO-standard design}, which they had to arrange
-        in order of most to least important according to their own views.
-        After prioritizing the different design attributes, the participant was
-        again asked to pick what they felt was the most suitable design.
-
-
-        \todo{Expand with information about ISO design standard}
-
-      \subsection{Gathering relevant test data}
-
-        There is a two-fold goal that the collected test-data needs to solve:
-        \begin{itemize}
-          \item{
-            Generate a quantifiable value that can be tracked in order to
-            evaluate the participants performance during tests.
-          }
-          \item{
-            Aggregate participant feedback about the platform in order to
-            improve the next version.
-          }
-        \end{itemize}
-
-        The first problem is solved by sticking with a established tradition
-        within usability testing\findref\findref, measuring completion time.
-        In order to keep track of their test-runs, participant are assigned an
-        anonymous id-string after acknowledging that they have read the initial
-        information. The anonymous id is registered as used in the database
-        and the id is stored in the participants browsers web-session.
-
-        As a participant starts a new task, the database will register the
-        start-time and link it to the aforementioned anonymous id. If the
-        participant completes the task, the stop-time will be recorded in the
-        same database post, and the difference between these two values will be
-        used as the time for task completion.
-
-        Acquiring feedback data is done through a post-test survey with ten set
-        questions (1-5) and a free-from dialog box for additional input.
-        \todo{Expand and reword last section}
-
-
-      \subsection{Evaluating impact and effectiveness}
-
-        First the test-measurements and feedback is recorded from the
-        participants and stored to the underlying database. This data can then
-        be processed in order to find interesting correlations between
-        different application variables, such as the test types impact on the
-        overall completion time.
-
-        The data is accumulated and processed using Python, specifically Python
-        3.8.1 as of the time of this writing. The graphs included in this paper
-        are generated through matplotlib, and numpy was used in select
-        instances.
-
-%        Since the data is stored in real-time and is available
-
-%			Results by measuring the time and showing graphs + statistical grouping /
-%			analysis.
-
-		\section{Theory}
-
-			\subsection{Information presentation and color}
-
-        This looks into the interaction between the Human Visual System (HVS)
-        and Graphical User Interfaces (GUIs), specifically the impact of color
-        on this interaction.
-
-        \todo{Expand section}
-
-			\subsection{Representative high fidelity prototypes}
-
-        User-Centered design and other iterative methods place a large
-        importance on creating a high fidelity prototyp\findref that users can interact
-        with, the sooner the better\findref.
-
-        In order to create a high fidelity prototype from the paper prototypes
-        presented earlier, each task had to be broken down into its essential
-        component. All the given examples given from the managers revolved
-        around identifying a specific piece of information, surrounded by
-        similar data in order to act on it.
-
-        \todo{Expand on 'finding a needle' approach with all the tasks, easy to
-        time and evaluate.}
-
-
-%			\subsection{Measuring time to task completion}
+%		\section{Method}
 %
+%      This section expands on the methodology behind the initial concept and
+%      creation of the testing platform, as well as the process of generating
+%      and evaluating data from the usability tests performed by the participants.
+%
+%      \subsection{Software development methodology}
+%
+%        The goal was to adopt an agile development process{\findref} for the
+%        creation, evaluation and improvement of the usability testing platform.
+%
+%        This methodology is centered around creating a minimal
+%        working prototype{\findref} that is put in front of real users as soon
+%        as possible. The feedback data generated by the users should then be
+%        feed back into the design to improve the next prototype version, which
+%        is tested again. This cycle should then be repeated until either the
+%        software is satisfactory or the time is up.
+%
+%%      The goal was to perform several full iteration cycles, but in the
+%%      end
+%%      While this was the goal, it only completed one whole full cycle, with
+%%      smaller iterations within the larger cycle. \todo{Reword}
+%
+%      \subsection{Defining the initial concept}
+%
+%        In order to perform usability tests that can be measured and validated,
+%        there needs to something for users to interact with. Since the subject
+%        of communication under pressure was the initial focus, the suggestion
+%        of helping managers reduce the stress for their team came up.
+%
+%        After interviewing a few managers, the following ideas were
+%        gathered:
+%
+%
+%      \subsection{Paper prototypes for a first-draft interface}
+%
+%        Even though the initial interface setup was very bare-bones, it was
+%        still important to get it in front of users, in this case, test
+%        participants, as soon as possible.
+%
+%        %\begin{figure}[h!]
+%        %  \centering
+%        %  \begin{minipage}{.49\textwidth}
+%        %    \includegraphics[width=\linewidth]{ui11.pdf}
+%        %  \end{minipage}
+%        %  \begin{minipage}{.49\textwidth}
+%        %    \includegraphics[width=\linewidth]{ui12.pdf}
+%        %  \end{minipage}
+%        %  \begin{minipage}{.49\textwidth}
+%        %    \includegraphics[width=\linewidth]{ui13.pdf}
+%        %  \end{minipage}
+%        %  \begin{minipage}{.49\textwidth}
+%        %    \includegraphics[width=\linewidth]{ui14.pdf}
+%        %  \end{minipage}
+%        %  \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4.}
+%        %\end{figure}
+%
+%        %\todoMaybe{These figures should probably be under result?}
+%
+%        Four mock-up interfaces were created based on \todoInsert{part about
+%          ui design reference} and presented to five\checkTruth colleagues for
+%        evaluation. The evaluation was conducted as an in-person interview
+%        where the interviewee was asked to voiced their thoughts out aloud.
+%        After the initial reaction and thought about each of the designs, the
+%        interviewee was asked to pick, according to them, the most suitable
+%        design.
+%
+%        After the initial pick, the interviewee was presented with
+%        \todoInsert{part about ISO-standard design}, which they had to arrange
+%        in order of most to least important according to their own views.
+%        After prioritizing the different design attributes, the participant was
+%        again asked to pick what they felt was the most suitable design.
+%
+%
+%        \todo{Expand with information about ISO design standard}
+%
+%      \subsection{Gathering relevant test data}
+%
+%        There is a two-fold goal that the collected test-data needs to solve:
+%        \begin{itemize}
+%          \item{
+%            Generate a quantifiable value that can be tracked in order to
+%            evaluate the participants performance during tests.
+%          }
+%          \item{
+%            Aggregate participant feedback about the platform in order to
+%            improve the next version.
+%          }
+%        \end{itemize}
+%
+%        The first problem is solved by sticking with a established tradition
+%        within usability testing\findref\findref, measuring completion time.
+%        In order to keep track of their test-runs, participant are assigned an
+%        anonymous id-string after acknowledging that they have read the initial
+%        information. The anonymous id is registered as used in the database
+%        and the id is stored in the participants browsers web-session.
+%
+%        As a participant starts a new task, the database will register the
+%        start-time and link it to the aforementioned anonymous id. If the
+%        participant completes the task, the stop-time will be recorded in the
+%        same database post, and the difference between these two values will be
+%        used as the time for task completion.
+%
+%        Acquiring feedback data is done through a post-test survey with ten set
+%        questions (1-5) and a free-from dialog box for additional input.
+%        \todo{Expand and reword last section}
+%
+%
+%      \subsection{Evaluating impact and effectiveness}
+%
+%        First the test-measurements and feedback is recorded from the
+%        participants and stored to the underlying database. This data can then
+%        be processed in order to find interesting correlations between
+%        different application variables, such as the test types impact on the
+%        overall completion time.
+%
+%        The data is accumulated and processed using Python, specifically Python
+%        3.8.1 as of the time of this writing. The graphs included in this paper
+%        are generated through matplotlib, and numpy was used in select
+%        instances.
+%
+%%        Since the data is stored in real-time and is available
+%
+%%			Results by measuring the time and showing graphs + statistical grouping /
+%%			analysis.
+%
+%		\section{Theory}
+%
+%			\subsection{Information presentation and color}
+%
+%        This looks into the interaction between the Human Visual System (HVS)
+%        and Graphical User Interfaces (GUIs), specifically the impact of color
+%        on this interaction.
 %
 %        \todo{Expand section}
-
-			\subsection{Thresholds for test failures}
-
-        Is there a clear limit to when a participant should no longer be able
-        to detect differences in color and relative sizes?
-
-        \todo{Expand section}
-
-
-		\section{Implementation}
-
-      This section specifies how the user-facing web-application and its
-      backend was constructed, and what the thought behind some of the
-      decisions were.
-
-%			Writing a web-application with Flask + python + sqlite3.
-%			HTML5 and CSS with a dab javascript.
-
-			\subsection{Platform software stack}
-
-        The main user interfacing application is written in Python together
-        with the Flask web-framework running on top of an Apache web-server.
-        On the backend sqlite3 is used in order to store the results and
-        feedback from participants for easy retrieval.
-
-        While trying to keep the amount of JavaScript to a minimum, in order to
-        have the highest possible interoperability rate, some snippets were
-        required in order to make it possible to submit a web-form by clicking
-        a SVG-graphic.
-
-			\subsection{Interface creation}
-
-        Interface wise the application is built in plain HTML5 markup to
-        organize the main structure and buttons. All the various interfaces for
-        the different tasks are constructed using Scalable Vector Graphics
-        (SVG).
-
-			\subsection{Variable challenges}
-
-        Randomness provides a good source of test-material but is not a good
-        fit for reproducibility. Fortunately this can be omitted by giving the
-        random number generator a pre-determined seed as a parameter to its
-        initialization call. Since the generator uses this seed as the basis
-        for all the random number sequences it produces, in other words, the
-        sequence of variables produced by two random number generators given
-        the same seed should be identical.
-
-        In this setup, the initial generator uses a hard-coded seed to to
-        produce a few thousand unique alpha-numeric sequences that are then
-        used as the anonymous ids for the participants. It is also these
-        anonymous-ids that are used as the seeds when generating the different
-        data-sets for each use.
-
-        This makes it possibility to reconstruct a participants test by
-        re-supplying the same anonymous-id and test-type to the application and
-        it should return the same test-setup.
-
-
-\addtocontents{toc}{\pagebreak}
+%
+%			\subsection{Representative high fidelity prototypes}
+%
+%        User-Centered design and other iterative methods place a large
+%        importance on creating a high fidelity prototyp\findref that users can interact
+%        with, the sooner the better\findref.
+%
+%        In order to create a high fidelity prototype from the paper prototypes
+%        presented earlier, each task had to be broken down into its essential
+%        component. All the given examples given from the managers revolved
+%        around identifying a specific piece of information, surrounded by
+%        similar data in order to act on it.
+%
+%        \todo{Expand on 'finding a needle' approach with all the tasks, easy to
+%        time and evaluate.}
+%
+%
+%%			\subsection{Measuring time to task completion}
+%%
+%%
+%%        \todo{Expand section}
+%
+%			\subsection{Thresholds for test failures}
+%
+%        Is there a clear limit to when a participant should no longer be able
+%        to detect differences in color and relative sizes?
+%
+%        \todo{Expand section}
+%
+%
+%		\section{Implementation}
+%
+%      This section specifies how the user-facing web-application and its
+%      backend was constructed, and what the thought behind some of the
+%      decisions were.
+%
+%%			Writing a web-application with Flask + python + sqlite3.
+%%			HTML5 and CSS with a dab javascript.
+%
+%			\subsection{Platform software stack}
+%
+%        The main user interfacing application is written in Python together
+%        with the Flask web-framework running on top of an Apache web-server.
+%        On the backend sqlite3 is used in order to store the results and
+%        feedback from participants for easy retrieval.
+%
+%        While trying to keep the amount of JavaScript to a minimum, in order to
+%        have the highest possible interoperability rate, some snippets were
+%        required in order to make it possible to submit a web-form by clicking
+%        a SVG-graphic.
+%
+%			\subsection{Interface creation}
+%
+%        Interface wise the application is built in plain HTML5 markup to
+%        organize the main structure and buttons. All the various interfaces for
+%        the different tasks are constructed using Scalable Vector Graphics
+%        (SVG).
+%
+%			\subsection{Variable challenges}
+%
+%        Randomness provides a good source of test-material but is not a good
+%        fit for reproducibility. Fortunately this can be omitted by giving the
+%        random number generator a pre-determined seed as a parameter to its
+%        initialization call. Since the generator uses this seed as the basis
+%        for all the random number sequences it produces, in other words, the
+%        sequence of variables produced by two random number generators given
+%        the same seed should be identical.
+%
+%        In this setup, the initial generator uses a hard-coded seed to to
+%        produce a few thousand unique alpha-numeric sequences that are then
+%        used as the anonymous ids for the participants. It is also these
+%        anonymous-ids that are used as the seeds when generating the different
+%        data-sets for each use.
+%
+%        This makes it possibility to reconstruct a participants test by
+%        re-supplying the same anonymous-id and test-type to the application and
+%        it should return the same test-setup.
+%
+%
+%\addtocontents{toc}{\pagebreak}
 	\chapter{Evaluation}
 
-	  \chapter{Participants}
+	  \section{Participants}
 
       Where from? \\
 
@@ -1051,9 +1195,6 @@
 
         \begin{itemize}
           \item{Discuss the process. Good bad? Done anything differently?}
-          \item{}
-          \item{}
-          \item{}
         \end{itemize}
 
       \subsection{Results}
