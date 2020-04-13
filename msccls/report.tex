@@ -20,6 +20,7 @@
 \usepackage{textcomp}
 \usepackage{pdfpages}
 \usepackage{enumitem}
+\setlist[description]{leftmargin=1.5cm,labelindent=1cm}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
 %\listfiles % initialize
@@ -287,11 +288,13 @@
         Again, the participant was asked to voice their thought process out
         aloud as they did the sorting.
 
-        Again, after confirming that the interviewee was satisfied with their
+        After confirming that the interviewee was satisfied with their
         ordering, a set of ten flash-cards were introduced. These cards
         represent the combined key-words-attributes from ISO 9241-11 and ISO
         9241-12, concerning usability and presentation of information
         respectively.
+
+        Keyword definitions presented below:
 
             \begin{description}[style=nextline]
               \item[Effectiveness]{
@@ -332,21 +335,21 @@
               }
             \end{description}
 
-        Where the top three terms come from ISO 9241-11 and the remaining
-        from ISO 9241-12.
+        Where the top three terms are defined in ISO 9241-11 with the remainder
+        coming from ISO 9241-12.
 
         The next task was for each participant to order the keywords
         in order of how important they thought that specific quality was for a
-        well-functioning user interfacing software. There were no restrictions
+        well-functioning, user interfacing software. There were no restrictions
         in regards to the number of times a participant could ask about the
         definition or clarification of each term.
 
         When the participant acknowledged that they were finished with their
-        selection, it was recorded, and the were asked to do the final task.
+        selection, it was recorded, and the were asked to do one final task.
         Each participant was asked to re-evaluate their previously selected
-        order of the prototype interfaces based on the key-word order they
-        arranged, changing the order if they felt another one was more
-        appropriate.
+        ranking of the prototype interfaces, changing the order if they felt
+        another one was more appropriate after being exposed to the ISO
+        definitions.
 
 %        evaluation. The evaluation was conducted as an in-person interview
 %        where the interviewee was asked to voiced their thoughts out aloud.
@@ -365,6 +368,9 @@
 %
 
     \section{Implementation}
+
+      After evaluating the responses from the prototype interviews, interface
+      1.4 was chosen as the base for the user-facing test-implementation.
 
 %		\section{Method}
 %
@@ -585,26 +591,117 @@
 
 	  \section{Participants}
 
-      Where from? \\
+      \begin{figure}[h!]
+        \centering
+        \includegraphics{figures/deploy_link.pdf}
+        \caption{Link-distribution and test milestones.}
+      \end{figure}
 
-      How many? \\
+      After the test application was implemented and deployed, a link to it was
+      shared on Facebook together with an explanation of what the purpose of
+      the test was. After a few days another link was sent out on the Massive
+      internal mailing list.
 
-      Section male / female / other. \\
+      The final group of participants can be split into three groups according
+      to the following test-milestones:
+      \begin{itemize}
+        \item{Getting past the initial information and consent form.}
+        \item{Completing the pre-survey.}
+        \item{Completing the post-survey.}
+      \end{itemize}
 
-      Average arg. \\
+      with the following distribution.
+      Out of the total of five days the application was live, in the first
+      three days there were 27 participants that got past the first milestone,
+      with 23 (85.2\%) of them completing the post-survey. At the third day a
+      link to the application was shared internally at Massive. The final
+      combined result over the five day span was; 101 participants getting past
+      the initial information, 79 (78.2\%) answered the initial survey and a
+      total of 74 (73.3\%) completing the post-survey.
 
-      Average test-session. \\
+      Since there is no concrete information to work with for users that only
+      passed the first milestone, that group is excluded and the pre-survey and
+      post-survey groups will receive more analysis.
+
+      In the pre-survey group, the average age is, 30.5 years, 28 participants
+      (32.9\%) identify as female, 54 (63.5\%) as male and 3 (3.5\%) as other.
+      Looking at the post-survey group, the average age of the participants
+      shifts slightly, 31.1 years, and 24 (32.4\%), 47 (63.5\%) and 3 (4\%)
+      of the participants identify as female, male and other respectively.
+
+      Finally, looking at completion times for the post-survey group, the average
+      time from registration to finishing the last test-question was 20 minutes
+      and 56 seconds with a median of 4 minutes and 23 seconds. Additionally,
+      the fastest completion time was 37 seconds with the longest completion
+      time clocking in at 14 hours 15 minutes and 35 seconds.
+%      The initial Facebook link gathered 27 recorded test runs after three
+%      days. After sharing the link to the test internally on Massive, an
+%      additional 74 completions of the test were recorded over a span of two
+%      days. In total, 101 completions, from pre- to post-questionnaire were
+%      recorded over a five day span.
+%
+%
+%      According to the pre-questionnaire, that the average age of a participant
+%      is 30 years, .
 
 
-      \section{Participants where from?}
 
-      \section{?}
+%      Where from?
+%
+%      How many?
+%
+%      Section male / female / other.
+%
+%      Average arg.
+%
+%      Average test-session.
+%
+%
+%      \section{Participants where from?}
+%
+%      \section{?}
 
     \section{Setup}
 
-      \begin{itemize}
-        \item{Upplägg på tester / vart gjordes de?}
-      \end{itemize}
+      Since the tests were done remotely via the internet, only requiring a
+      browse, there was no standardized hardware-setup that the tests were
+      executed on. In order to have the possibility to analyze impact of
+      different types of hardware and group different results, the
+      pre-questionnaire included questions about what kind of hardware the
+      participant was using to access the tests.
+
+      It was concluded that screen size and input method had the largest
+      probability to affect the result given the design of the tests.
+      The participants were asked to specify their screen size by selecting one
+      of the following options: \textit{desktop, laptop, tablet} or
+      \textit{mobile}. As for the input method the choices were:
+      \textit{mouse, trackpad, touch} or \textit{other}.
+
+      While the choices for the input method, except the last one, corresponds
+      directly to a concrete input method used in human-computer interactions,
+      the screen-sizes are somewhat ambiguous. This was an active choice in
+      order to not alienate participants by forcing them to specify an actual
+      measurement for the screen size.
+      The assumed values for the screen-sizes ranges for the given choices are:
+      \textit{Desktop} - 17"+,
+      \textit{Laptop} -  12"-17",
+      \textit{Tablet} - 7"-12" and
+      \textit{Mobile} - 5"-7"
+
+      After the participant has submitted the pre-survey the interface is
+      unlocked giving them access to any of the four test types;
+      \textit{Employee Hours},
+      \textit{Team Workload},
+      \textit{Task Dependencies} and
+      \textit{Team Performance}.
+      together wit a few basic about the current test session. The statistics
+      include how many test of each type they have completed and how many test
+      they have to complete in order for the post-survey to become available.
+
+      Requiring five tests before making the post-survey available is the only
+      hard limitation placed on the participants. Other than the test-minimum
+      there is no limit on how many tests they can perform or how long time
+      they take to complete one test or the test session as a whole.
 
     \section{Procedure}
 
@@ -619,7 +716,7 @@
 
 			\subsection{Pre-questionnaire -- itemizations}
 
-        Before being able to perform the tests, each participant has to fill
+        Before being able to perform the test, each participant has to fill
         out and submit a pre-questionnaire. This is done in order to get
         a rough demographical overview of the people participating in this
         study. Initially they are asked about age, used input device, type of
@@ -794,7 +891,6 @@
         In total, \varHere{totalParticipants} participants moved past the
         initial information over a five day period.
 
-        \vspace{-0.55cm}
 				\begin{figure}[h!]
 					\centering
 					\includegraphics{figures/participantsOverTime.pdf}
@@ -1237,6 +1333,8 @@
 
           Might be a quirk in that re-seeding with the same user-id could
           possibly create 'easy' anonymous id's.
+
+        Not possible to check screen-size and input method.
 
 
 

@@ -3,6 +3,7 @@ DIR_REPORTS=${DIR_STATIC}/pdf/reports
 
 PATH_FIGURES=msccls/figures
 FIGUTILS:=$(wildcard msccls/figures/utils/*.py)
+PY:=virt_py3/bin/python
 
 figures_py=$(foreach d,$(filter-out %__.py,$(wildcard ${PATH_FIGURES}/*.py)),${d:%.py=%.pdf})
 figures_pyx=$(foreach d,$(wildcard ${PATH_FIGURES}/*.pyx),${d:%.pyx=%.pdf})
@@ -30,10 +31,10 @@ ${DIR_REPORTS}, ${PATH_FIGURES}, ${DIR_REPORTS} :
 	mkdir -p $@
 
 ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.py csv_to_pdf.py ${FIGUTILS} | ${PATH_FIGURES}
-	python csv_to_pdf.py ${@:%.pdf=%.py} $@
+	${PY} csv_to_pdf.py ${@:%.pdf=%.py} $@
 
 ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.pyx | ${PATH_FIGURES}
-	python $^ $@
+	${PY} $^ $@
 
 clean:
 	rm -rf ${PATH_FIGURES} ${PATH_FIGURES_DATA}
