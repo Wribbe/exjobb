@@ -201,7 +201,7 @@
       \caption{Concept, development, testing and improvement cycle.}
     \end{figure}
 
-		\section{Brainstorming-sessions and interviews}
+		\section{Brainstorming-sessions and interviews}{\label{label_sectionIdeas}
 
       In order to figure out a interesting approach, two brainstorming-sessions
       were conducted. One with Patric, in order to figure out what could be
@@ -220,32 +220,41 @@
       about what they would like to see implemented in order to make their
       day-to-day work easier, producing the following ideas:
 
+      \newcommand{\ideaOne}{
+        An easy way to see if a co-worker is assigned more work than they have
+        available hours.%
+      }
+
+      \newcommand{\ideaTwo}{
+        Calendar overview where it is possible to determine if there are
+        hot-spots where lots of results need to be produced at the same
+        time.%
+      }
+
+      \newcommand{\ideaThree}{
+        A concise way to identify if there are critical tasks that, if
+        delayed, would delay other tasks that depend on it.%
+      }
+
+      \newcommand{\ideaFour}{
+        The possibility to identify a group or teams strengths and assign
+        task types accordingly.%
+      }
+
       \begin{itemize}
-        \item{
-          An easy way to see if a co-worker is assigned more work than they
-          have available hours.
-        }
-        \item{
-          Calendar overview where it is possible to determine if there are
-          hot-spots where lots of results need to be produced at the same
-          time.
-        }
-        \item{
-          A concise way to identify if there are critical tasks that, if
-          delayed, would delay other tasks that depend on it.
-        }
-        \item{
-          The possibility to identify a group or teams strengths and assign
-          task types accordingly.
-        }
+        \item{\ideaOne\label{label_ideas}}
+        \item{\ideaTwo}
+        \item{\ideaThree}
+        \item{\ideaFour}
       \end{itemize}
+
 
 		\section{Lo-fi prototype}
 
       After taking some pointers from \findref, together with the suggestions
       gathered from the manager-interviews, four simple paper prototypes, shown
-      below, were printed and presented to a second group of interviewees for
-      evaluation.
+      below, were printed and presented to a second group of five interviewees
+      for evaluation.
 
         \begin{figure}[h!]
           \center
@@ -595,22 +604,25 @@
         \centering
         \includegraphics{figures/deploy_link.pdf}
         \caption{Link-distribution and test milestones.}
+        \label{label_milestones}
       \end{figure}
 
-      After the test application was implemented and deployed, a link to it was
-      shared on Facebook together with an explanation of what the purpose of
-      the test was. After a few days another link was sent out on the Massive
-      internal mailing list.
+    \subsection{Sources and Milestones}
 
-      The final group of participants can be split into three groups according
-      to the following test-milestones:
+      After the test application was implemented and deployed, a link to the
+      application was shared on the authors personal Facebook-profile together
+      with an explanation of what the purpose of the test was. Three days
+      later, the same link was shared on the Massive internal mailing list.
+
+      Looking at the test setup and the final result, the participants can be
+      grouped into three categories, depending how far through the test-session
+      they ended up. The test structure has the following milestones:
       \begin{itemize}
         \item{Getting past the initial information and consent form.}
         \item{Completing the pre-survey.}
         \item{Completing the post-survey.}
       \end{itemize}
 
-      with the following distribution.
       Out of the total of five days the application was live, in the first
       three days there were 27 participants that got past the first milestone,
       with 23 (85.2\%) of them completing the post-survey. At the third day a
@@ -621,7 +633,9 @@
 
       Since there is no concrete information to work with for users that only
       passed the first milestone, that group is excluded and the pre-survey and
-      post-survey groups will receive more analysis.
+      post-survey groups will receive further analysis.
+
+      \subsection{Age, Gender-Identity and Completion Times}
 
       In the pre-survey group, the average age is, 30.5 years, 28 participants
       (32.9\%) identify as female, 54 (63.5\%) as male and 3 (3.5\%) as other.
@@ -629,11 +643,25 @@
       shifts slightly, 31.1 years, and 24 (32.4\%), 47 (63.5\%) and 3 (4\%)
       of the participants identify as female, male and other respectively.
 
-      Finally, looking at completion times for the post-survey group, the average
+      Looking at completion times for the post-survey group, the average
       time from registration to finishing the last test-question was 20 minutes
       and 56 seconds with a median of 4 minutes and 23 seconds. Additionally,
       the fastest completion time was 37 seconds with the longest completion
       time clocking in at 14 hours 15 minutes and 35 seconds.
+
+    \subsection{Prerequisites, Prior Knowledge and Education}
+
+      Other attributes that were deemed interested included; how comfortable
+      the participant felt using a computer, if they hade any general interest
+      in user interface design and if they had studied user interface design in
+      any capacity. They were also questioned on if they regularly practiced
+      precise mouse movements through games and similar activities and finally
+      if they have trouble distinguishing colors from each other. These
+      questions were posed as a personal statement, such as, ''\textit{I feel
+        comfortable using a computer}'' together with a range of selectable
+      numerical options, ranging from one, \textit{strongly disagree} to five,
+      \textit{strongly agree}.
+
 %      The initial Facebook link gathered 27 recorded test runs after three
 %      days. After sharing the link to the test internally on Massive, an
 %      additional 74 completions of the test were recorded over a span of two
@@ -663,47 +691,178 @@
 
     \section{Setup}
 
+%      \begin{figure}[h!]
+%        \centering
+%        \includegraphics{figures/information_setup.pdf}
+%        \caption{Information gathering process.}
+%      \end{figure}
+
+    \subsection{Varying Testing Hardware}
+
       Since the tests were done remotely via the internet, only requiring a
-      browse, there was no standardized hardware-setup that the tests were
-      executed on. In order to have the possibility to analyze impact of
-      different types of hardware and group different results, the
-      pre-questionnaire included questions about what kind of hardware the
-      participant was using to access the tests.
+      device capable running a standard browser, there was no standardized
+      hardware-setup that the tests were executed on. In order to have the
+      possibility to analyze impact of different types of hardware and group
+      different results, the pre-questionnaire included questions about what
+      kind of hardware the participant was using to access the tests.
 
       It was concluded that screen size and input method had the largest
       probability to affect the result given the design of the tests.
       The participants were asked to specify their screen size by selecting one
       of the following options: \textit{desktop, laptop, tablet} or
       \textit{mobile}. As for the input method the choices were:
-      \textit{mouse, trackpad, touch} or \textit{other}.
+      \textit{mouse, trackpad, touch} or \textit{other}, see figure
+      \ref{label_preSurvey} for a capture.
 
+    \subsection{Input Methods and Screen Sizes}
+
+      \todo{Spell out the input alternatives}
       While the choices for the input method, except the last one, corresponds
       directly to a concrete input method used in human-computer interactions,
       the screen-sizes are somewhat ambiguous. This was an active choice in
       order to not alienate participants by forcing them to specify an actual
       measurement for the screen size.
       The assumed values for the screen-sizes ranges for the given choices are:
-      \textit{Desktop} - 17"+,
-      \textit{Laptop} -  12"-17",
-      \textit{Tablet} - 7"-12" and
-      \textit{Mobile} - 5"-7"
+      \textit{Desktop} $>$17",
+      \textit{Laptop}  12"-17",
+      \textit{Tablet}  7"-12" and
+      \textit{Mobile}  $<$7".
 
-      After the participant has submitted the pre-survey the interface is
-      unlocked giving them access to any of the four test types;
-      \textit{Employee Hours},
-      \textit{Team Workload},
-      \textit{Task Dependencies} and
-      \textit{Team Performance}.
-      together wit a few basic about the current test session. The statistics
-      include how many test of each type they have completed and how many test
-      they have to complete in order for the post-survey to become available.
-
-      Requiring five tests before making the post-survey available is the only
-      hard limitation placed on the participants. Other than the test-minimum
-      there is no limit on how many tests they can perform or how long time
-      they take to complete one test or the test session as a whole.
-
+    \newpage
     \section{Procedure}
+
+      \ \\ \vspace{-1.2cm}
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics{figures/test_flow.pdf}
+        \caption{Per-participant test-flow.}
+      \end{figure}
+
+      \vspace{-0.7cm}
+
+      \subsection{General information, consent and initial survey}
+
+        When accessing the test the participant is greeted by a information and
+        consent screen, detailing the goals of the test and how the information
+        generated by their activity will be used. The page explains that this
+        is a usability study, and though there will be information collected,
+        anything that will be publicised will be aggregations and include no
+        personally identifiable information. The full information and consent
+        page can be found in figure \ref{label_infoConsent}.
+
+        Participant that accept and submit the consent form are then navigated
+        to the main landing page. This page acts as a hub for the duration of
+        the test session, providing access to all other parts of testing
+        application. On the first visit the main view of the landing page is
+        occupied by the initial survey, shown below.
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.7\textwidth]{figures/webapp_pre_survey.pdf}
+          \caption{Capture of initial survey page.}
+          \label{label_preSurvey}
+        \end{figure}
+
+        While it is possible for the participant to interact with the buttons on
+        the left side before the initial survey is submitted, pressing any of the
+        buttons except 'Abort Test' will only display the same survey-page.
+
+        \begin{figure}[h!]
+          \centering
+          \fbox{
+            \includegraphics[trim={4cm 8cm 9cm 8cm},clip,width=.6\textwidth]{figures/webapp_abort.pdf}
+          }
+          \caption{Capture of confirmation page for aborting the test.}
+          \label{label_abort}
+        \end{figure}
+
+        The dedicated 'Abort Test' button is available in all the different
+        views of the application, in case the participant no longer wants to
+        participate for any reason. Pressing this button displays a page
+        explaining that continuing will scrub any activity related to their
+        current anonymous id from the database and abort the current test.
+        %Additionally and return it to the pool
+        %of available identification strings.
+
+
+      \subsection{Main hub-page}
+
+        After the participant has submitted the pre-survey, it  disappears and is
+        replaced by a few basic statistics about the current test session.
+        The functionality of the left-side buttons is restored and makes it
+        possible to choose any of the following four test types:
+        \textit{Employee Hours},
+        \textit{Team Workload},
+        \textit{Task Dependencies} and
+        \textit{Team Performance}.
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.7\textwidth]{figures/webapp_main_statistics.pdf}
+          \caption{Capture of the hub page, post initial survey, default state.}
+          \label{label_mainStatistics}
+        \end{figure}
+
+        The session-statistics include the participants assigned anonymous id,
+        how many test of each type they have completed and how many test they
+        have to complete in order for the post-survey to become available.
+
+        Requiring five tests before making the post-survey available is the only
+        hard limitation placed on the participants. Other than the test-minimum
+        there is no limit on how many tests they can perform or how long time
+        they take to complete a individual test or the test session as a whole.
+
+      \subsection{Basis and Purpose of the Test-Tasks}
+
+        The basis for the test-tasks is derived from the items displayed at the
+        end of section \ref{label_sectionIdeas} at page \pageref{label_ideas}.
+        This list contains a selected subset of the answers to the
+        interview question of what tooling is currently missing that could make
+        the day-to-day work for interviewed managers easier.
+
+        Using these examples of what could feasibly be implemented to add
+        real-world value to current day-to-day activities gives a concrete
+        foundation to base the test-task design on. However, since all of
+        the select suggestions could be implemented as a self-contained tool or
+        service in their own right, implementing each of them fully, with
+        correct behaviour, is outside the scope of this report.
+
+        Due to the limited time and development resources mentioned above each
+        of the suggestions will be abstracted to its simplest goal that still
+        resembles the function of the original suggestion. Since the
+        overarching goal is to measure if the design of the test has any
+        impacts on the performance, the main focus will be on tracking the time
+        to completion of the task as accurately as possible.
+
+      \subsection{Test task - Employee Hours}
+
+        \textit{''\ideaOne''}
+
+        Based on first item from the brainstorm list at page \pageref{label_ideas}
+
+      \subsection{Test task - Team Workload}
+
+      \subsection{Test task - Task Dependencies}
+
+      \subsection{Test task - Team Performance}
+
+      \subsection{Post survey}
+
+        As the participant completes five or more tests the 'Take Survey' button
+        becomes active, which takes the participant to the post-survey, with the
+        option to return to the tests if the button was pressed by accident or if
+        the participant had a change of mind. The post-survey consist of eight
+        questions and an optional input field for additional comments. These
+        questions are ment to evaluate the participants thoughts about the
+        current iteration of the testing application in order to derive possible
+        improvement for the next implementation iteration.
+
+        Options that are of interest include, among others, if the goal of each
+        task was clear, if the application was pleasing to look at, if the use of
+        colors help when navigating application, etcetera. For a verbatim list of
+        the questions used in the post-questionnaire see figure
+        \todoInsert{reference to post-survey}.
 
       \begin{itemize}
         \item{Informed Consent}
@@ -896,8 +1055,8 @@
 					\includegraphics{figures/participantsOverTime.pdf}
           \vspace{-0.3cm}
           \caption{
-            Total amount of participants that got past the initial
-            information screen and did not abort the tests.
+            Total amount of participants that got past each of the milestones
+            defined in figure \ref{label_milestones}.
           }
 				\end{figure}
 
@@ -1402,5 +1561,12 @@
             second for; all, regular and outliers user-groups.
           }
         \end{figure}
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\textwidth]{figures/webapp_information_consent.pdf}
+        \caption{Capture of information and consent page.}
+        \label{label_infoConsent}
+      \end{figure}
 
 \end{document}

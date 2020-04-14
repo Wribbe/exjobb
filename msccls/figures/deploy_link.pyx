@@ -7,9 +7,9 @@ unit.set(uscale=2)
 c = canvas.canvas()
 
 textattrs = [text.halign.center, text.vshift.middlezero]
-E = text.text(0*2.5, 0, r"""\bf Deploy application""", textattrs)
-D = text.text(1*2.5, 0, r"\bf Share link Facebook", textattrs)
-C = text.text(2*2.5, 0, r"\bf Share link Massive", textattrs)
+E = text.text(0*2.5, 0, r"""\bf Application deployed""", textattrs)
+D = text.text(1*2.5, 0, r"\bf Link Shared on Facebook", textattrs)
+C = text.text(2*2.5, 0, r"\bf Link Shared at Massive", textattrs)
 
 for X in [C, D, E]:
     c.draw(X.bbox().enlarged(0.05).path(),
