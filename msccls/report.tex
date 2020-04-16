@@ -221,23 +221,23 @@
       about what they would like to see implemented in order to make their
       day-to-day work easier, producing the following ideas:
 
-      \newcommand{\ideaOne}{
+      \newcommand{\ideaOne}{%
         An easy way to see if a co-worker is assigned more work than they have
         available hours.%
       }
 
-      \newcommand{\ideaTwo}{
+      \newcommand{\ideaTwo}{%
         Calendar overview where it is possible to determine if there are
         hot-spots where lots of results need to be produced at the same
         time.%
       }
 
-      \newcommand{\ideaThree}{
+      \newcommand{\ideaThree}{%
         A concise way to identify if there are critical tasks that, if
         delayed, would delay other tasks that depend on it.%
       }
 
-      \newcommand{\ideaFour}{
+      \newcommand{\ideaFour}{%
         The possibility to identify a group or teams strengths and assign
         task types accordingly.%
       }
@@ -259,10 +259,10 @@
 
         \begin{figure}[h!]
           \center
-          \includegraphics[valign=t,trim={.10cm .10cm .35cm .25cm},crop,width=.49\linewidth]{ui11.pdf}
-          \includegraphics[valign=t,trim={.15cm .30cm .20cm .25cm},crop,width=.49\linewidth]{ui12.pdf}
-          \includegraphics[valign=t,trim={.45cm .55cm .65cm .35cm},crop,width=.49\linewidth]{ui13.pdf}
-          \includegraphics[valign=t,trim={.25cm .35cm .30cm .25cm},crop,width=.49\linewidth]{ui14.pdf}
+          \includegraphics[valign=t,trim={.10cm .10cm .35cm .25cm},clip,width=.49\linewidth]{ui11.pdf}
+          \includegraphics[valign=t,trim={.15cm .30cm .20cm .25cm},clip,width=.49\linewidth]{ui12.pdf}
+          \includegraphics[valign=t,trim={.45cm .55cm .65cm .35cm},clip,width=.49\linewidth]{ui13.pdf}
+          \includegraphics[valign=t,trim={.25cm .35cm .30cm .25cm},clip,width=.49\linewidth]{ui14.pdf}
           \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4}
           \label{label_mockupInterfaces}
         \end{figure}
@@ -276,7 +276,7 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[trim={0 0 0 0},crop]{figures/lofi_method.pdf}
+          \includegraphics[trim={0 0 0 0},clip]{figures/lofi_method.pdf}
           \caption{Overall structure of prototype selection interviews.}
         \end{figure}
 
@@ -651,7 +651,7 @@
       the fastest completion time was 37 seconds with the longest completion
       time clocking in at 14 hours 15 minutes and 35 seconds.
 
-    \subsection{Prerequisites, prior knowledge and education}
+      \subsection{Prerequisites, prior knowledge and education}
 
       Other attributes that were deemed interested included; how comfortable
       the participant felt using a computer, if they hade any general interest
@@ -762,7 +762,7 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[width=.6\textwidth]{figures/captures/webapp_pre_survey.pdf}
+          \includegraphics[width=.7\textwidth]{figures/captures/webapp_pre_survey.pdf}
           \caption{Capture of initial survey page.}
           \label{label_preSurvey}
         \end{figure}
@@ -838,12 +838,13 @@
         the main focus will be on tracking the time to completion of the task
         as accurately as possible.
 
-      \subsection{Information pages and fictional context}
+      \subsection{Information, fictional context and execution}
 
         Before starting any of the tasks, the participant is greeted by a page
         containing the general information about the task at hand. Each of the
         pages follows the same structure with three sections, \textit{Goal},
         \textit{How} and \textit{Summary}, explained below.
+        \todo{Re-edit}
 
         The \textit{Goal} section should be short{\findref}, a sentence at
         most{\findref}, and tell the participant what they need to do in order
@@ -863,16 +864,49 @@
         been presented is available after starting the test, accessible by
         hovering the cursor over a '?' in the upper left corner.
 
-        Overall, the intent is to give the participant enough concrete
+        Since all the task-mechanics boil down to
+        \textit{find the element and press it as fast as possible},
+        the intent is to give the participant enough concrete
         information about the test at hand while trying to maintain the
-        implied fictional context of the task. Which means, any instructions
-        and information should be closer to \textit{''select the co-worker with
-          the most X''} rather than \textit{''click the largest box''}.
+        implied fictional context of the task. Which means the tone of any
+        instructions or information should be closer to
+        \textit{''select the co-worker with the most X''} rather than
+        \textit{''click the largest box''}.
+        \todoMaybe{Colorswatches}
+        \todoMaybe{Range of values}
+        \todoMaybe{Randomization-1 + max}
+        \todoMaybe{Add about no feedback on result -> BAD}
 
+      %pallet = [
+      %  "#001f3f",
+      %  "#0074D9",
+      %  "#39CCCC",
+      %  "#3D9970",
+      %  "#2ECC40",
+      %  "#01FF70",
+      %  "#FFDC00",
+      %  "#FF851B",
+      %  "#85144b",
+      %  "#F012BE",
+      %  "#B10DC9"
+      %]
 
       \subsection{Task - employee hours}
 
-        \textit{''\ideaOne''}
+        \textit{\ideaOne}
+
+        The premise for this task is that the organization generating the data
+        utilizes some form of task assigning system together with a
+        cost-estimation system. In short, there is a set of tasks that need to
+        be done, each with a estimated time-cost, and a number of people that
+        can be scheduled to do said work.
+
+        Given there is a limited amount of time that any assignee can spend
+        working, it is possible to over-schedule someone. In this scenario,
+        being over-scheduled is the result of having more work scheduled to you
+        over a period of time than the total available capacity for the same
+        period. In summary, the goal of this task consists of identifying these
+        cases, in particular, the person that is the most over-scheduled.
 
         \begin{figure}[h!]
           \centering
@@ -881,11 +915,40 @@
           \caption{Capture of Employee Hours information and task page.}
         \end{figure}
 
+        After starting the task, the participant is shown a bar-graph with bars
+        of varying heights and coloring. Each bar shows the relation between
+        available and scheduled work-time for one out of the twenty-five
+        represented people.
 
+        Here, the height of the black outline of each bar represents the
+        \textit{available work-capacity}, the varying heights simulating the
+        difference of available hours due to to sick-leave, vacations or
+        different contracts.
+
+        The \textit{total scheduled workload} for
+        each person is represented by the height of the colored segments in
+        each bar. If there is capacity left the colored segment will not extend to the
+        top of the bar outline, leaving a white segment representing
+        non-scheduled time. On the other hand, if the amount of scheduled work
+        is greater than the available capacity, the color will extend beyond
+        the original outline and be colored differently for readability.
+
+        In summary, the height of a white segments in a bar represent the
+        amount of remaining capacity, while the height of any other-colored
+        segment signifies how \textit{over-scheduled} someone is. Find the
+        largest other-colored segment it and click on it.
 
       \subsection{Task - team workload}
 
-        \textit{''\ideaTwo''}
+        \textit{\ideaTwo}
+
+        In the following scenario the business or organization has a schedule,
+        Monday to Friday, that stretches twenty-five weeks into the future. The
+        goal is to keep the workload as steady as possible without to many
+        jumps in either direction. Have to little to do and people are
+        underutilized and in worst case, bored. Have to much that needs to be
+        done at the same time and people might burn out. Avoiding both
+        extremes would be preferable.
 
         \begin{figure}[h!]
           \centering
@@ -894,9 +957,41 @@
           \caption{Capture of Team Workload information and task page.}
         \end{figure}
 
+        Running this test shows the participant a grid of twenty-five rows
+        consisting of five columns each, denoted
+        \texttt{MON},
+        \texttt{TUE},
+        \texttt{WED},
+        \texttt{THU} and
+        \texttt{FRI},
+        representing the scheduled twenty-five workweeks mentioned above. Each
+        of the rectangles are colored with the same color but differ in the
+        saturation. A cell that has zero saturation, or white in this case,
+        signal that no work is scheduled for completion on that particular day.
+        Inversely, the darker a cell is, the more work needs to be completed on
+        that specific day.
+
+        Since there needs to be a clearly defined goal for each test, there has
+        to be a choice between bored and burned out people, where the latter
+        seems far worse. Now the problem can be corrected by identifying days
+        where there is an extra high amount of work that needs to be done, and
+        try to re-schedule it to less busy days.
+
+        For the participant executing the test, the goal is to find the
+        darkest, or most saturated rectangle and click it as fast as possible.
+
       \subsection{Task - task dependencies}
 
-        \textit{''\ideaThree''}
+        \textit{\ideaThree}
+
+        The assumption for this test is that the underlying system producing
+        the data has tasks that need to be completed first in order for other
+        tasks to complete in turn, in short, dependencies. This test revolves
+        around answering the question
+        \textit{''which elements are the most crucial for the overall
+          process?''}. The answer to this question can be very useful, as an
+        example, when being forced to cut back on things due to limited
+        resources while trying to affect as few other things as possible.
 
         \begin{figure}[h!]
           \centering
@@ -905,9 +1000,33 @@
           \caption{Capture of Task Dependencies info- and task-page.}
         \end{figure}
 
-      \subsection{Task - team performance}
+        Initializing this test shows the participant seventeen small circles,
+        representing tasks, arranged in a larger circle. Additionally, there are
+        colored lines connecting some circles together, indicating there is
+        a dependency between them, more lines equals more dependencies.
 
-        \textit{''\ideaFour''}
+        Since the stated interest in knowing how dependent the different
+        moving parts are on each other, knowing which task has the most
+        dependencies is a good start. In terms of what the participant has to
+        do to finish the test, this translates to; find the task with the most
+        connections and click on it as fast as possible.
+
+        \subsection{Task - team performance}
+
+        \textit{\ideaFour}
+
+        Given a working-environment where things are done in parallell it
+        becomes interesting to know if a specific group or individual is
+        especially effective in a certain area. Having this information makes
+        it possible to assign people, if they excel at a specific area, to
+        tasks that match their abilities.
+
+        In this test there are five different task-categories,
+        \textit{tickets},
+        \textit{rnd},
+        \textit{support},
+        \textit{features} and
+        \textit{maintentance}.
 
         \begin{figure}[h!]
           \centering
@@ -915,29 +1034,40 @@
           \includegraphics[width=.49\textwidth]{figures/captures/webapp_team_performance_task.pdf}
           \caption{Capture of Team Performance info- and task-page.}
         \end{figure}
+
+        This task presents the participant with bars showcasing the total
+        completed work-load for nine different teams over an unspecified amount
+        of time.
+
+        There are two types of information shown, the total amount of work done
+        by each team, represented by the total horizontal length of the bar.
+        And the amount of the total work that went into a specific
+        task-section, represented by the length of each individual sub-section
+        of the overall bar.
+
+        In order to correctly answer this test, the participant first needs to
+        identify which of the bars is the longest one, and then identify which
+        sub-section is the largest one, and click on that one.
+
       \subsection{Post survey}
 
-        As the participant completes five or more tests the 'Take Survey' button
-        becomes active, which takes the participant to the post-survey, with the
-        option to return to the tests if the button was pressed by accident or if
-        the participant had a change of mind. The post-survey consist of eight
-        questions and an optional input field for additional comments. These
-        questions are ment to evaluate the participants thoughts about the
-        current iteration of the testing application in order to derive possible
-        improvement for the next implementation iteration.
+        As the participant completes five or more tests the 'Take Survey'
+        button becomes active, pressing this button sends the participant to
+        the post-survey page. Other than the survey itself, there is also the
+        option to return to the tests if the button was pressed by accident or
+        if the participant had a change of mind.
+
+        The post-survey consist of eight questions and an optional input field
+        for additional comments. These questions are ment to evaluate the
+        participants thoughts about the current iteration of the testing
+        application in order to derive possible improvement for the next
+        implementation iteration.
 
         Options that are of interest include, among others, if the goal of each
         task was clear, if the application was pleasing to look at, if the use of
         colors help when navigating application, etcetera. For a verbatim list of
         the questions used in the post-questionnaire see figure
         \todoInsert{reference to post-survey}.
-
-      \begin{itemize}
-        \item{Informed Consent}
-        \item{Number of tests}
-        \item{question ares etc.}
-        \item{picture of 'test-flow'}
-      \end{itemize}
 
 		\section{Results}
 
