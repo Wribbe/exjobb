@@ -20,6 +20,7 @@
 \usepackage{textcomp}
 \usepackage{pdfpages}
 \usepackage{enumitem}
+\usepackage[export]{adjustbox}
 \setlist[description]{leftmargin=1.5cm,labelindent=1cm}
 
 % used to display the used files at the end. Select nofilelist as a package option to disable this
@@ -249,7 +250,7 @@
       \end{itemize}
 
 
-		\section{Lo-fi prototype}
+		\section{Paper prototypes}
 
       After taking some pointers from \findref, together with the suggestions
       gathered from the manager-interviews, four simple paper prototypes, shown
@@ -258,10 +259,10 @@
 
         \begin{figure}[h!]
           \center
-          \includegraphics[width=.40\linewidth]{ui11.pdf}
-          \includegraphics[width=.40\linewidth]{ui12.pdf}
-          \includegraphics[width=.40\linewidth]{ui13.pdf}
-          \includegraphics[width=.40\linewidth]{ui14.pdf}
+          \includegraphics[valign=t,trim={.10cm .10cm .35cm .25cm},crop,width=.49\linewidth]{ui11.pdf}
+          \includegraphics[valign=t,trim={.15cm .30cm .20cm .25cm},crop,width=.49\linewidth]{ui12.pdf}
+          \includegraphics[valign=t,trim={.45cm .55cm .65cm .35cm},crop,width=.49\linewidth]{ui13.pdf}
+          \includegraphics[valign=t,trim={.25cm .35cm .30cm .25cm},crop,width=.49\linewidth]{ui14.pdf}
           \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4}
           \label{label_mockupInterfaces}
         \end{figure}
@@ -271,12 +272,12 @@
       Lager versions of prototypes and itemized result from the interviews are
       found in \todoInsert{result link for interviews and larger prototypes.}
 
-      \subsection{Lo-fi interview structure}
+      \subsection{Interview structure for prototype selection}
 
         \begin{figure}[h!]
           \centering
           \includegraphics[trim={0 0 0 0},crop]{figures/lofi_method.pdf}
-          \caption{Overall structure of Lo-Fi interviews.}
+          \caption{Overall structure of prototype selection interviews.}
         \end{figure}
 
         These interviews were conducted in-person, with five team members, on
@@ -376,7 +377,7 @@
 %        \todo{Expand with information about ISO design standard}
 %
 
-    \section{Implementation}
+    \section{Implementation of selected prototype}
 
       After evaluating the responses from the prototype interviews, interface
       1.4 was chosen as the base for the user-facing test-implementation.
@@ -607,7 +608,7 @@
         \label{label_milestones}
       \end{figure}
 
-    \subsection{Sources and Milestones}
+    \subsection{Sources and test-flow milestones}
 
       After the test application was implemented and deployed, a link to the
       application was shared on the authors personal Facebook-profile together
@@ -635,21 +636,22 @@
       passed the first milestone, that group is excluded and the pre-survey and
       post-survey groups will receive further analysis.
 
-      \subsection{Age, Gender-Identity and Completion Times}
+      \subsection{Age, gender-identity and completion times}
 
-      In the pre-survey group, the average age is, 30.5 years, 28 participants
-      (32.9\%) identify as female, 54 (63.5\%) as male and 3 (3.5\%) as other.
-      Looking at the post-survey group, the average age of the participants
-      shifts slightly, 31.1 years, and 24 (32.4\%), 47 (63.5\%) and 3 (4\%)
-      of the participants identify as female, male and other respectively.
+      In the pre-post-survey group, the average age is, 30.5 years, 28
+      participants (32.9\%) identify as female, 54 (63.5\%) as male and 3
+      (3.5\%) as other. Looking at the post-survey group, the average age of
+      the participants shifts slightly, 31.1 years, and 24 (32.4\%), 47
+      (63.5\%) and 3 (4\%) of the participants identify as female, male and
+      other respectively.
 
-      Looking at completion times for the post-survey group, the average
+      Looking at completion times for the post-post-survey group, the average
       time from registration to finishing the last test-question was 20 minutes
       and 56 seconds with a median of 4 minutes and 23 seconds. Additionally,
       the fastest completion time was 37 seconds with the longest completion
       time clocking in at 14 hours 15 minutes and 35 seconds.
 
-    \subsection{Prerequisites, Prior Knowledge and Education}
+    \subsection{Prerequisites, prior knowledge and education}
 
       Other attributes that were deemed interested included; how comfortable
       the participant felt using a computer, if they hade any general interest
@@ -697,7 +699,7 @@
 %        \caption{Information gathering process.}
 %      \end{figure}
 
-    \subsection{Varying Testing Hardware}
+    \subsection{Dealing with varying testing hardware}
 
       Since the tests were done remotely via the internet, only requiring a
       device capable running a standard browser, there was no standardized
@@ -714,7 +716,7 @@
       \textit{mouse, trackpad, touch} or \textit{other}, see figure
       \ref{label_preSurvey} for a capture.
 
-    \subsection{Input Methods and Screen Sizes}
+    \subsection{Input methods and screen sizes}
 
       \todo{Spell out the input alternatives}
       While the choices for the input method, except the last one, corresponds
@@ -728,18 +730,19 @@
       \textit{Tablet}  7"-12" and
       \textit{Mobile}  $<$7".
 
-    \newpage
     \section{Procedure}
-
-      \ \\ \vspace{-1.2cm}
 
       \begin{figure}[h!]
         \centering
         \includegraphics{figures/test_flow.pdf}
-        \caption{Per-participant test-flow.}
+        \caption{Illustrated flow for overall test-session.}
       \end{figure}
 
-      \vspace{-0.7cm}
+      \begin{figure}[h!]
+        \centering
+        \includegraphics{figures/test_flow_task_runs.pdf}
+        \caption{Illustrated flow for individual task-runs.}
+      \end{figure}
 
       \subsection{General information, consent and initial survey}
 
@@ -759,7 +762,7 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[width=.7\textwidth]{figures/webapp_pre_survey.pdf}
+          \includegraphics[width=.6\textwidth]{figures/captures/webapp_pre_survey.pdf}
           \caption{Capture of initial survey page.}
           \label{label_preSurvey}
         \end{figure}
@@ -771,7 +774,7 @@
         \begin{figure}[h!]
           \centering
           \fbox{
-            \includegraphics[trim={4cm 8cm 9cm 8cm},clip,width=.6\textwidth]{figures/webapp_abort.pdf}
+            \includegraphics[trim={4cm 8cm 9cm 8cm},clip,width=.5\textwidth]{figures/captures/webapp_abort.pdf}
           }
           \caption{Capture of confirmation page for aborting the test.}
           \label{label_abort}
@@ -786,7 +789,7 @@
         %of available identification strings.
 
 
-      \subsection{Main hub-page}
+      \subsection{Landing page}
 
         After the participant has submitted the pre-survey, it  disappears and is
         replaced by a few basic statistics about the current test session.
@@ -799,7 +802,7 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[width=.7\textwidth]{figures/webapp_main_statistics.pdf}
+          \includegraphics[width=.7\textwidth]{figures/captures/webapp_main_statistics.pdf}
           \caption{Capture of the hub page, post initial survey, default state.}
           \label{label_mainStatistics}
         \end{figure}
@@ -813,7 +816,7 @@
         there is no limit on how many tests they can perform or how long time
         they take to complete a individual test or the test session as a whole.
 
-      \subsection{Basis and Purpose of the Test-Tasks}
+      \subsection{Basis and purpose of the test-tasks}
 
         The basis for the test-tasks is derived from the items displayed at the
         end of section \ref{label_sectionIdeas} at page \pageref{label_ideas}.
@@ -828,25 +831,90 @@
         service in their own right, implementing each of them fully, with
         correct behaviour, is outside the scope of this report.
 
-        Due to the limited time and development resources mentioned above each
-        of the suggestions will be abstracted to its simplest goal that still
-        resembles the function of the original suggestion. Since the
-        overarching goal is to measure if the design of the test has any
-        impacts on the performance, the main focus will be on tracking the time
-        to completion of the task as accurately as possible.
+        Due to the limited time and development resources mentioned above, each
+        suggestion will be abstracted to its simplest goal that still contains
+        the core function of the original. Since the overarching goal is to
+        measure if the design of the test has any impacts on the performance,
+        the main focus will be on tracking the time to completion of the task
+        as accurately as possible.
 
-      \subsection{Test task - Employee Hours}
+      \subsection{Information pages and fictional context}
+
+        Before starting any of the tasks, the participant is greeted by a page
+        containing the general information about the task at hand. Each of the
+        pages follows the same structure with three sections, \textit{Goal},
+        \textit{How} and \textit{Summary}, explained below.
+
+        The \textit{Goal} section should be short{\findref}, a sentence at
+        most{\findref}, and tell the participant what they need to do in order
+        to complete the task successfully.
+
+        After reading the \textit{How} section, the participant should have a
+        basic understanding of how the information related to the test is
+        structured and presented. If there are any specific details about the
+        representation of the task that are deemed essential they should be
+        described in this section.
+
+        The \textit{Summary} section is meant to repeat the information in the
+        \textit{How} section, but in a different and briefer fashion in order
+        to help with retention\findref.
+
+        Lastly, the participant is told that the same information that has just
+        been presented is available after starting the test, accessible by
+        hovering the cursor over a '?' in the upper left corner.
+
+        Overall, the intent is to give the participant enough concrete
+        information about the test at hand while trying to maintain the
+        implied fictional context of the task. Which means, any instructions
+        and information should be closer to \textit{''select the co-worker with
+          the most X''} rather than \textit{''click the largest box''}.
+
+
+      \subsection{Task - employee hours}
 
         \textit{''\ideaOne''}
 
-        Based on first item from the brainstorm list at page \pageref{label_ideas}
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_employee_hours_info.pdf}
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_employee_hours_task.pdf}
+          \caption{Capture of Employee Hours information and task page.}
+        \end{figure}
 
-      \subsection{Test task - Team Workload}
 
-      \subsection{Test task - Task Dependencies}
 
-      \subsection{Test task - Team Performance}
+      \subsection{Task - team workload}
 
+        \textit{''\ideaTwo''}
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_team_workload_info.pdf}
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_team_workload_task.pdf}
+          \caption{Capture of Team Workload information and task page.}
+        \end{figure}
+
+      \subsection{Task - task dependencies}
+
+        \textit{''\ideaThree''}
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_dependencies_info.pdf}
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_dependencies_task.pdf}
+          \caption{Capture of Task Dependencies info- and task-page.}
+        \end{figure}
+
+      \subsection{Task - team performance}
+
+        \textit{''\ideaFour''}
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_team_performance_info.pdf}
+          \includegraphics[width=.49\textwidth]{figures/captures/webapp_team_performance_task.pdf}
+          \caption{Capture of Team Performance info- and task-page.}
+        \end{figure}
       \subsection{Post survey}
 
         As the participant completes five or more tests the 'Take Survey' button
@@ -1443,16 +1511,16 @@
         next when performing the tests. It would of course be preferable if
         every one felt they knew what to do, but the result is encouraging.
 
-		\section{Discussion}
+		\chapter{Discussion}
 
-      \subsection{The development process}
+      \section{The development process}
 
 
         \begin{itemize}
           \item{Discuss the process. Good bad? Done anything differently?}
         \end{itemize}
 
-      \subsection{Results}
+      \section{Results}
 
         \begin{itemize}
           \item{Discuss the results.}
@@ -1461,34 +1529,34 @@
           \item{Outliers, why?}
         \end{itemize}
 
-			\subsection{Possible improvements}
+			\section{Possible improvements}
 
         What could be improved if this was done again?
 
-        \subsubsection{Multiple design iterations}
+        \subsection{Multiple design iterations}
 
           Should have had multiple smaller iterations, easy to get stuck.
 
-        \subsubsection{Opt-in followup}
+        \subsection{Opt-in followup}
 
           Some questions reveled answers that didn't match what I had
           anticipated, would be interesting to at least have a chance to follow
           up on those observations.
 
-        \subsubsection{Leverage more frameworks?}
+        \subsection{Leverage more frameworks?}
 
           Didn't have the foundational expertise to deicide on a good
           framework, would be easier now.
           Build upon frameworks for faster iteration?
 
-			\subsection{Threats to validity}
+			\section{Threats to validity}
 
-        \subsubsection{Online testing and latency}
+        \subsection{Online testing and latency}
 
           Latency should be minimal, but it would be better to measure and
           verify than simply guess.
 
-        \subsubsection{Seeding with user-id}
+        \subsection{Seeding with user-id}
 
           Might be a quirk in that re-seeding with the same user-id could
           possibly create 'easy' anonymous id's.
@@ -1564,7 +1632,7 @@
 
       \begin{figure}[h!]
         \centering
-        \includegraphics[width=\textwidth]{figures/webapp_information_consent.pdf}
+        \includegraphics[width=\textwidth]{figures/captures/webapp_information_consent.pdf}
         \caption{Capture of information and consent page.}
         \label{label_infoConsent}
       \end{figure}

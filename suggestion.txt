@@ -36,47 +36,46 @@ Antal Kvinnor/män
 Hur länge varade en test session ungefär
 
 
-4.2 Setup
+  4.2 Setup
 
-Hur var uppläget av testet, dvs var gjordes, vad för utrustning användes
-
-
-4.3 Procedure
-
-Beskriv hur testet gick till, de olika stegen informed consent, test (antal test), questionnaire etc.
-
-Ha gärna med en bild som beskriver flödet
+  Hur var uppläget av testet, dvs var gjordes, vad för utrustning användes
 
 
-4.4 Results
+  4.3 Procedure
 
-Presentera resultat från testet
+  Beskriv hur testet gick till, de olika stegen informed consent, test (antal
+  test), questionnaire etc.
 
-4.4.1 Pre-questionnaire-itemizations
+  Ha gärna med en bild som beskriver flödet
 
-4.4.2 Pre-questionnaire-1-5 questions
+  4.4 Results
 
-4.4.3 —
+    Presentera resultat från testet
 
+    4.4.1 Pre-questionnaire-itemizations
+
+    4.4.2 Pre-questionnaire-1-5 questions
+
+    4.4.3 —
 
 5 Discussions
 
-5.1 The development process
+  5.1 The development process
 
-Diskutera din process, vad var bra/dåligt, något du borde gjort annorlunda?
+  Diskutera din process, vad var bra/dåligt, något du borde gjort annorlunda?
 
 
-5.2 Results
+  5.2 Results
 
-Diskutera resultaten, fanns det något konstigt? Var allt som förväntat?
+    Diskutera resultaten, fanns det något konstigt? Var allt som förväntat?
 
-Några outliers? Varför tror du att de var outliers?
+    Några outliers? Varför tror du att de var outliers?
 
-5.3 Possible improvements
+  5.3 Possible improvements
 
-5.4 Threats to validity
+  5.4 Threats to validity
 
-5.5 Future
+  5.5 Future
 
 6 Conclusions
 
