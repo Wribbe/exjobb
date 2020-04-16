@@ -1,0 +1,43 @@
+Sammanfattning:
+---------------
+
+  Framsida:
+    Bytt
+
+  Kapitel 1:
+    Oförändrat.
+
+  Kapitel 2:
+    Oförändrat.
+
+  Kapitel 3:
+    - Omskrivet för att passa förslag.
+    - Del 3.3 saknas, vet inte riktigt hur jag ska börja, vad jag ska ha med.
+
+  Kapitel 4:
+    - Fram till 4.4 omskrivet för att passa förslaget.
+    - 4.4 framåt är den äldsta nuvarande texten, finns antagligen text där som
+      ska ändras, plockas bort, flyttas etc. Men inte hunnit gå igenom det.
+
+  Kapitel 5:
+    Oförändrat.
+
+  Kapitel 6:
+    Oförändrat.
+
+  Appendix:
+    Lagt till
+
+
+Övriga noteringar:
+------------------
+
+  - Kan vara så att vissa bilder kan ligga på konstiga ställen, inte brytt mig om
+    att se till att de hamnar rätt innan all text är på plats.
+
+  - Generellt sã är all text i 'första skedet' kommer gå igenom det minst en
+    gång till helt och hållet. Andemeningen kommer behållas, men kommer
+    synka språket, kommentera gärna på om något innehåll inte ska vara med /
+    ligger fel.
+
+  - Borde jag minska ner bilderna under 4.4 och framåt?
