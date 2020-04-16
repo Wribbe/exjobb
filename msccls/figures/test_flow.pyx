@@ -42,6 +42,7 @@ links = [
   [G, F],
   [H, G],
   [J, H],
+  [K, J],
 ]
 
 for X,Y in links:
