@@ -19,3 +19,4 @@ sync_db.json
 *.bcf
 *.run.xml
 msccls/vars
+*.bacc
