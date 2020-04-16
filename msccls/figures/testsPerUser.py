@@ -1,4 +1,6 @@
-from msccls.figures.utils import get_db, dump_vars, as_percent
+import os
+from msccls.figures.utils import get_db, dump_vars, as_percent, incremental_sum
+
 def get_data():
   db = get_db()
   testruns = db.execute("SELECT * FROM test_run").fetchall()
@@ -16,40 +18,63 @@ def get_data():
     numberOfRuns[val] += 1
 
   valNumAnyTestsRun = sum(numberOfRuns.values())
-  valTestsFiveToTen = 0
+  valTestTenOrLess = 0
   valTestsElevenOrMore = 0
-  numUsers = len(users)
-  valTestNoTests = numUsers - valNumAnyTestsRun
+  vals = {}
+  numUsersTotal = len(users)
+  valTestNoTests = numUsersTotal - valNumAnyTestsRun
+  numUsersDidTests = numUsersTotal-valTestNoTests
   for numRuns, numUsers in numberOfRuns.items():
-    if 5 >= numRuns <= 9:
-      valTestsFiveToTen += numUsers
-    elif numRuns > 9:
+    if numRuns < 11:
+      valTestTenOrLess += numUsers
+    elif numRuns > 10:
       valTestsElevenOrMore += numUsers
+    vals.setdefault(numRuns, 0)
+    vals[numRuns] += numUsers
 
-#  valNumAnyTestsRunP = valNumAnyTestsRun/numUsers
-#  valNumFiveOrMoreTestRunP = valNumFiveOrMoreTestRun/numUsers
+#  for k,v in vals.items():
+#    vals[k] = v/numUsersTotal
 
-  # Convert to latex formatted percentages.
-#  valNumAnyTestsRunP = asPercent(valNumAnyTestsRunP)
-#  valNumFiveOrMoreTestRunP = asPercent(valNumFiveOrMoreTestRunP)
+  valTestsElevenOrMoreP = as_percent(valTestsElevenOrMore/numUsersTotal)
+  valTestTenOrLessP = as_percent(valTestTenOrLess/numUsersTotal)
+
+  tx, ty = incremental_sum(numberOfRuns)
+  tabular = [(
+    "\\# Tests run",
+    '\\# participants',
+    "Sum participants",
+    '\\% of total participating'
+  )]
+  tabular += [
+    (fr"$\#r\leq{k}$", f"${numberOfRuns[k]}$", f"${v}$", f"${v/numUsersDidTests*100:.2f}\%$") for k,v in zip(tx, ty)
+  ]
+  tablePrecentageOfUsers = [rf"\begin{{tabular}}{{| l | c | c | c |}}"]
+#  tabular[1] = ('$\\#r=1$', *tabular[1][1:])
+  for line in tabular:
+    tablePrecentageOfUsers.append(f"\\hline {'&'.join(line)}\\\\")
+  tablePrecentageOfUsers.append(rf"\hline\end{{tabular}}")
+  tablePrecentageOfUsers = os.linesep.join(tablePrecentageOfUsers)
 
   dump_vars([
     ('valNumAnyTestsRun', valNumAnyTestsRun),
-    ('valTestsFiveToTen', valTestsFiveToTen),
+    ('valTestTenOrLess', valTestTenOrLess),
     ('valTestsElevenOrMore', valTestsElevenOrMore),
     ('valTestNoTests', valTestNoTests),
-#    ('valNumAnyTestsRunP', valNumAnyTestsRunP),
+    ('valTestTenOrLessP', valTestTenOrLessP),
+    ('valTestsElevenOrMoreP', valTestsElevenOrMoreP),
+    ('tablePrecentageOfUsers', tablePrecentageOfUsers),
   ])
 
   x = list(numberOfRuns.keys())
-  y = list(numberOfRuns.values())
+  y = [numberOfRuns[k] for k in x]
   return {
     'data': [(x,y)],
     'method': 'bar',
-    'xticks': [1,5,10]+list(numberOfRuns.keys())[-3:],
-    'yticks': list(set(numberOfRuns.values()))[-3:],
-    'xlabel': "Number of test run",
-    'ylabel': "Number of users in category",
+    'xticks': [1,5,10]+list(numberOfRuns.keys())[-5:],
+    'yticks': [4,9,43],
+    'xlabel': "Number of tests in group",
+    'ylabel': "Participants in category",
+    'title': "Participants grouped on number of test-runs",
 #    'table': {
 #      'cellText': [(f"{x}:", y) for x,y in zip(x,y)],
 #      'colLabels': ['Tests Run','#Users'],
