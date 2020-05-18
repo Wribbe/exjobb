@@ -13,10 +13,10 @@ pdflatex=pdflatex -interaction=nonstopmode
 deps_tex=$(filter-out %report.tex,$(wildcard msccls/*.tex))
 
 
-all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
+all: msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 
 msccls/report.bbl : msccls/report.bib
-	cd msccls && ${pdflatex} report && biber report && ${pdflatex} report
+	cd msccls && biber report && ${pdflatex} report && biber report && ${pdflatex} report
 
 msccls/toc.guard : msccls/report.tex
 	[ -z "$(shell diff -q $@ msccls/report.toc)" ] || { cd msccls && ${pdflatex} report.tex; }
