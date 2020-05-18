@@ -15,8 +15,16 @@ deps_tex=$(filter-out %report.tex,$(wildcard msccls/*.tex))
 
 all: msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 
+
+virt_py3: requirements.txt
+	rm -rf $@
+	python -m venv $@
+	$@/bin/python -m pip install --upgrade pip
+	$@/bin/python -m pip install -r $^
+
+
 msccls/report.bbl : msccls/report.bib
-	cd msccls && biber report && ${pdflatex} report && biber report && ${pdflatex} report
+	cd msccls && ${pdflatex} report && biber report && ${pdflatex} report
 
 msccls/toc.guard : msccls/report.tex
 	[ -z "$(shell diff -q $@ msccls/report.toc)" ] || { cd msccls && ${pdflatex} report.tex; }
@@ -32,7 +40,7 @@ ${DIR_STATIC}/report.pdf : msccls/report.tex ${figures} ${deps_tex} msccls/repor
 ${DIR_REPORTS}, ${PATH_FIGURES}, ${DIR_REPORTS} :
 	mkdir -p $@
 
-${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.py csv_to_pdf.py ${FIGUTILS} | ${PATH_FIGURES}
+${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.py csv_to_pdf.py ${FIGUTILS} | ${PATH_FIGURES} virt_py3
 	${PY} csv_to_pdf.py ${@:%.pdf=%.py} $@
 
 ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.pyx | ${PATH_FIGURES}
@@ -43,7 +51,7 @@ clean:
 
 #${DIR_STATIC}/report.pdf : msccls/preface.pdf
 
-msccls/preface.pdf : msccls/preface.tex
+msccls/preface.pdf : msccls/preface.tex | virt_py3
 	cd msccls && ${pdflatex} preface.tex
 
 .PHONY: all clean
