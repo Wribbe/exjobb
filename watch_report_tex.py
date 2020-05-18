@@ -2,9 +2,10 @@
 
 import time
 import subprocess
+import os
 
 from pathlib import Path
-to_watch = [Path('msccls','report.tex')]
+to_watch = Path('msccls')
 last_seen = {}
 
 def file_changed(path):
@@ -16,11 +17,21 @@ def file_changed(path):
     last_seen[path] = modded_at
     return True
 
+def something_changed(files):
+  for file in files:
+    if not file.endswith(".tex"):
+      continue
+    path = Path(root, file)
+    if file_changed(path):
+      return True
+  return False
 
-print(f"watching {','.join([str(p) for p in to_watch])}")
+print(f"watching {to_watch}")
+
 while True:
-  for watch in to_watch:
-    if file_changed(watch):
+
+  for root, _, files in os.walk(to_watch):
+    if something_changed(files):
       subprocess.call('make')
-    break
+      break
   time.sleep(1)
