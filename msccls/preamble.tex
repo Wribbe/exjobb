@@ -1,0 +1,68 @@
+% to show a list of used packages at the end of the document, delete the nofilelist option
+%\documentclass{cslthse-msc}
+%\setlength{\textfloatsep}{1pt plus 1.0pt minus 2.0pt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[titletoc, header, page]{appendix}
+\usepackage{transparent}
+\usepackage[
+	backend=biber,
+	style=numeric,
+	sorting=none,
+]{biblatex}
+\addbibresource{report.bib}
+%\setlength{\belowcaptionskip}{0pt}
+\usepackage{parskip}
+\usepackage{textcomp}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+\setlist[description]{leftmargin=1.5cm,labelindent=1cm}
+
+% used to display the used files at the end. Select nofilelist as a package option to disable this
+%\listfiles % initialize
+
+%\geometry{showframe}
+%better like this?
+%\student{Flavius Gruian}{Flavius.Gruian@cs.lth.se}
+\student{Stefan Eng}{atn08sen@lu.se}
+
+\thesisnumber{LU-CS-EX: 2020-XX} % Birger Swahn will provide this number to you, once the thesis is ready for publication
+
+\title{
+  Usability testing on the web; Measuring how design impacts task performance
+  times.
+}
+%\onelinetitle
+%\twolinestitle
+\threelinestitle
+%\fourlinestitle
+
+%\subtitle{A {\LaTeX} class}
+\company{MASSIVE}
+\supervisors{
+  John Deer, \href{mailto:jdeer@company.com}{\texttt{jdeer@company.com}}
+}{
+  Don Jeer, \href{mailto:djeer@xy.lth.se}{\texttt{djeer@xy.lth.se}}
+}
+\examiner{Jane Doe, \href{mailto:jane.doe@cs.lth.se}{\texttt{jane.doe@cs.lth.se}}}
+
+\date{\today}
+%\date{January 16, 2015}
+
+\acknowledgements{
+}
+
+\theabstract{
+}
+
+\keywords{
+	Usability testing,
+	Web-application,
+	Flask,
+	HTML
+}
+
