@@ -10,17 +10,19 @@ figures_pyx=$(foreach d,$(wildcard ${PATH_FIGURES}/*.pyx),${d:%.pyx=%.pdf})
 figures=${figures_py} ${figures_pyx}
 
 pdflatex=pdflatex -interaction=nonstopmode
+deps_tex=$(filter-out %report.tex,$(wildcard msccls/*.tex))
+
 
 all: ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
 
-msccls/report.aux : msccls/report.bib
+msccls/report.bbl : msccls/report.bib
 	cd msccls && ${pdflatex} report && biber report && ${pdflatex} report
 
 msccls/toc.guard : msccls/report.tex
 	[ -z "$(shell diff -q $@ msccls/report.toc)" ] || { cd msccls && ${pdflatex} report.tex; }
 	cat msccls/report.toc > msccls/toc.guard
 
-${DIR_STATIC}/report.pdf : msccls/report.tex msccls/report.aux ${figures} | ${DIR_REPORTS}
+${DIR_STATIC}/report.pdf : msccls/report.tex ${figures} ${deps_tex} msccls/report.bbl | ${DIR_REPORTS}
 	cd msccls && ${pdflatex} report.tex && cp report.pdf ../$@
 	# Remove other same-day pdfs.
 	rm -rf ${DIR_REPORTS}/$(shell date '+%Y-%m-%d_')*.pdf
@@ -38,7 +40,6 @@ ${PATH_FIGURES}/%.pdf : ${PATH_FIGURES}/%.pyx | ${PATH_FIGURES}
 
 clean:
 	rm -rf ${PATH_FIGURES} ${PATH_FIGURES_DATA}
-
 
 #${DIR_STATIC}/report.pdf : msccls/preface.pdf
 

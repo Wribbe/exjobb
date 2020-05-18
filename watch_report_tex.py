@@ -19,7 +19,7 @@ def file_changed(path):
 
 def something_changed(files):
   for file in files:
-    if not file.endswith(".tex"):
+    if not file.endswith(".tex") and not file.endswith(".bib"):
       continue
     path = Path(root, file)
     if file_changed(path):
