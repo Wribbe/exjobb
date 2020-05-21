@@ -13,7 +13,7 @@ pdflatex=pdflatex -interaction=nonstopmode
 deps_tex=$(filter-out %report.tex,$(wildcard msccls/*.tex))
 
 
-all: msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard msccls/report.aux ${figures}
+all: msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard ${figures}
 
 
 virt_py3: requirements.txt
