@@ -65,7 +65,7 @@ def get_data():
     'legend': handlers_for_legend,
     'markers': markers,
     'colors': colors,
-    'yticks': range(110)[::10],
+    'yticks': range(110)[::20],
     'xticks': [1] + list(range(10, 110)[::10]),
     'ylabel': "Percentage",
     'xlabel': "Test index, from the first test-run and onwards",

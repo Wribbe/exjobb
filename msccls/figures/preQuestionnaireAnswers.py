@@ -77,7 +77,7 @@ def get_data(path_out):
   yticks = range(1, len(categories)+1)
   ylabels = [range_to_string(c) for c in categories]
   plt.yticks(yticks, ylabels)
-  plt.xlabel('Number of participants in in category')
+  plt.xlabel('Number of participants in category')
   plt.ylabel('Age ranges')
   plt.title('Participant age-ranges')
   plt.ylim(0, 7)

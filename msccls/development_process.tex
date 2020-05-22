@@ -181,24 +181,105 @@ touch of 'design-school'. \todo{Fix this section.}
 %
 %        \todo{Expand with information about ISO design standard}
 %
+\section{Technology Stack}
+
+  Since this is a development project, there is a need to choose a technology
+  stack. \todo{Expand}
+
+  \subsection{Python}
+
+  The backbone of the testing-platform is written in  Python\cite{citePython},
+  a general purpose programming language that is steadily becoming
+  more and more popular among developers according to the 2019 installment of
+  the annual developer survey\cite{citeStackOverflow2019Survey},
+  conducted by popular programming questions and answers site,
+  StackOverflow\cite{citeStackOverflow}.
+
+  In addition to the author having prior experience with Python, the language
+  is chosen due to its interesting relation to both data-analysis and
+  web-development. When
+  JetBrains\cite{citeJetBrains},
+  creators of
+  PyCharm\cite{citePyCharm},
+  a Python coding environment, asked 24 000 Python
+  developers:
+  ``What do you use Python for?''\cite{citeJetSurvey}, allowing for multiple
+  selections, 59\% answered data analysis and 51\% web development.
+
+  Python is also the home of SciPy, ``a Python-based ecosystem of open-source
+  software for mathematics, science and engineering''\cite{citeSciPyHomepage},
+  that has become ``a de facto
+  standard for leveraging scientific algorithms in
+  Python''\cite{citeSciPyPaper}, making the language a good fit for gathering
+  and processing data from studies in various ways.
+
+  \subsection{Flask}
+
+  Since the goal is to collect test-data remotely over the internet, there
+  needs to be web-component added to the mix. Here the final choice comes down
+  down to Flask\cite{citeFlaskHomepage} or Django\cite{citeDjangoHomepage},
+  two popular Python web-frameworks. Django facilitates an established
+  structure and more features defined out-of-the-box, also known as ``batteries
+  included'', while Flask encourages a more build-it-as-you-need-it approach.
+
+  In the end Flask was chosen because it better supports the chosen iterative
+  development process. Additionally, it is hard to know if the
+  project-structure enforced by Django is a good fit or not until the
+  development has been progressing for a while, which is not ideal when
+  development resources are scarce.
+
+
+%  \cite{citeIeeeSpectrum}
+%
+%  \cite{citepypl}
+%
+%  \cite{citetiobe}
+
+  \subsection{SVG (Scalable Vector Graphics)}
+
+  \subsection{To JavaScript or not to JavaScript}
+
+
 
 \section{Hi-fi prototype}
 
 After completing the interviews and tallying which paper prototype that
 was sorted first the most times, the result was paper prototype 1.4.
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics{figures/test_flow.pdf}
-  \caption{Illustrated flow for overall test-session.}
-\end{figure}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics{figures/test_flow.pdf}
+    \caption{Illustrated flow for overall test-session.}
+  \end{figure}
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics{figures/test_flow_task_runs.pdf}
-  \caption{Illustrated flow for individual task-runs.}
-\end{figure}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics{figures/test_flow_task_runs.pdf}
+    \caption{Illustrated flow for individual task-runs.}
+  \end{figure}
 
+
+  \subsection{Basis and purpose of the test-tasks}
+
+  The test-tasks are derived from the items listed at the
+  end of section \ref{label_sectionIdeas} at page \pageref{label_ideas}.
+  This list contains a selected subset of the answers to the
+  interview question of what tooling is currently missing that could make
+  the day-to-day work for interviewed managers easier.
+
+  Using these examples of what could feasibly be implemented to add
+  real-world value to current day-to-day activities gives a concrete
+  foundation to base the test-task design on. However, since all of
+  the select suggestions could be implemented as a self-contained tool or
+  service in their own right, implementing each of them fully, with
+  correct behaviour, is outside the scope of this report.
+
+  Due to the limited time and development resources mentioned above, each
+  suggestion will be abstracted to its simplest goal that still contains
+  the core function of the original. Since the overarching goal is to
+  measure if the design of the test has any impacts on the performance,
+  the main focus will be on tracking the time to completion of the task
+  as accurately as possible.
 
   \subsection{Input methods and screen sizes}
 
@@ -519,3 +600,6 @@ was sorted first the most times, the result was paper prototype 1.4.
     the questions used in the post-questionnaire see figure
     \todoInsert{reference to post-survey}.
 
+%https://businessoverbroadway.com/2019/01/13/programming-languages-most-used-and-recommended-by-data-scientists/
+
+%https://www.jetbrains.com/lp/python-developers-survey-2019/
