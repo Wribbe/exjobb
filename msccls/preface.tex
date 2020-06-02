@@ -212,16 +212,6 @@
 
 \begin{document}
 
-\pagenumbering{roman}
-
-\newcommand\titleFirst{Usability testing on the web; Measuring}
-\newcommand\titleSecond{how design impacts task performance}
-%\newcommand\titleFirst{Usability testing on the web; Building a}
-%\newcommand\titleSecond{usability testing platform with Python}
-\newcommand\titleThird{at MASSIVE, Malmö}
-%\newcommand\titleFull{\titleFirst \ \titleSecond \ \titleThird}
-\newcommand\titleFull{\titleFirst \ \titleSecond}
-
 \newcommand\name{Stefan Eng}
 \newcommand\email{kontakt@stefaneng.se}
 \newcommand\nameEmail{\name \ \texttt{<\email>}}
@@ -232,84 +222,84 @@
 \newcommand\examiner{Johanna Persson}
 \newcommand\contact{Patrick O'Casey}
 \newcommand\stanfordBootleg{\textit{design thinking bootleg}}
+%\newcommand\titleFull{\titleFirst \ \titleSecond \ \titleThird}
+\newcommand\titleFull{\titleFirst \ \titleSecond}
 
-% Definition of names.
-\def\shotgun{\texttt{Shotgun}}
-\def\recordingSystem{\texttt{<Recording-System>}}
-\def\flask{\texttt{Flask}}
-\def\python{\texttt{Python}}
-\def\reviewProtocol{\texttt{<Review-Protocol>}}
-\def\numIterations{\texttt{<Num-Iterations>}}
+\newcommand\titleFirst{AAA}
+\newcommand\titleSecond{AAA}
 
-% Begin title page.
-{\color[rgb]{0.612,0.376,0.075}
-  \thispagestyle{empty}
+%% BEGIN Title Pages
+\renewcommand\titleFirst{Building a platform for remote usability-}
+\renewcommand\titleSecond{testing from scratch using Python}
+\input{titlepage.tex}
+\newpage
 
-  \def\colorBorder{0.8cm}
-  \def\titleBoxWidth{15.0cm}
-  \definecolor{bgcolor}{rgb}{0.835,0.824,0.769}
+\renewcommand\titleFirst{Building a platform for remote usability-}
+\renewcommand\titleSecond{testing using Python and Flask}
+\input{titlepage.tex}
+\newpage
 
-  \begin{tikzpicture}[remember picture, overlay]
-    \coordinate (topLeft) at ($%
-      (current page.north west) + (\colorBorder, -\colorBorder)%
-    $);
+\renewcommand\titleFirst{Performing task based usability-testing }
+\renewcommand\titleSecond{and measuring performance over the web }
+\input{titlepage.tex}
+\newpage
 
-    \coordinate (bottom-Right) at ($%
-      (current page.south east) + (-\colorBorder, \colorBorder)%
-    $);
+\renewcommand\titleFirst{Performing task based usability-testing }
+\renewcommand\titleSecond{and measuring user performance online}
+\input{titlepage.tex}
+\newpage
 
-    \fill[fill=bgcolor] (topLeft) rectangle (bottom-Right);
-  \end{tikzpicture}
+\renewcommand\titleFirst{Snake in a web; using Python to perform}
+\renewcommand\titleSecond{usability tests over the internet}
+\input{titlepage.tex}
+\newpage
 
-  \begin{tikzpicture}[remember picture, overlay]
-    \fill[fill=white] (0.5cm, 0cm) rectangle +(\titleBoxWidth+1cm, -8.0cm);
-  \end{tikzpicture}
+\renewcommand\titleFirst{From click to PDF; using SVG and Python}
+\renewcommand\titleSecond{to create sharable usability-testing results}
+\input{titlepage.tex}
+\newpage
 
-  \fontfamily{phv}\selectfont
-  \vspace{1cm}
-  %\vspace{1cm}
-  \begin{minipage}{\paperwidth}
-    \begin{minipage}{1.0cm}
-      \
-    \end{minipage}
-    \begin{minipage}{\titleBoxWidth}
-      \textrm{\YUGE \bfseries
-        \titleFirst
-        \vspace{0.3cm} \\
-        \titleSecond
-        %\vspace{0.45cm} \\
-        %\titleThird
-      } \\ \vspace{3mm}
-      \hspace{-2mm}\noindent\rule{{\titleBoxWidth-2mm}}{0.3mm} \\
-      \vspace{-5mm} \\
-      \textrm{\LARGE
-        \name
-      }\vspace{5mm} \\
-      {\footnotesize\bfseries
-        DIVISION OF {\DIVISION} | DEPARTMENT OF DESIGN SCIENCES \\
-        FACULTY OF ENGINEERING LTH | LUND UNIVERSITY \\
-        \the\year
-        \vspace{0.6cm} \\
-        MASTER THESIS
-      }
-    \end{minipage}
-  \end{minipage}
+\renewcommand\titleFirst{One mans insanity; How to be slowly}
+\renewcommand\titleSecond{devoured by a large reptile (Python)}
+\input{titlepage.tex}
+\newpage
 
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=center] at ($ (current page.south east) + (-4.2cm, 4.2cm) $) {
-        \includegraphics[width=9cm]{LU-logotyp-tryck-digitalt/EPS_for_tryck/Engelska/LundUniversity_C2line_CMYK_cut.pdf}
-    };
-  \end{tikzpicture}
+\renewcommand\titleFirst{Task-based usability testing and perform-}
+\renewcommand\titleSecond{ance measurement over the internet}
+\input{titlepage.tex}
+\newpage
 
-  \begin{tikzpicture}[remember picture, overlay]
-    \node[anchor=center] at ($ (current page.south west) + ( 6.3cm, 4.2cm) $) {
-        \includegraphics[width=9cm]{logos/Massive_Logotype_Print/Black/MASSIVE_LOGO_CMYK_BLACK.eps}
-    };
-  \end{tikzpicture}
+\renewcommand\titleFirst{Online usability-testing and performance-}
+\renewcommand\titleSecond{measurements using Python and Flask}
+\input{titlepage.tex}
+\newpage
+
+\renewcommand\titleFirst{Online task based usability testing with}
+\renewcommand\titleSecond{performance measurements using Python}
+\input{titlepage.tex}
+\newpage
+
+\renewcommand\titleFirst{Online task-based usability-testing with}
+\renewcommand\titleSecond{performance measurements using Python}
+\input{titlepage.tex}
+\newpage
+
+\renewcommand\titleFirst{Performing online task based usability }
+\renewcommand\titleSecond{
+  testing and performance measurements \\
+  \hspace{0.3cm} \\
+  using Python at Massive Entertainment
 }
+\input{titlepage.tex}
+\newpage
 
+%\renewcommand\titleFirst{}
+%\renewcommand\titleSecond{}
+%\input{titlepage.tex}
+%\newpage
 
-%% Beginning Title page.
+%% END Title Pages
+
 \newpage
 
 \begin{center}
@@ -321,9 +311,6 @@
   \includegraphics[width=3.5cm]{LU-logotyp-tryck-digitalt/EPS_for_tryck/Engelska/LundUniversity_C2line_BLACK.eps}
 
 \end{center}
-
-%% End Title page.
-
 
 %% Beginning Copyright page.
 \newpage
