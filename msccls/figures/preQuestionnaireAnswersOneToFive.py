@@ -86,7 +86,7 @@ def get_data(path_out):
   category_colors = plt.cm.get_cmap('RdYlGn')(
     np.linspace(0.15, 0.85, data.shape[1]))
 
-  fig, ax = plt.subplots(figsize=(9.2, 1))
+  fig, ax = plt.subplots(figsize=(9.2, 0.6))
   ax.invert_yaxis()
   ax.xaxis.set_visible(False)
   ax.set_xlim(0, np.sum(data, axis=1).max())
