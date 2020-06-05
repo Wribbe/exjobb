@@ -309,7 +309,8 @@ and
 %
 %  \cite{citetiobe}
 
-  \subsection{SVG -- dynamic tasks, scaling and sharing}
+  \subsection{SVG -- dynamic tasks, scaling and
+  sharing}\label{label_svg_section}
 
   Scalable Vector Graphics (SVG) is, as described on the W3C-homepage, ``%
   \textit{%
@@ -356,8 +357,16 @@ and
 
 \section{Hi-fi prototype}
 
-After completing the interviews and tallying which paper prototype that
-was sorted first the most times, the result was paper prototype 1.4.
+  In order to properly begin the design of the hi-fi prototype the general
+  test-flow for each participant is defined, using the high-level
+  description of a test method\cite[p.78]{citeHandbookUsability} as
+  inspiration with modifications due to the remote nature of the tests.
+
+  %Using the most selected paper prototype, 1.4 as base the development started
+  %After the
+
+  %After completing the interviews and tallying which paper prototype that
+  %was sorted first the most times, the result was paper prototype 1.4.
 
   \begin{figure}[h!]
     \centering
@@ -365,12 +374,41 @@ was sorted first the most times, the result was paper prototype 1.4.
     \caption{Illustrated flow for overall test-session.}
   \end{figure}
 
+  The first major difference is the overall lack of time-limits. Since these
+  tests are performed online, at a device of the participants choice at a,
+  presumably, fitting time for them there is really no resource-restrictions in
+  play as for how long a individual test-session could be. There is however a
+  restriction centered around the minimum allowed tests performed, since in
+  order to measure performance and the effects of repeated tests there needs to
+  be a minimum number of tests performed by each participant.
+
+  Other than this, the overall test-flow follows the basic outline, beginning
+  with a nondisclosure and privacy statement (Information and consent),
+  followed by a combined background and experience questionnaire (Pre-survey).
+  Then in order to complete the test-flow, a participants completes at least
+  five tasks of their choosing, more if they want, ending with a post-test
+  debriefing (Post-survey). Again, with the main difference being the absence
+  of an active moderator, due to the online nature of the tests.
+
   \begin{figure}[h!]
     \centering
     \includegraphics{figures/test_flow_task_runs.pdf}
     \caption{Illustrated flow for individual task-runs.}
   \end{figure}
 
+  As for the flow of each individual tasks, it is split into three distinct phases;
+  \textit{Task selection},
+  \textit{Task-Info} and
+  \textit{Task-Execution}.
+  Each of the sections final design, purpose and implementation is
+  described in greater detail in later sections below.
+
+  What is worth noting here is that, as with many of the other steps, the
+  participant is free to spend any amount of time on the first and second
+  section, moving between them freely. It is when moving to the last stage,
+  execution that the interface becomes more restrictive, locking the
+  participant into the selected task, and measuring the time to the first
+  submitted answer regardless if it is correct or not.
 
   \subsection{Basis and purpose of the test-tasks}
 
