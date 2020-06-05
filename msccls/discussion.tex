@@ -1,53 +1,63 @@
-This section reflects on the processes underpinning the report, such as
-literary information gathering, the intial design process, the platform
-development process, platform deployment, processing-pipeline of the gathered
-user data,  together with a broad-view examination on the obtained final
-results and any thoughts surrounding those.
 
-\section{Literary information gathering}
+This section reflects on the general processes underpinning the procject as a
+whole and any improvemets or special considersations that have come to light
+during its execution and completion.
+%
+%Initially the literary information gathering stage is discussed together with
+%the intial design process.
+%The discussion then moves to the overall
+%development process and deployment of the finalized hi-fi platform.
+%Lastly, the overal data-processing-pipeline of the gathered results is examined
+%toghether with a more broad-view examination of the obtained results and any
+%thoughts surrounding those.
 
-  First off, there exists a rich corpus of fascinating literary references
-  regarding different flavours of user-centered design, usability and
-  usability-testing spanning from present day, back to the 1980s, which might
-  make some sources easier to miss. One such missed source is
-  \citetitle{citeBeyondTheUsabilityLab}%
-  \cite{citeBeyondTheUsabilityLab}. Having access to this reference during the
-  initial design and development of the platform would have probably led to a
-  different, more literary-grounded design of the questionnaires.
-
-  \todo{Expand on what design changes}
+%\section{Literary information gathering}
+%
+%  First off, there exists a rich corpus of fascinating literary references
+%  regarding different flavours of user-centered design, usability and
+%  usability-testing spanning from present day, back to the 1980s, which might
+%  make some sources easier to miss. One such missed source is
+%  \citetitle{citeBeyondTheUsabilityLab}%
+%  \cite{citeBeyondTheUsabilityLab}. Having access to this reference during the
+%  initial design and development of the platform would have probably led to a
+%  different, more literary-grounded design of the questionnaires.
+%
+%  \todo{Expand on what design changes}
 
 \section{The design process}
 
   Having the paper prototypes as an initial lo-fi starting point and conducting
   the interviews to determine which to use worked very well, and is an element
-  that would be repeated if a similar process would be done in the future.
+  that should be repeated if a similar process would be done in the future.
+
   That being said, it is regrettable that the iterative design process did not
   have a chance to get into gear and display its full potential over multiple
   design runs. Only managing to get through one
   design-implement-release-and-test-cycle really hamstrung the possibility of
-  experience the process of dynamically evolving the platform over time in
-  response to user feedback.
+  experience positive effect of the process of dynamically evolving the
+  platform over time in response to user feedback.
 
 \section{The development process}
 
   It was very easy to set up and get starting working on creating the platform
-  with both Python and Flask, and the performance and functionality of the
-  platform in its current state is satisfactory. However, given the state of
-  the code, it would probably be very hard for someone else to re-purpose the
-  platform for needs somewhat outside of what was done here without requiring
-  a significant re-write.
+  both with Python and Flask. In regard to the final performance and
+  functionality of the platform in its current state is satisfactory for the
+  indented use.
+
+  However, given the state of the code, it would probably be very hard for
+  someone else to re-purpose the platform for needs somewhat outside of what
+  was done here without requiring a significant re-write.
 
   The only remedy for this that comes to mind is more development experience in
-  regards to this type of web related projects. It feels like it is safe to assume, that the
-  majority of the target audience; people from the academia involved in
-  usability studies, wanting to do remote tests, would, much like the author,
-  lack extensive experience in coding this type of project and would likely
-  fall into the same traps given a wide-open playing field. One way to offset
-  this lack of experience somewhat would be to leverage the developer time put
-  into a more a more opinionated web-framework like
-  Django\cite{citeDjangoHomepage}, and, if needed change later when being more
-  experienced and wanting something that is not currently achievable.
+  regards to this type of web related projects. It feels like it is safe to
+  assume, that the majority of the target audience; interested individuals
+  inside of the gaming-industry, wanting to do remote tests, would, much like
+  the author, lack extensive experience in coding this type of project and
+  would likely fall into the same traps given a wide-open playing field.
+
+  One way to offset this lack of experience somewhat would be to leverage the
+  accumulated developer time put into a more opinionated web-framework like the
+  aforementioned Django\cite{citeDjangoHomepage} project.
 
   %In this section there is a discussion about how the development process went
   %overall. Which parts of the process went ok and was there anything could have
@@ -59,9 +69,24 @@ results and any thoughts surrounding those.
 
 \section{Deployment and gathering participants}
 
-  Deployment of the platform succeeded without any problem, and giving
-  participants access to the platform by sharing an url-address was very
-  efficient.
+  Deploying the platform on a local server exposed to the internet was done
+  without much hassle, and it was easy enough to gather participants by
+  sharing a url-link to the application.
+
+  In hind-sight, the data collection would benefit from having a more robust
+  mechanic in place in order to differentiate if a significant portion of the
+  participants came from a specific location, as an example, Massive.
+
+  Since the initial distribution-plan did not include the internal Massive
+  mailing list, the platform did not have this kind of mechanic in place, witch
+  made int impossible to definitely split the final set of participants along
+  that grouping if needed.
+
+
+%
+%  Deployment of the platform succeeded without any problem, and giving
+%  participants access to the platform by sharing an url-address was very
+%  efficient.
 
 %  It is worth noting that sharing the
 %  link on Facebook was the only distribution method planned for initially.
@@ -69,50 +94,128 @@ results and any thoughts surrounding those.
 
 \section{Results}
 
-  \begin{itemize}
-    \item{Discuss the results.}
-    \item{Anything weird?}
-    \item{Everything as planned?}
-    \item{Outliers, why?}
-  \end{itemize}
+  Event though the data gathered from the tests was rudimentary and the
+  design of the test tasks as basic as possible they were still enough to
+  determine some interesting characteristics about the different represented
+  cases and how users interacted with them.
+
+  Given more time and resources it would be trivial to expand the system to
+  perform more multi-faceted data collection together with more intricately
+  design tasks in order to test specific usability target beyond
+  time-to-completion.
+
+  Overall, the size of the response, and how easy it was to run large batches
+  of remote test and extract data from them with little to no experience was
+  surprising. Especially since the data was only collected during five days
+  before focus was shifted to processing said collected data.
+
+%
+%  \begin{itemize}
+%    \item{Discuss the results.}
+%    \item{Anything weird?}
+%    \item{Everything as planned?}
+%    \item{Outliers, why?}
+%  \end{itemize}
 
 \section{Possible improvements}
 
-  What could be improved if this was done again?
+%  What could be improved if this was done again?
+  Even though the deployed platform impressed with the ease it collected
+  response data, there are some considerations that should be taken into
+  account if this process, or similar was to be repeated.
 
-  \subsection{Multiple design iterations}
+  \subsection{Let go early, fit multiple design iterations}
 
-    Should have had multiple smaller iterations, easy to get stuck.
+  In the gaming industry there is a commonly performed practice referred to as
+  ``creating a vertical slice''. And though there does not seem to exist an
+  official recording of its origin, or agreed upon definition, the different
+  variant heard by the author are similar enough that the general understanding
+  of what the process strives to do will be stated in the context of this
+  report as follows:
 
-  \subsection{Opt-in followup}
+  When producing a vertical slice, the goal is to create, with the least effort
+  possible, something that engages the whole set of interconnected systems that
+  will appear in the finalized project or product in order to verify that it is
+  a viable effort as early as possible.
 
-    Some questions reveled answers that didn't match what I had
-    anticipated, would be interesting to at least have a chance to follow
-    up on those observations.
+  Viewing the development of this platform through this lens, the initial vertical
+  slice should have consisted of an non-styled html-page with a single input
+  field and submit button connected to a database, accessible by a url-link
+  that should have been distributed for feedback and iteration within the first
+  days of starting development.
 
-  \subsection{Leverage more frameworks?}
+  \subsection{Opt-in follow-up}
 
-    Didn't have the foundational expertise to decide on a good
-    framework, would be easier now.
-    Build upon frameworks for faster iteration?
+  From its inception, this project has had an clear goal of keeping the
+  participants as anonymous as possible and only collect the bare necessities
+  to perform basic analysis.
 
-\section{Threats to validity}
+  However, after processing the data, there are some answers that would have
+  been interesting if they could have been followed up on. The most plausible
+  solution while still keeping the anonymity of the participants would be some
+  kind of option for a opt-in follow-up through anonymized email communication
+  or similar.
+
+  \subsection{Investigate and leverage frameworks}
+
+  More time should have been spent investigating different available
+  frame-works, both for the front-end and back-end of the platform development,
+  given the plethora of available web-related solutions and frameworks available.
+
+  Assuming one is not already experienced, there is much to be gained by
+  adopting one a frameworks with this type of project, even if, after gaining
+  some experience, the initially chosen framework is switched out for a better
+  fit.
+
+%    Didn't have the foundational expertise to decide on a good
+%    framework, would be easier now.
+%    Build upon frameworks for faster iteration?
+
+  \section{Threats to validity}
+
+  This section highlights any known discrepancies related to the theory,
+  implementation or execution of the project that could introduce threats to
+  any results based on the collect data.
 
   \subsection{Online testing and latency}
 
-  Latency should be minimal, but it would be better to measure and
-  verify than simply guess.
+  Since these tests are performed online, there is always the possibility that
+  the quality of the connection, or rather lack thereof, could influence the
+  measurements collected by the platform.
 
-  \subsection{Seeding with user-id}
+  Further iterations on similar type of timed testing should integrate some
+  type of analysis of the connection quality established with the participant
+  in question over a set period of time. Even though it would be hard to
+  mitigate the effect of connection-influence, having access to this type data
+  would make it possible to at least generate a confidence interval in regards
+  to the registered values.
 
-  Might be a quirk in that re-seeding with the same user-id could
-  possibly create 'easy' anonymous id's.
-
-  Not possible to check screen-size and input method.
-
-  Could have defined buttons better on the print-outs.
+%  \subsection{Seeding with user-id}
+%
+%  Might be a quirk in that re-seeding with the same user-id could
+%  possibly create 'easy' anonymous id's.
+%
+%  Not possible to check screen-size and input method.
+%
+%  Could have defined buttons better on the print-outs.
 
   \subsection{Default age value}\label{label_validity_default_age}
 
+  Analyzing the returned data from the test pre-questionnaire, the most common
+  age was twenty-five, which coincidentally was the precise value of the only
+  pre-filled input field in any of the questions. Going forth, non of the
+  fields should have a default value in order to avoid this kind of bias.
+
 %				network latency?
 %				multiple runs with same person?
+
+  \subsection{Users participating multiple times}
+
+  Even though multiple test-runs with the same user beyond the initial five
+  test-task runs was encouraged, running several tests as different users was
+  not. Doing some basic correlation of the logs on the server running the
+  platform, it seems that at least a handful of participants ran tests as
+  different user-ids. Since this could introduce some unexpected biases to the
+  collected data, it would be interesting to add some kind of flagging
+  mechanism for when many different users appear to be coming from the same
+  source, while still keeping it anonymous.

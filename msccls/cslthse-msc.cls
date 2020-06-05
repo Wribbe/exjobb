@@ -12,7 +12,8 @@
 %\ExecuteOptions{12pt,a4paper,onecolumn, twoside, openright}
 %\ProcessOptions\relax
 %\LoadClass{report}
-\LoadClass[12pt,a4paper,onecolumn,twoside,openright]{report}
+%\LoadClass[12pt,a4paper,onecolumn,twoside,openright]{report}
+\LoadClass[12pt,a4paper,onecolumn,twoside]{report}
 
 % margins
 % use showframe in parameters if you want to check the margins
