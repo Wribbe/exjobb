@@ -1,0 +1,116 @@
+This section reflects on the processes underpinning the report, such as
+literary information gathering, the intial design process, the platform
+development process, platform deployment, processing-pipeline of the gathered
+user data,  together with a broad-view examination on the obtained final
+results and any thoughts surrounding those.
+
+\section{Literary information gathering}
+
+  First off, there exists a rich corpus of fascinating literary references
+  regarding different flavours of user-centered design, usability and
+  usability-testing spanning from present day, back to the 1980s, which might
+  make some sources easier to miss. One such missed source is
+  \citetitle{citeBeyondTheUsabilityLab}%
+  \cite{citeBeyondTheUsabilityLab}. Having access to this reference during the
+  initial design and development of the platform would have probably led to a
+  different, more literary-grounded design of the questionnaires.
+
+  \todo{Expand on what design changes}
+
+\section{The design process}
+
+  Having the paper prototypes as an initial lo-fi starting point and conducting
+  the interviews to determine which to use worked very well, and is an element
+  that would be repeated if a similar process would be done in the future.
+  That being said, it is regrettable that the iterative design process did not
+  have a chance to get into gear and display its full potential over multiple
+  design runs. Only managing to get through one
+  design-implement-release-and-test-cycle really hamstrung the possibility of
+  experience the process of dynamically evolving the platform over time in
+  response to user feedback.
+
+\section{The development process}
+
+  It was very easy to set up and get starting working on creating the platform
+  with both Python and Flask, and the performance and functionality of the
+  platform in its current state is satisfactory. However, given the state of
+  the code, it would probably be very hard for someone else to re-purpose the
+  platform for needs somewhat outside of what was done here without requiring
+  a significant re-write.
+
+  The only remedy for this that comes to mind is more development experience in
+  regards to this type of web related projects. It feels like it is safe to assume, that the
+  majority of the target audience; people from the academia involved in
+  usability studies, wanting to do remote tests, would, much like the author,
+  lack extensive experience in coding this type of project and would likely
+  fall into the same traps given a wide-open playing field. One way to offset
+  this lack of experience somewhat would be to leverage the developer time put
+  into a more a more opinionated web-framework like
+  Django\cite{citeDjangoHomepage}, and, if needed change later when being more
+  experienced and wanting something that is not currently achievable.
+
+  %In this section there is a discussion about how the development process went
+  %overall. Which parts of the process went ok and was there anything could have
+  %been improved or tweaked?
+
+  %\begin{itemize}
+  %  \item{Discuss the process. Good bad? Done anything differently?}
+  %\end{itemize}
+
+\section{Deployment and gathering participants}
+
+  Deployment of the platform succeeded without any problem, and giving
+  participants access to the platform by sharing an url-address was very
+  efficient.
+
+%  It is worth noting that sharing the
+%  link on Facebook was the only distribution method planned for initially.
+%  After a suggestion that it would probably be interesting to sperad it
+
+\section{Results}
+
+  \begin{itemize}
+    \item{Discuss the results.}
+    \item{Anything weird?}
+    \item{Everything as planned?}
+    \item{Outliers, why?}
+  \end{itemize}
+
+\section{Possible improvements}
+
+  What could be improved if this was done again?
+
+  \subsection{Multiple design iterations}
+
+    Should have had multiple smaller iterations, easy to get stuck.
+
+  \subsection{Opt-in followup}
+
+    Some questions reveled answers that didn't match what I had
+    anticipated, would be interesting to at least have a chance to follow
+    up on those observations.
+
+  \subsection{Leverage more frameworks?}
+
+    Didn't have the foundational expertise to decide on a good
+    framework, would be easier now.
+    Build upon frameworks for faster iteration?
+
+\section{Threats to validity}
+
+  \subsection{Online testing and latency}
+
+  Latency should be minimal, but it would be better to measure and
+  verify than simply guess.
+
+  \subsection{Seeding with user-id}
+
+  Might be a quirk in that re-seeding with the same user-id could
+  possibly create 'easy' anonymous id's.
+
+  Not possible to check screen-size and input method.
+
+  Could have defined buttons better on the print-outs.
+
+%				network latency?
+%				multiple runs with same person?

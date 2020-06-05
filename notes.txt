@@ -1,0 +1,63 @@
+2020-04-21
+----------
+  [ ] * 1.3 Usability testing - introduction?
+
+  [X] * 1.3. -> kapitel 2.1. (Usability)
+
+  [ ] * Why usability ej egen rubrik? (Löpande text) + Verktyg (Benchmarking -> Tool).
+
+  [X] * Stryk 1.4 (Running usability test at larger scales.
+
+  [X] * Report Goals tidigare. Efter Massive kanske?
+
+  [ ] * Kolla Literary Scope? Korrekt? + Limitations (Hela Arbetet)?
+      Som löpande text. Mer än bara Literary?
+
+  [ ] * Usability -> Design Process Teori, Iterativt arbete. Design Process fungerar.
+      Mer theory-centric.
+
+  [ ] * Python -> Akadmin, brett använtbart.
+
+  [X] * Undvik Patric / Günter -> Contact / Supervisor.
+
+  [ ] * 3.1 "övergång" -> ex: "Three managers were interview.. " + "meta-data":
+      mean-age, average-time, gender, for invervievr etc.
+
+  [ ] * 3.2.1 -> five team members -> meta-data etc. se ovan.
+      after testing -> each session lasting.
+
+  [ ] * 3.3 Rename to -> Hi-fi prototype:
+    - beskriv hur Hi-Fi fungerar -> ta bilder från 4.4 (grab från appen)
+
+  [X] * 3.2 Paper -> Lo-fi.
+
+  [X] * 4 -- Add Preamble.
+      - Bryt ut, source test and milestone.
+      - Flytta upp bilden 'milestones etc.'
+      - Bjuda in ska upp.
+      - Antal personer ska vara kvar.
+
+  [X] * 4.2.2 -- Screen -> Move to hi-fi imp.
+
+  [?] * 4.3 direkt efter setup.
+
+  [ ] * Flytta upp mycket från dumparna till implementeringen.
+
+  [X] * Basis and purpose -> Innan participants.
+
+  [?] * 4.3.4 -- Information, fict.. Fundera om denna ska ligga under Procedure?
+
+  [X] * Eventuellt plocka bort 'Task -' Prefix?
+
+  [?] * Flytta runt grafer som redan är nämnda, typ ålder, det som är duplicerat.
+
+  [/] * Kommentera specific för graf -> ok.
+
+  [/] * Diskussion -> Mer övergripande.
+
+  [X] * Felstavat:
+      deicide
+
+Links:
+https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=language+propularity+IEEE&btnG=
+

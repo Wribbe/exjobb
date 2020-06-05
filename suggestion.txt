@@ -1,0 +1,83 @@
+1 Introduction 
+
+(Jag tycker att din intro chapter har en bra stuktur)
+
+
+2 Background theory
+
+Beskriv här teori om usability, om mjukvara du har använt etc.
+
+
+3. Development process
+
+Beskriv här din process, de olika faserna, din bild som du har i 2.1.1 är super!
+
+Brainstorming session
+
+Din Lo-fi
+
+Din high-fi (eller kalla det implementation)
+
+
+4. Evaluation
+
+4.1 Participants
+
+Ha ett avsnitt som beskriver dina participants för det stora testet.
+
+Hur hittade du dem?
+
+Hur många var dem?
+
+Deras medel ålder?
+
+Antal Kvinnor/män
+
+Hur länge varade en test session ungefär
+
+
+  4.2 Setup
+
+  Hur var uppläget av testet, dvs var gjordes, vad för utrustning användes
+
+
+  4.3 Procedure
+
+  Beskriv hur testet gick till, de olika stegen informed consent, test (antal
+  test), questionnaire etc.
+
+  Ha gärna med en bild som beskriver flödet
+
+  4.4 Results
+
+    Presentera resultat från testet
+
+    4.4.1 Pre-questionnaire-itemizations
+
+    4.4.2 Pre-questionnaire-1-5 questions
+
+    4.4.3 —
+
+5 Discussions
+
+  5.1 The development process
+
+  Diskutera din process, vad var bra/dåligt, något du borde gjort annorlunda?
+
+
+  5.2 Results
+
+    Diskutera resultaten, fanns det något konstigt? Var allt som förväntat?
+
+    Några outliers? Varför tror du att de var outliers?
+
+  5.3 Possible improvements
+
+  5.4 Threats to validity
+
+  5.5 Future
+
+6 Conclusions
+
+References
+

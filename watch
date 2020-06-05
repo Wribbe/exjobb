@@ -1,0 +1,3 @@
+#!/bin/sh
+zathura msccls/report.pdf&
+./scripts/watch_report_tex.py

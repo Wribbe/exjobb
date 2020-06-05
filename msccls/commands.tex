@@ -1,0 +1,12 @@
+\renewcommand{\bibname}{References}
+
+%\makefrontmatter
+\newcommand{\todo}[1]{\textcolor{blue}{\textbf{TODO:} #1}}
+\newcommand{\todoMaybe}[1]{\textcolor{OliveGreen}{\textbf{?TODO:} #1?}}
+\newcommand{\eatdot}[1]{}
+\newcommand{\ctitle}[1]{\citetitle{#1}\cite{#1}}
+\newcommand{\varHere}[1]{\input{vars/#1.txt}\unskip}
+\newcommand{\checkTruth}[0]{\textcolor{red}{(?)}}%
+\newcommand{\findref}[0]{\textcolor{orange}{[!]}}%
+\newcommand{\todoInsert}[1]{\textcolor{purple}{\textit{<insert #1 here>}}}%
+\newcommand{\numRuns}[1]{\texttt{\#r=#1}}%

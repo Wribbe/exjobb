@@ -1,0 +1,379 @@
+\documentclass[a4paper,11pt]{article}
+
+% Get equation environment.
+\usepackage{amsmath}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage[hidelinks=true]{hyperref}
+
+\usepackage{calc}
+
+\usepackage[a4paper,top=4.9cm, bottom=4.9cm, left=4.05cm,%
+  right=4.05cm]{geometry}
+
+% Change table of contents to match.
+\usepackage{titletoc}
+\usepackage[titles]{tocloft}
+\setlength{\cftsubsecindent}{0.3cm}
+\setlength{\cftsubsecindent}{0.3cm}
+\setlength{\cftsubsubsecindent}{0.6cm}
+\addto\captionsenglish{\renewcommand{\contentsname}{Table of contents}}
+\renewcommand{\cftdot}{}
+\renewcommand{\cftsecfont}{\normalfont\large}
+\renewcommand{\cftsecpagefont}{\normalfont\large}
+\renewcommand{\cftsubsecpagefont}{\normalfont\large}
+\renewcommand{\cftsubsecfont}{\normalfont\large}
+\renewcommand{\cftsubsubsecpagefont}{\normalfont\large}
+\renewcommand{\cftsubsubsecfont}{\normalfont\large}
+
+\setlength{\parindent}{0cm}
+\newcommand\YUGE{\fontsize{24}{12}\selectfont}
+
+%Set title formats.
+\usepackage{titlesec}
+\newcommand\HOne{\fontsize{20}{12}\selectfont}
+\newcommand\HTwo{\fontsize{14}{8}\selectfont}
+\titleformat{\section}
+  {\normalfont\HOne}
+  {\thesection:}
+  {0.3cm}
+  {}
+  {}%
+\titleformat{name=\section,numberless}
+  {\normalfont\HOne}
+  {}
+  {0cm}
+  {}
+  {}%
+\titleformat{\subsection}{\normalfont\HTwo}{\thesubsection:}{0.3cm}{}
+\def\sectionSpacing{1.5cm}
+\titlespacing{\section}{0cm}{10pt}{\sectionSpacing}
+\titlespacing{name=\section, numberless}{0cm}{0cm}{\sectionSpacing}
+\titlespacing{\subsection}{0cm}{10pt}{\sectionSpacing-0.7cm}
+\titlespacing{\subsubsection}{0pt}{10pt}{12pt}
+
+% Reference settings.
+\usepackage[autostyle]{csquotes}
+\usepackage[
+  backend=biber,
+  style=numeric,
+  url=true,
+  sorting=none
+]{biblatex}
+
+
+\renewcommand\multicitedelim{\addsemicolon\space}
+\bibliography{$bibfile}
+
+% Get copyright-symbol.
+\usepackage{textcomp}
+
+% Get shortmonthname.
+\usepackage{datetime2}
+
+% Get the [H] parameter for figures.
+\usepackage{float}
+
+% Get and set watermark.
+%\usepackage{eso-pic}
+%\AddToShipoutPictureFG{
+%  \begin{tikzpicture}[remember picture,overlay]
+%    \node[scale=15,rotate=45,opacity=0.1,color=red] at (current page.center) {Draft};
+%    \node[scale=3,rotate=45,opacity=0.1,color=red, yshift=-0.90cm] at (current
+%    page.center) {\DTMnow};
+%  \end{tikzpicture}
+%}
+%
+% Get heart.
+\usepackage{txfonts}
+
+% Get \isempty.
+\usepackage{xifthen}
+
+% Get strike through.
+\usepackage[normalem]{ulem}
+
+% Define t o d o commands.
+
+%\newcommand\tableofcontentsTODO{%
+%  \addcontentsline{toc}{section}{Todo-list}%
+%  \section*{\textbf{\textcolor{purple}{Todo-list:}}
+%      \@mkboth{\MakeUppercase\contentsname}{\MakeUppercaes\contentsname}%
+%    }%
+%    \vspace{-1.7cm}%
+%    \@starttoc{tocTODO}%
+%}%
+
+%\newcounter{counterTODO}\setcounter{counterTODO}{1}
+%\newcounter{counterTODOMaybe}\setcounter{counterTODOMaybe}{1}
+%
+%\newcommand\TODO[2][]{%
+%  \ifshowTodo{%
+%    \def\varTODOtext{\textcolor{purple}{\texttt{<}\textbf{TODO}\#\arabic{counterTODO}\texttt{: #2>}}}
+%    \def\varTODOContentLine{\textcolor{purple}{#2}}
+%    \ifthenelse{\isempty{#1}}%
+%      {% Is not checked.
+%        \addcontentsline{tocTODO}{section}{\vspace{-0.3cm}\varTODOContentLine}%
+%        \varTODOtext\\%
+%      }%
+%      {% Is checked.
+%        \addcontentsline{tocTODO}{section}{\vspace{-0.3cm}\sout{\varTODOContentLine}}%
+%      }%
+%      \stepcounter{counterTODO}%
+%  }\fi%
+%}
+%
+%\newcommand\TODOMaybe[1]{%
+%  \ifshowTodo{%
+%    \textcolor{orange}{%
+%      \texttt{<}\textbf{TODOMaybe}\#\arabic{counterTODOMaybe}\texttt{: #1?>}%
+%    }\\%
+%    \stepcounter{counterTODOMaybe}
+%  }\fi%
+%}
+%\newcommand\TODOCite{\ifshowTodo{\textcolor{blue}{\texttt{\textit{[Finalize
+%          citations]}}}}\else[?]\fi}
+% Get adjustwidth command.
+\usepackage{changepage}
+
+% Get \NewEnviron command.
+\usepackage{environ}
+
+% Get subfigure.
+\usepackage{subcaption}
+
+% Get wrapfig.
+\usepackage{wrapfig}
+
+
+% Define notes environment.
+\NewEnviron{notes}[1]
+{
+  \ifshowComments
+    \vspace{-1.2cm}
+    \color{teal}
+    Notes (\textit{#1}):
+    \begin{adjustwidth}{0.5cm}{0pt}
+      \BODY
+    \end{adjustwidth}
+    \vspace{0.3cm}
+  \fi
+}
+
+%% Define draftText command.
+%\newcommand\draftText[1]
+%{
+%  \ifshowComments
+%    {\footnotesize
+%      \color{OliveGreen}
+%        #1
+%    }
+%  \fi
+%}
+%
+
+% Toggle clutter on or off.
+%\newif\ifshowTodo
+%\newif\ifshowComments
+%
+%\ifdefined\visibleComments
+%  \showTodotrue
+%  \showCommentstrue
+%\else
+%  \showCommentsfalse
+%  \showTodofalse
+%\fi
+%
+%\ifx\visibleComments\undefined
+%  \DeclareSourcemap{
+%    \maps[datatype=bibtex]{
+%      \map{
+%        \step[fieldsource=url, match=\regexp{http://ludwig.lub.lu.se/login}, final]
+%        \step[fieldset=url, null]
+%        \step[fieldset=urldate, null]
+%      }
+%    }
+%  }
+%\fi
+
+% Define see command.
+\newcommand\seeref[1]{see \ref{#1} at page \pageref{#1}}
+
+\begin{document}
+
+\newcommand\name{Stefan Eng}
+\newcommand\email{kontakt@stefaneng.se}
+\newcommand\nameEmail{\name \ \texttt{<\email>}}
+
+\newcommand\DIVISION{ERGONOMICS AND AEROSOL TECHNOLOGY}
+\newcommand\division{Ergonomics and Aerosol Technology}
+\newcommand\supervisor{Günter Alce}
+\newcommand\examiner{Johanna Persson}
+\newcommand\contact{Patrick O'Casey}
+\newcommand\stanfordBootleg{\textit{design thinking bootleg}}
+%\newcommand\titleFull{\titleFirst \ \titleSecond \ \titleThird}
+\newcommand\titleFull{\titleFirst \ \titleSecond}
+
+\newcommand\titleFirst{AAA}
+\newcommand\titleSecond{AAA}
+
+%% BEGIN Title Pages
+%\renewcommand\titleFirst{Building a platform for remote usability-}
+%\renewcommand\titleSecond{testing from scratch using Python}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Building a platform for remote usability-}
+%\renewcommand\titleSecond{testing using Python and Flask}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Performing task based usability-testing }
+%\renewcommand\titleSecond{and measuring performance over the web }
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Performing task based usability-testing }
+%\renewcommand\titleSecond{and measuring user performance online}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Snake in a web; using Python to perform}
+%\renewcommand\titleSecond{usability tests over the internet}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{From click to PDF; using SVG and Python}
+%\renewcommand\titleSecond{to create sharable usability-testing results}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{One mans insanity; How to be slowly}
+%\renewcommand\titleSecond{devoured by a large reptile (Python)}
+%\input{titlepage.tex}
+%\newpage
+
+\renewcommand\titleFirst{Task-based usability testing and perform-}
+\renewcommand\titleSecond{ance measurement over the internet}
+\input{titlepage.tex}
+\newpage
+
+%\renewcommand\titleFirst{Online usability-testing and performance-}
+%\renewcommand\titleSecond{measurements using Python and Flask}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Online task based usability testing with}
+%\renewcommand\titleSecond{performance measurements using Python}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Online task-based usability-testing with}
+%\renewcommand\titleSecond{performance measurements using Python}
+%\input{titlepage.tex}
+%\newpage
+%
+%\renewcommand\titleFirst{Performing online task based usability }
+%\renewcommand\titleSecond{
+%  testing and performance measurements \\
+%  \hspace{0.3cm} \\
+%  using Python at Massive Entertainment
+%}
+%\input{titlepage.tex}
+%\newpage
+
+%\renewcommand\titleFirst{}
+%\renewcommand\titleSecond{}
+%\input{titlepage.tex}
+%\newpage
+
+%% END Title Pages
+
+\newpage
+
+\begin{center}
+  {\HOne \titleFull} \\
+  \vspace{2.5cm}
+  {\Large \name} \\
+  \vspace{2.0cm}
+%  \hspace{0.17cm}
+  \includegraphics[width=3.5cm]{LU-logotyp-tryck-digitalt/EPS_for_tryck/Engelska/LundUniversity_C2line_BLACK.eps}
+
+\end{center}
+
+%% Beginning Copyright page.
+\newpage
+
+%{\Large \titleFirst \\ \titleSecond}
+{\Large \titleFull}
+\vspace{1.5cm} \\
+\begin{large}
+  Copyright \textcopyright \ \the\year \ \name \\
+
+  \textit{Published by} \vspace{0.2cm} \\
+      Department of Design Sciences \\
+      Faculty of Engineering LTH, Lund University \\
+      P.O. Box 118, SE-221 00 Lund, Sweden
+
+  \vspace{0.8cm}
+  Subject: (MAMM10), Interaction Design \\
+  Division: \division \\
+  Supervisor: \supervisor \\
+  Company supervisor and company contact: \contact \\
+  Examiner: \examiner \\
+
+
+\end{large}
+%% EndCopyright page.
+
+\newpage
+
+
+\section*{Abstract}
+
+%\TODO[]{Write non-mock abstract}
+%\def\abs{\input{tex/report/abstract.tex}}
+%{\abs}
+
+
+\newpage
+
+\section*{Sammanfattning}
+
+%\TODO[]{Complete English version \& translate to Swedish}
+%{\abs}
+
+\newpage
+
+\section*{Preface}
+
+%\TODO[]{Finish preface}
+
+{\large
+
+First off I want to thank my fiancé, Amanda, for helping out with proof-reading and
+edit-suggestions while simultaneously putting up with the weird question and
+theories lobbed in her general direction.
+\textcolor{red}{\ensuremath\varheartsuit} \\
+
+\vspace{0.7cm}
+\DTMsavenow{thisone}
+Malmö,
+\DTMenglishmonthname{\DTMfetchmonth{thisone}},
+\DTMfetchyear{thisone}
+\vspace{0.7cm} \\
+\name
+}
+
+\end{document}

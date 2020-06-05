@@ -1,0 +1,82 @@
+%\renewcommand\titleFirst{Usability testing on the web; Building a}
+%\renewcommand\titleSecond{usability testing platform with Python}
+%\newcommand\titleThird{at MASSIVE, Malmö}
+%\newcommand\titleFull{\titleFirst \ \titleSecond \ \titleThird}
+
+
+% Definition of names.
+\def\shotgun{\texttt{Shotgun}}
+\def\recordingSystem{\texttt{<Recording-System>}}
+\def\flask{\texttt{Flask}}
+\def\python{\texttt{Python}}
+\def\reviewProtocol{\texttt{<Review-Protocol>}}
+\def\numIterations{\texttt{<Num-Iterations>}}
+
+% Begin title page.
+{\color[rgb]{0.612,0.376,0.075}
+  \thispagestyle{empty}
+
+  \def\colorBorder{0.8cm}
+  \def\titleBoxWidth{15.0cm}
+  \definecolor{bgcolor}{rgb}{0.835,0.824,0.769}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \coordinate (topLeft) at ($%
+      (current page.north west) + (\colorBorder, -\colorBorder)%
+    $);
+
+    \coordinate (bottom-Right) at ($%
+      (current page.south east) + (-\colorBorder, \colorBorder)%
+    $);
+
+    \fill[fill=bgcolor] (topLeft) rectangle (bottom-Right);
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[fill=white] (0.5cm, 0cm) rectangle +(\titleBoxWidth+1cm, -8.0cm);
+  \end{tikzpicture}
+
+  \fontfamily{phv}\selectfont
+  \vspace{1cm}
+  %\vspace{1cm}
+  \begin{minipage}{\paperwidth}
+    \begin{minipage}{1.0cm}
+      \
+    \end{minipage}
+    \begin{minipage}{\titleBoxWidth}
+      \textrm{\YUGE \bfseries
+        \titleFirst
+        \vspace{0.3cm} \\
+        \titleSecond
+        %\vspace{0.45cm} \\
+        %\titleThird
+      } \\ \vspace{3mm}
+      \hspace{-2mm}\noindent\rule{{\titleBoxWidth-2mm}}{0.3mm} \\
+      \vspace{-5mm} \\
+      \textrm{\LARGE
+        \name
+      }\vspace{5mm} \\
+      {\footnotesize\bfseries
+        DIVISION OF {\DIVISION} | DEPARTMENT OF DESIGN SCIENCES \\
+        FACULTY OF ENGINEERING LTH | LUND UNIVERSITY \\
+        \the\year
+        \vspace{0.6cm} \\
+        MASTER THESIS
+      }
+    \end{minipage}
+  \end{minipage}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=center] at ($ (current page.south east) + (-4.2cm, 4.2cm) $) {
+        \includegraphics[width=9cm]{LU-logotyp-tryck-digitalt/EPS_for_tryck/Engelska/LundUniversity_C2line_CMYK_cut.pdf}
+    };
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=center] at ($ (current page.south west) + ( 6.3cm, 4.2cm) $) {
+        \includegraphics[width=9cm]{logos/Massive_Logotype_Print/Black/MASSIVE_LOGO_CMYK_BLACK.eps}
+    };
+  \end{tikzpicture}
+}
+
+%\renewcommand\titleFull{\titleFirst \ \titleSecond}

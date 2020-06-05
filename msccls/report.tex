@@ -1,0 +1,47 @@
+\documentclass[nofilelist,dvipsnames]{cslthse-msc}
+
+\input{preamble.tex}
+
+\begin{document}
+
+\input{commands.tex}
+
+\includepdf[pages=-]{preface.pdf}
+\tableofcontents
+
+\chapter{Introduction}
+
+  \input{introduction.tex}
+
+\chapter{Background theory}
+%\chapter{User-centered design and usability}
+
+  \input{background_theory.tex}
+
+\chapter{Development process and technology stack}
+
+  \input{development_process.tex}
+
+\chapter{Evaluation}
+
+  \input{evaluation.tex}
+
+\chapter{Discussion}
+
+  \input{discussion.tex}
+
+\chapter{Conclusions}
+
+  \input{conclusion.tex}
+
+\chapter{Popular Science}
+
+  \input{popular_science.tex}
+
+\makebibliography{report}
+
+\chapter{Appendix}
+
+  \input{appendix.tex}
+
+\end{document}
