@@ -1,5 +1,18 @@
-The overall process took inspiration from agile software development with a
-touch of 'design-school'. \todo{Fix this section.}
+
+The development process outline was inspired by the
+12 key-principles of user-centered system design
+listed earlier, especially the following ones:
+\textit{user focus},
+\textit{active user involvement},
+\textit{evolutionary systems development},
+\textit{simple design representations},
+and
+\textit{prototyping}.
+%The overall process took inspiration from agile software development with a
+%touch of 'design-school'. \todo{Fix this section.}
+
+%Since the resulting application should be something that could potentially
+%benefit the team, with the users
 
 \begin{figure}[h!]
   \centering
@@ -7,24 +20,53 @@ touch of 'design-school'. \todo{Fix this section.}
   \caption{Concept, development, testing and improvement cycle.}
 \end{figure}
 
+%The user focus should be established by the initial interviews. By interviewing
+%for actual pain-points, in this case from managers, finding a
+%Using the initial interviews, the goal was to figure out what kind of
+%project could be constructed
+
 \section{Brainstorming-sessions and interviews}{\label{label_sectionIdeas}
 
-  In order to figure out a interesting approach, two brainstorming-sessions
-  were conducted. The first in order to figure out what could be beneficial
-  to the team and studio at large. Secondly, discussing possible academic
-  applications and results.
+  In order to figure out the initial development approach and goal, two
+  brainstorming-sessions were conducted.
 
-  After hearing about the communication regression, it was decided that
-  it would be interesting to see if there are certain design elements and
-  theories that hold up better under stressful scenarios than others. A
-  secondary goal included trying to make a testing platform 'from-scratch'
-  in order to see if it would be feasible for a smaller research- or
-  developer-team to conduct similar evaluations in-house on a small budget.
+  The first session was conducted with members of the team at Massive, trying
+  to figure out something that could en up being beneficial to the team and
+  possibly the studio at large. The reasoning was that by focusing on something
+  with a tangential benefit clearly defined from the start, the buy-in
+  from the team would increase while also making it possible to perform
+  usability-tests among team-members, since they would then be a part of the
+  group of potential end-user.
 
-  To deicide what type of mock-assignments the tests should be constructed
-  from, three in-person interviews were conducted. The managers were asked
-  about what they would like to see implemented in order to make their
-  day-to-day work easier, producing the following ideas:
+  In the second session the ideas and suggestions brought up during the first
+  session were discussed with the supervisor, figuring out possible academic
+  applications and approaches.
+
+  One item that got a lot of attention in both sessions was the tendency of
+  information-sharing breaking down when it is needed the most. On the team
+  side, the discussions centered on the negative impact on team performance and
+  general well-being of the team members. The academic part of the discussion
+  revolved mainly around how this negative impact could be mitigated or
+  eliminated by improving the design and usability of the underlying
+  communication systems.
+
+  Initially the idea was to incrementally perform alterations to the existing
+  design of the communication system used, and then perform usability testing in
+  order to determine which, if any of the alterations would reduce the friction
+  of use during high-stress situation. But after an initial investigation
+  revealed that doing these kind of alteration on the current system would be
+  very hard, the idea was scrapped.
+
+  Discussing alternatives, it was decided that creating a web-based application
+  where it would be possible to conduct task-based usability-tests with tasks
+  based on current managerial pain-points would strike a good balance between
+  academic application and real-world benefits for the team.
+
+  In order to deicide what type of mock-assignments the tests should be
+  constructed from, three in-person interviews were conducted with managers of
+  the team. The managers were asked about what they would like to see
+  implemented in order to make their day-to-day work easier, producing the
+  following ideas:
 
   \newcommand{\ideaOne}{%
     An easy way to see if a co-worker is assigned more work than they have
@@ -57,10 +99,34 @@ touch of 'design-school'. \todo{Fix this section.}
 
 \section{Lo-fi prototypes}
 
-  After taking some pointers from \findref, together with the suggestions
-  gathered from the manager-interviews, four simple paper prototypes, shown
-  below, were printed and presented to a second group of five interviewees
-  for evaluation.
+  The prototype designs were created with pointers from
+  \citeauthor{citeDonMakeMeThink}s
+  \citetitle{citeDonMakeMeThink}\cite{citeDonMakeMeThink} in mind, mainly,
+  ``Break up pages into clearly defined areas'' and ``Make it obvious what's
+  clickable''. The second point also reflects the concept and importance of
+  `\textit{affordance}`, a term used by Donald Norman, in the oft-cited design classic
+  \citetitle{citeTheDesignOfEverydayThings}\cite{citeTheDesignOfEverydayThings}.
+
+  In the context of the book, affordance refers to
+  \textit{%
+  ``the relationship between a physical object
+  and a person (or for that matter, any interacting agent, whether animal or
+  human, or even machines and robots). An affordance is a relationship
+  between the properties of an object and the capabilities of the agent that
+  determine just how the object could possibly be used''
+  }\cite[p. 11]{citeTheDesignOfEverydayThings}
+
+  And while the book focuses on design in the physical reality, the concepts
+  are still easily adaptable to a web-environment by identifying digital objects and
+  try to figure out how to promote the right affordances, or as Krug puts it, making
+  it obvious what it should be used for.
+
+  Keeping these principles in mind, together with suggestions
+  gathered from the manager-interviews, four simple paper prototypes were
+  created, shown below. The main difference being the placement of the main
+  interface elements. The first group having them on top and the second one the
+  left side. Lager versions of interface prototypes can be found as figures
+  8.2-8.4 the appendices section.
 
     \begin{figure}[h!]
       \center
@@ -72,12 +138,14 @@ touch of 'design-school'. \todo{Fix this section.}
       \label{label_mockupInterfaces}
     \end{figure}
 
-  The main difference is the placement of the main interface elements, with
-  the first group having them on top, and the second one the left side.
-  Lager versions of prototypes and itemized result from the interviews are
-  found in \todoInsert{result link for interviews and larger prototypes.}
+  In order to determine which one should be used as the
+  basis for the high-fidelity prototype, they were all printed and made ready
+  for evaluation, described below.
 
   \subsection{Interview structure for prototype selection}
+
+    The specific purpose of these interviews was to determine which of the
+    presented ui-mockups was perceived to be the most usable.
 
     \begin{figure}[h!]
       \centering
@@ -85,7 +153,7 @@ touch of 'design-school'. \todo{Fix this section.}
       \caption{Overall structure of prototype selection interviews.}
     \end{figure}
 
-    These interviews were conducted in-person, with five team members, on
+    The interviews were conducted in-person, with five team members, on
     the premises of Massive. The interview started with a description of
     what was happening; an evaluation of four different mock-up interfaces
     to determine which one was the most suitable for further testing.
@@ -98,15 +166,15 @@ touch of 'design-school'. \todo{Fix this section.}
     functionality.
 
     When the participant felt they were done and any questions they had
-    about the interface were sorted out, they were asked to sort the
+    about the interface were sorted out, they were asked to arrange the
     prototypes from best- to least-suited for the upcoming test purpose.
     Again, the participant was asked to voice their thought process out
     aloud as they did the sorting.
 
-    After confirming that the interviewee was satisfied with their
-    ordering, a set of ten flash-cards were introduced. These cards
-    represent the combined key-words-attributes from ISO 9241-11{\findref}
-    and ISO 9241-12{\findref}, concerning usability and presentation of
+    After confirming that the interviewee was satisfied with their ordering, a
+    set of ten flash-cards were introduced. These cards represent the combined
+    key-words-attributes from ISO 9241-11\cite{citeISO9241} and ISO
+    9241-12\cite{citeISO9241-12}, concerning usability and presentation of
     information respectively.
 
     Keyword definitions presented below:
@@ -153,18 +221,21 @@ touch of 'design-school'. \todo{Fix this section.}
     Where the top three terms are defined in ISO 9241-11 with the remainder
     coming from ISO 9241-12.
 
-    The next task was for each participant to order the keywords
+    In the next task, each participant was asked to order the keywords
     in order of how important they thought that specific quality was for a
     well-functioning, user interfacing software. There were no restrictions
     in regards to the number of times a participant could ask about the
     definition or clarification of each term.
 
     When the participant acknowledged that they were finished with their
-    selection, it was recorded, and the were asked to do one final task.
-    Each participant was asked to re-evaluate their previously selected
-    ranking of the prototype interfaces, changing the order if they felt
-    another one was more appropriate after being exposed to the ISO
-    definitions.
+    selection, they were asked to do one final task, to re-evaluate their
+    previously selected ranking of the prototype interfaces, changing the order
+    if they felt another one was more appropriate after being exposed to the
+    ISO definitions.
+
+    As for the final result of these interviews, all participants sans one, chose 1.4 as being
+    the most usable in the initial ranking. And after the ISO definitions
+    section everyones answered that 1.4 was the most suitable interface setup.
 
 %        evaluation. The evaluation was conducted as an in-person interview
 %        where the interviewee was asked to voiced their thoughts out aloud.
@@ -183,8 +254,9 @@ touch of 'design-school'. \todo{Fix this section.}
 %
 \section{Technology Stack}
 
-  Since this is a development project, there is a need to choose a technology
-  stack. \todo{Expand}
+  With the basis of this report being a development-project, there has to be
+  some thought and explanation about what the technology-stack should look like
+  and why.
 
   \subsection{Python}
 
@@ -195,7 +267,8 @@ touch of 'design-school'. \todo{Fix this section.}
   conducted by popular programming questions and answers site,
   StackOverflow\cite{citeStackOverflow}.
 
-  In addition to the author having prior experience with Python, the language
+  In addition to the author having prior experience with Python, and the
+  language being used heavily throughout Massive, the language
   is chosen due to its interesting relation to both data-analysis and
   web-development. When
   JetBrains\cite{citeJetBrains},
@@ -215,7 +288,8 @@ touch of 'design-school'. \todo{Fix this section.}
 
   \subsection{Flask}
 
-  Since the goal is to collect test-data remotely over the internet, there
+  Since one of the goals of this project is to facilitate usability-test in a
+  geographically distributed team, presumably, over the internet, there
   needs to be web-component added to the mix. Here the final choice comes down
   down to Flask\cite{citeFlaskHomepage} or Django\cite{citeDjangoHomepage},
   two popular Python web-frameworks. Django facilitates an established
@@ -235,10 +309,49 @@ touch of 'design-school'. \todo{Fix this section.}
 %
 %  \cite{citetiobe}
 
-  \subsection{SVG (Scalable Vector Graphics)}
+  \subsection{SVG -- dynamic tasks, scaling and sharing}
 
-  \subsection{To JavaScript or not to JavaScript}
+  Scalable Vector Graphics (SVG) is, as described on the W3C-homepage, ``%
+  \textit{%
+    a markup language for describing two-dimensional graphics applications and
+    images, [and is] \ldots supported by all modern browsers for desktops and
+    mobiles.%
+  }''\cite{citeW3CSVG}
+  Where W3C stands for the World Wide Web Consortium, an international
+  community that work together to develop web standards\cite{citeW3CHomepage}.
 
+  While this choice might seem a bit odd for a reader that is somewhat versed
+  in web-development, since it would undoubtedly be easier to visualize the
+  user-interface using static images such as .png or .jpg, both common image
+  standards used on the internet.
+
+  However, there are specific advantages in using this markup language for this
+  specific application. First, it is supported on a wide array of browsers and
+  hardware, mitigating the loss of control of the underlying testing-hardware
+  somewhat, more on this in section \ref{label_testingHardware}.
+
+  Secondly, as stated in the name, this is a vector based graphics format.
+  This means that the underlaying primitives are made up by  points and vectors
+  instead of pixels storing color values. This approach enables the interface
+  scale very well, both to larger and smaller formats, without any loss of
+  quality. The usability of such a scaled interface of course assumes that the
+  underlying interface design is done in such a way that it will still be
+  usable at the new size, but there is no need to take concerns about loss of
+  quality into account.
+
+  The third point is closely related to the second point. Since all the
+  graphical information of the page will be displayed using this vector format,
+  making a high-fidelity sharable snapshot of the current state of the page is
+  as easy as printing the page to a pdf through the standard print-dialog in
+  the browser viewing the page. At the time of writing, this works best
+  in Googels popular web-browser, Chrome, and is the method used to produce all
+  figures visualizing the platform in the following sections, feel free to zoom
+  in on any of them if you are reading this in a digital format.
+
+  Lastly, since the format is text-based, it is possible to use any programming
+  language that can handle text, Python in this case, to dynamically generate
+  interfaces wholesale or to apply modifications, such as randomization or
+  parameters-adjustment on already existing base-interfaces on the fly.
 
 
 \section{Hi-fi prototype}
