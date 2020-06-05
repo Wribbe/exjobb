@@ -117,7 +117,11 @@ post-survey groups will receive further analysis.
 
 \section{Results}
 
-  \todo{Write something here}
+
+  This section presents the different data categories extracted from the
+  test-data received after concluding the initial run of the testing-platform.
+  The main focus is put on the individual data-groupings without discussing the
+  data in a larger context, since this is done later.
 
   \subsection{Pre-questionnaire -- itemizations}
 
@@ -131,63 +135,73 @@ post-survey groups will receive further analysis.
     \begin{figure}[h!]
       \centering
       \includegraphics{figures/preQuestionnaireAnswers.pdf}
-      \caption{Answers for the pre-questionnaire.}
+      \caption{Answers for pre-questionnaire age-ranges.}
     \end{figure}
 
     Beginning with age, with each dot representing one answer, no
     participant was twenty or below, most of the  participants were between
     twenty-one and thirty-five, with fourteen being thirty-six and older.
     Since a large part of the participants came from MASSIVE, this seems to
-    fit the mean age at the company, which is at thirty-two{\findref} at
+    fit the mean age at the company, which is at thirty-two at
     the time of this writing.
 
     It's is worth mentioning however, that the most represented single age
     was twenty-five, which is the default value set for the age input
-    field. More on this specifically in \todoInsert{Link to threats to
-      validity}.
+    field, more reflection on this specifically in section
+    \ref{label_validity_default_age}.
 
-    \begin{figure}[h!]
-      \centering
-      \includegraphics{figures/preQuestionnaireAnswersIdentify.pdf}
-      \caption{Answers for the pre-questionnaire.}
-    \end{figure}
-
+    \newpage
     Asking people for what gender they identify as results in the largest
     group, 52 participants, identify as male. Again, as a large portion of
     participants came from MASSIVE, this is expected since the gender
-    distribution in businesses related game-development tend to be weighted
-    toward men\findref\findref.
+    distribution in businesses related game-development, at the time of
+    writing, is weighted toward a majority of men\cite[p.16]{citeIndex2019}.
 
+    \vspace{-0.4cm}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.9\textwidth]{figures/preQuestionnaireAnswersIdentify.pdf}
+      \vspace{-0.2cm}
+      \caption{Answers for the pre-questionnaire gender identity.}
+    \end{figure}
+
+    \vspace{-0.2cm}
+    Continuing the trend, since most workstations at MASSIVE consist of a
+    desktop PC where the main peripherals used for input are a mouse and a
+    keyboard with the occasional drawing tablet mixed in, this is the most
+    represented category in the results.
+
+    \vspace{-0.4cm}
     \begin{figure}[h!]
       \centering
       \includegraphics{figures/preQuestionnaireAnswersInputs.pdf}
-      \caption{Answers for the pre-questionnaire.}
+      \vspace{-0.2cm}
+      \caption{Answers for the pre-questionnaire input device.}
     \end{figure}
 
-    Continuing the trend, most workstations at MASSIVE consist of a
-    desktop PC where the main peripherals used for input are a mouse and a
-    keyboard with the occasional drawing tablet mixed in.
-
+    \vspace{-0.2cm}
     In general it was assumed that most of the participants were going to
     use a mouse and keyboard, with trackpads as a probable second place,
     making the turnout of nearly twenty participants using touch as their
     main input a bit of a surprise.
 
-    Even though the assumed main input method for these tests is a keyboard
-    and mouse at a stationary desktop computer, the overarching goal of the
-    project, as stated earlier, is to be a pre-cursor to o more generalized
-    usability testing framework. In order to align with this goal, it is
-    important to explore the possibility of scaling the interface and
-    related tests to different screen sizes, and analyze what, if any,
-    impact is has on participant performance.
+%    Even though the assumed main input method for these tests is a keyboard
+%    and mouse at a stationary desktop computer, the overarching goal of the
+%    project, as stated earlier, is to be a pre-cursor to o more generalized
+%    usability testing framework. In order to align with this goal, it is
+%    important to explore the possibility of scaling the interface and
+%    related tests to different screen sizes, and analyze what, if any,
+%    impact is has on participant performance.
 
     \begin{figure}[h!]
       \centering
       \includegraphics{figures/preQuestionnaireAnswersScreen.pdf}
+      \vspace{-0.2cm}
       \caption{Answers for the pre-questionnaire.}
     \end{figure}
 
-    Requiring actual screen-sizes was seen as to cumbersome of a task to
+    \vspace{-0.4cm}
+    Requiring actual screen-sizes was deemed to cumbersome of a task to
     ask of the participants, especially if using devices other than a
     somewhat standard desktop monitor. Here the categories roughly equate
     to; \textit{Desktop}: 18" or larger, \textit{Laptop}: 13"-17", \textit{Tablet}:
@@ -230,13 +244,19 @@ post-survey groups will receive further analysis.
       \end{center}
     \end{figure}
 
-    Looking at the general interest in regards to user interface design,
-    most participants either do not care about it, or find it somewhat to
-    very interesting. If this was a non-anonymous study, it would be
-    interesting to follow up on the seven participants that strongly
-    disagree to this question. Mostly in order to differentiate if they do
-    not like user interfaces an input method in general, or if it is more
-    related to them not wanting to be involved in user interface design.
+    With this pretty even spread, it would once again be interesting to follow
+    up on the ends of the spectrum such as \textit{do the seven participants that
+    have a strong disinterest in UI-design just don't like interfaces in
+    general?}
+%    Looking at the general interest in regards to user interface design,
+%    most participants either do not care about it, or find it somewhat to
+%    very interesting. If this was a non-anonymous study, it would be
+%    interesting to follow up on the seven participants that strongly
+%    disagree to this question.
+%
+%    Mostly in order to differentiate if they do
+%    not like user interfaces an input method in general, or if it is more
+%    related to them not wanting to be involved in user interface design.
 
     \begin{figure}[h!]
       \textbf{Q3: I have studied UI-design.}
@@ -254,6 +274,7 @@ post-survey groups will receive further analysis.
     self-learnt, online-course, university etcetera would be needed clarify
     this information further.
 
+    \newpage
     \begin{figure}[h!]
       \textbf{Q4: I play pointer based games (e.g. first person shooters).}
       \begin{center}
@@ -291,10 +312,10 @@ post-survey groups will receive further analysis.
   \subsection{Launch, participation and overall success ratio}
 
     The test-site went live 2020-01-24 with the link initially shared only
-    through Facebook. On 2020-01-27 the link was shared on the MASSIVE
-    internal mailing list, boosting the participation significantly.
-    In total, \varHere{totalParticipants} participants moved past the
-    initial information over a five day period.
+    through the authors personal Facebook. On 2020-01-27 the link was shared on
+    the MASSIVE internal mailing list, boosting the participation
+    significantly. In total, \varHere{totalParticipants} participants moved
+    past the initial information over a five day period.
 
     \begin{figure}[h!]
       \centering
@@ -328,9 +349,9 @@ post-survey groups will receive further analysis.
     The number of recommended test was five, which when completed, allowed
     the participant to continue to the final survey. However, there was
     nothing stopping each participant from doing more or less than five.
-    By generating a histogram for the number of performed tests per
-    participant it is possible to determine which of tests was most
-    popular.
+    Generating a histogram for the number of performed tests per
+    participant it is possible to determine what total number of tests was most
+    commonly run per participant.
 
     \begin{figure}[h!]
       \centering
@@ -340,7 +361,7 @@ post-survey groups will receive further analysis.
 
     In total, of the \varHere{totalParticipants} number of participant that
     started a session, \varHere{valNumAnyTestsRun} of them ran at least one
-    test, which means \varHere{valTestNoTests} ran no tests. Retrieving and
+    test, which indicates \varHere{valTestNoTests} ran no tests. Retrieving and
     tabulating additional values, discarding users with no test-runs,
     produces the following table.
 
@@ -437,14 +458,15 @@ post-survey groups will receive further analysis.
     \end{figure}
 
     Initially the going-by-order tendency from figure
-    \ref{label_testsRunOrder} holds for index one and two, but breaks down
-    on the third, with the second option being the most prevalent.
-    Interestingly, the sequential does appears between run five and nine,
-    then disappears. Apart from that, it seems the preferable way to do
+    \ref{label_testsRunOrder} holds for the first and second index, but breaks down
+    on the third, where the second option becomes the most picked one instead
+    of the third. This is expected, since there are fewer participants in the
+    outlier group, any deviations by a single participant will affect that
+    ration more directly. Apart from that, it seems the preferable way to do
     thirty or more tests is to do them in batches.
 
-    Exact values this figure and number of users in each group can be found
-    tabulated in the appendix. \todo{Add table and reference}
+%    Exact values this figure and number of users in each group can be found
+%    tabulated in the appendix. \todo{Add table and reference}
 
 %      \todo{
 %        Continue exploring the data, time distribution? Which task was failed
@@ -537,9 +559,9 @@ post-survey groups will receive further analysis.
     \end{figure}
 
     Reusing the previous data by splitting it and creating one histogram
-    each for the regular and outlier group gives a better view of how the
-    completion times are distributed for each of the groups respectably,
-    result shown below.
+    each for the regular and outlier group gives a view of how the completion
+    times are distributed for each of the groups respectably, result shown
+    below.
 
     \begin{figure}[h!]
       \centering
@@ -556,21 +578,21 @@ post-survey groups will receive further analysis.
     the tests in the outlier group were completed in 9 seconds or less,
     compared to 35 seconds or less in the regular group.
 
-  \subsection{Effect of color pallet on completion times}
-
-    \todo{Figure out a good way to calculate and visualize this.}
-
-  \subsection{Largest impact on completion times}
-
-    \todo{Possible multi variat analysis? Possible? Worth it?}
+%  \subsection{Effect of color pallet on completion times}
+%
+%    \todo{Figure out a good way to calculate and visualize this.}
+%
+%  \subsection{Largest impact on completion times}
+%
+%    \todo{Possible multi variat analysis? Possible? Worth it?}
 
   \subsection{Post-survey questions}
 
     In order to gather feedback for evaluation and possible incorporation
     into the next design iterations, the test concludes with a second
-    questionnaire with eight '1-5 questions'. These questions are ment to
-    evaluate what participants thought about the setup, and if they have
-    any suggestions, comments or improvements.
+    questionnaire with eight questions on a five-point Likert scale. The goal
+    of this questionnaire is to evaluate what participants thought about the setup,
+    and if they have any suggestions, comments or improvements.
 
     \begin{figure}[h!]
       \textbf{Q1: The goal of each task was clear.}
@@ -581,13 +603,24 @@ post-survey groups will receive further analysis.
       \end{center}
     \end{figure}
 
-    One of the main goals was to only challenge the participants in the
-    time it took them to complete a task and make it as easy for them every
-    where else. This means that there should be as little confusion to what
-    needs to be done in order to satisfy a test, and the challenge should
-    come from selecting one of many well understood options. And since a
-    clear majority at least agree that each task goal was clear, this goal
-    was accomplished.
+    In regards to the overarching platform-design, the desire was to create
+    a set of fairly challenging tasks, surrounded by a interface that is easy to
+    navigate and simple to understand, while also providing enough information
+    to facilitate the completion of tasks. And since most of the participant felt
+    they knew what to do in regards to the tasks, this seem to have been the
+    case.
+
+%    In addition, the interface should
+%    provide enough specific information in order for each participants to
+%    successfully navigate to the tasks and complete them.
+
+%    One of the main goals was to only challenge the participants in the
+%    time it took them to complete a task and make it as easy for them every
+%    where else. This means that there should be as little confusion to what
+%    needs to be done in order to satisfy a test, and the challenge should
+%    come from selecting one of many well understood options. And since a
+%    clear majority at least agree that each task goal was clear, this goal
+%    was accomplished.
 
     \begin{figure}[h!]
       \textbf{Q2: Test-application looks good.}
@@ -598,10 +631,13 @@ post-survey groups will receive further analysis.
       \end{center}
     \end{figure}
 
-    While appreciating that the majority of participants was either
-    indifferent or liked the design of the application, it was not one of
-    the goals for this project. The main goal was to be usable and scaling
-    well to different media sizes, not looking good.
+%    While appreciating that the majority of participants was either
+%    indifferent or liked the design of the application, it was not one of
+%    the goals for this project. The main goal was to be usable and scaling
+%    well to different media sizes, not looking good.
+%
+%    While appreciating that the majority of participants was either
+%    indifferent or liked the design of the application, the goal of the i
 
     This reads either as the participants being nice since the tone of the
     project is personal, or the design was too polished. If the latter case
@@ -620,9 +656,10 @@ post-survey groups will receive further analysis.
     Most people agreed that the color helped them preform their tasks.
     This question could be augmented with additional questions that asks
     more specifically about the perceived help. Additionally, it could be
-    complemented with a permutation of runs that do not contain any color,
-    in order to gather some test-data about runs without color.
+    complemented with task-permutations that do not contain any color
+    in order to gather test-data about the possible difference.
 
+    \newpage
     \begin{figure}[h!]
       \textbf{Q4: Amount of information was adequate.}
       \begin{center}
