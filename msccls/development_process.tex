@@ -254,9 +254,9 @@ and
 %
 \section{Technology Stack}
 
-  With the basis of this report being a development-project, there has to be
-  some thought and explanation about what the technology-stack should look like
-  and why.
+  Since this is development-based project, this section will provide insight in
+  why the different technology choices were made, and if any other
+  choices were considered at the time.
 
   \subsection{Python}
 
@@ -427,24 +427,10 @@ and
 
   Due to the limited time and development resources mentioned above, each
   suggestion will be abstracted to its simplest goal that still contains
-  the core function of the original. Since the overarching goal is to
-  measure if the design of the test has any impacts on the performance,
-  the main focus will be on tracking the time to completion of the task
-  as accurately as possible.
-
-  \subsection{Input methods and screen sizes}
-
-  \todo{Spell out the input alternatives} While the choices for the input
-  method, except the last one, corresponds directly to a concrete input
-  method used in human-computer interactions, the screen-sizes are somewhat
-  ambiguous. This was an active choice in order to not alienate
-  participants by forcing them to specify an actual measurement for the
-  screen size. The assumed values for the screen-sizes ranges for the given
-  choices are:
-  \textit{Desktop} $>$17",
-  \textit{Laptop}  12"-17",
-  \textit{Tablet}  7"-12" and
-  \textit{Mobile}  $<$7".
+  the core function of the original suggestion. With the overarching goal being
+  measurements of the time-to-completion performance of the participants, the
+  main focus of the tasks will be to define a clear completion criteria in
+  order to make it possible to precisely measure the elapsed time.
 
   \subsection{General information, consent and initial survey}
 
@@ -460,11 +446,12 @@ and
   to the main landing page. This page acts as a hub for the duration of
   the test session, providing access to all other parts of testing
   application. On the first visit the main view of the landing page is
-  occupied by the initial survey, shown below.
+  occupied by the initial survey, shown below, with a larger version available
+  in figure 8.6 in the appendices.
 
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=.7\textwidth]{figures/captures/webapp_pre_survey.pdf}
+    \includegraphics[width=.65\textwidth]{figures/captures/webapp_pre_survey.pdf}
     \caption{Capture of initial survey page.}
     \label{label_preSurvey}
   \end{figure}
@@ -473,15 +460,18 @@ and
   the left side before the initial survey is submitted, pressing any of the
   buttons except 'Abort Test' will only display the same survey-page.
 
+  \vspace{-0.4cm}
   \begin{figure}[h!]
     \centering
     \fbox{
       \includegraphics[trim={4cm 8cm 9cm 8cm},clip,width=.5\textwidth]{figures/captures/webapp_abort.pdf}
     }
+    \vspace{-0.2cm}
     \caption{Capture of confirmation page for aborting the test.}
     \label{label_abort}
   \end{figure}
 
+  \vspace{-0.2cm}
   The dedicated 'Abort Test' button is available in all the different
   views of the application, in case the participant no longer wants to
   participate for any reason. Pressing this button displays a page
@@ -490,9 +480,20 @@ and
   %Additionally and return it to the pool
   %of available identification strings.
 
+  While the choices for the input method, except the last one, corresponds
+  directly to a concrete input method used in human-computer interactions, the
+  screen-sizes are somewhat ambiguous. This was an active choice in order to
+  not alienate participants by forcing them to specify an actual measurement
+  for the screen size. The assumed values for the screen-sizes ranges for the
+  given choices are:
+  \textit{Desktop} $>$17",
+  \textit{Laptop}  12"-17",
+  \textit{Tablet}  7"-12" and
+  \textit{Mobile}  $<$7".
 
   \subsection{Landing page}
 
+  \vspace{-0.2cm}
   After the participant has submitted the pre-survey, it  disappears and is
   replaced by a few basic statistics about the current test session.
   The functionality of the left-side buttons is restored and makes it
@@ -502,6 +503,7 @@ and
   \textit{Task Dependencies} and
   \textit{Team Performance}.
 
+  \vspace{-0.2cm}
   \begin{figure}[h!]
     \centering
     \includegraphics[width=.7\textwidth]{figures/captures/webapp_main_statistics.pdf}
@@ -513,32 +515,38 @@ and
   how many test of each type they have completed and how many test they
   have to complete in order for the post-survey to become available.
 
-  Requiring five tests before making the post-survey available is the only
-  hard limitation placed on the participants. Other than the test-minimum
-  there is no limit on how many tests they can perform or how long time
-  they take to complete a individual test or the test session as a whole.
+  As previously stated, requiring five tests before making the post-survey
+  available is the only hard limitation placed on the participants. Other than
+  the test-minimum there is no limit on how many tests they can perform or how
+  long time they take to complete a individual test or the test session as a
+  whole.
 
   \subsection{Information, fictional context and execution}
 
   Before starting any of the tasks, the participant is greeted by a page
-  containing the general information about the task at hand. Each of the
-  pages follows the same structure with three sections, \textit{Goal},
-  \textit{How} and \textit{Summary}, explained below.
-  \todo{Re-edit}
+  containing the general information about the task at hand. Each of the pages
+  follows the same general structure, three sections, in the following order
+  \textit{Goal}, \textit{How} and \textit{Summary}.
 
-  The \textit{Goal} section should be short{\findref}, a sentence at
-  most{\findref}, and tell the participant what they need to do in order
-  to complete the task successfully.
+  According to the guidelines for on-screen
+  text\cite{citeOptimalLineLengthinReadingALiteratureReview}, a line should be
+  around 55 characters long in order to maximize the ease of reading and
+  comprehension. Any line shorter than 25 character or longer than 100
+  character is detrimental to the reading experience.
 
-  After reading the \textit{How} section, the participant should have a
+  Keeping this in mind, the goal sections should be a short summary that
+  informs the participant what they need to do in order to complete the task
+  successfully.
+
+  After reading the how section, the participant should have a
   basic understanding of how the information related to the test is
   structured and presented. If there are any specific details about the
   representation of the task that are deemed essential they should be
   described in this section.
 
-  The \textit{Summary} section is meant to repeat the information in the
-  \textit{How} section, but in a different and briefer fashion in order
-  to help with retention\findref.
+  Finally, the summary section is meant to repeat the information in the how
+  section, but in a different and briefer fashion in an attempt to help with
+  user retention.
 
   Lastly, the participant is told that the same information that has just
   been presented is available after starting the test, accessible by
@@ -552,10 +560,10 @@ and
   instructions or information should be closer to
   \textit{''select the co-worker with the most X''} rather than
   \textit{''click the largest box''}.
-  \todoMaybe{Colorswatches}
-  \todoMaybe{Range of values}
-  \todoMaybe{Randomization-1 + max}
-  \todoMaybe{Add about no feedback on result -> BAD}
+%  \todoMaybe{Colorswatches}
+%  \todoMaybe{Range of values}
+%  \todoMaybe{Randomization-1 + max}
+%  \todoMaybe{Add about no feedback on result -> BAD}
 
 %pallet = [
 %  "#001f3f",
@@ -620,6 +628,7 @@ and
     largest other-colored segment it and click on it.
 
 %      \subsection{Task - team workload}
+  \newpage
   \subsection{Team workload}
 
     \textit{\ideaTwo}
@@ -662,6 +671,7 @@ and
     For the participant executing the test, the goal is to find the
     darkest, or most saturated rectangle and click it as fast as possible.
 
+  \newpage
   \subsection{Task dependencies}
 
     \textit{\ideaThree}
@@ -694,6 +704,7 @@ and
     connections and click on it as fast as possible.
 
    % \subsection{Task - team performance}
+    \newpage
     \subsection{Team performance}
 
     \textit{\ideaFour}
@@ -731,6 +742,7 @@ and
     identify which of the bars is the longest one, and then identify which
     sub-section is the largest one, and click on that one.
 
+  \newpage
   \subsection{Post survey}
 
     As the participant completes five or more tests the 'Take Survey'
@@ -745,11 +757,17 @@ and
     application in order to derive possible improvement for the next
     implementation iteration.
 
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim={2.0cm 4cm 2.0cm 5cm},clip,width=.7\textwidth]{figures/captures/webapp_post_survey.pdf}
+      \caption{Capture of the post-survey.}
+    \end{figure}
+
+
     Options that are of interest include, among others, if the goal of each
     task was clear, if the application was pleasing to look at, if the use of
-    colors help when navigating application, etcetera. For a verbatim list of
-    the questions used in the post-questionnaire see figure
-    \todoInsert{reference to post-survey}.
+    colors help when navigating application, etcetera. For a larger version of
+    the capture, see figure 8.7 in the appendices.
 
 %https://businessoverbroadway.com/2019/01/13/programming-languages-most-used-and-recommended-by-data-scientists/
 
