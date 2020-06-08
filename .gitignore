@@ -20,3 +20,5 @@ sync_db.json
 *.run.xml
 msccls/vars
 *.bacc
+*.nav
+*.snm
