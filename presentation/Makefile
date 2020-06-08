@@ -1,4 +1,4 @@
 all: presentation.pdf
 
 %.pdf: %.tex
-	pdflatex $^
+	pdflatex -interaction=nonstopmode $^

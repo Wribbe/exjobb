@@ -1,23 +1,35 @@
-\documentclass{beamer}
+\documentclass[10pt,aspectratio=1610]{beamer}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
+\usetheme{CambridgeUS}
+\usecolortheme{orchid}
 
-%Information to be included in the title page:
-\title{Sample title}
-\author{Anonymous}
-\institute{Overleaf}
-\date{2014}
-
-
+\usetheme{Copenhagen}
+%\usecolortheme{beaver}
+\beamertemplatenavigationsymbolsempty
 
 \begin{document}
 
-\frame{\titlepage}
+\title[Usability testing over the internet] %optional
+{Task-based usability testing and performance measurements over the internet.}
 
-\begin{frame}
-\frametitle{Sample frame title}
-This is a text in the first frame. This is a text in the first frame. This is a text in the first frame.
-\end{frame}
+\subtitle{Using Python and Flask}
+
+\author[Stefan Eng] % (optional, for multiple authors)
+{Stefan Eng \\\texttt{<atn08sen@student.lu.se>}}
+
+\institute[LTH] % (optional)
+{\tiny{
+  DIVISION OF ERGONOMICS AND AEROSOL TECHNOLOGY | DEPARTMENT OF DESIGN SCIENCES
+  \\
+  FACULTY OF ENGINEERING LTH | LUND UNIVERSITY
+}}
+
+\date[]{\today}
+
+
+\frame{\titlepage}
 
 \end{document}
