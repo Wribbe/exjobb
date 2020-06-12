@@ -91,7 +91,7 @@
 \logo{
   \makebox[0.95\paperwidth]{%
     \includegraphics[align=c,width=2.4cm]{img/python.pdf}
-    \hspace*{0.2cm}
+    \hspace*{-0.1cm}
     \includegraphics[align=c,width=1.6cm]{img/flask.pdf}
     \hfill%
     \includegraphics[align=c,width=2.4cm]{%
@@ -131,23 +131,55 @@
 }
 
 \begin{frame}
-  \frametitle{MASSIVE ENTERTAINMENT | A UBISOFT STUDIO}
+  \frametitle{Agenda of presentation}
+  \begin{minipage}{.43\textwidth}
+    \textbf{Agenda:}
+    \begin{itemize}
+      \item{About Massive Entertainment}
+      \item{The problem}
+      \item{Roadblock}
+      \item{Pivot}
+      \item{Design and development process}
+      \item{Low-fidelity prototypes}
+      \item{High-fidelity prototype}
+      \item{Result examples}
+      \item{Conclusions and realizations}
+      \item{Questions}
+    \end{itemize}
+  \end{minipage}
   \begin{minipage}{.49\textwidth}
+    \vspace{-0.5cm} \\
+    \hspace{2cm}\includegraphics[width=0.8\textwidth]{img/agenda.pdf}
+  \end{minipage}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{MASSIVE ENTERTAINMENT | A UBISOFT STUDIO}
+  \begin{minipage}{.43\textwidth}
+    \vspace{-1.5cm}
+    \textbf{MASSIVE ENTERTAINMENT:} \\
+    Massive Entertainment is a world-leading game-development studio that was
+    founded in 1997 and is currently the fourth largest game-development studio
+    in Sweden. \\ \\
     \textbf{Some quick facts:}
     \begin{itemize}
       \item{650+ Employees}
       \item{Main office in Malmö}
-      \item{Secondary office in Stockholm}
-      \item{Some work with external actors}
+      \item{Sister office in Stockholm}
+      \item{
+          Possibly working with different external actors around the globe at any
+          given time
+        }
     \end{itemize}
   \end{minipage}
   \begin{minipage}{.49\textwidth}
-    \includegraphics{img/massive_outside.jpg}
+    \hspace{0.89cm}\includegraphics{img/massive_outside.jpg}
   \end{minipage}
 \end{frame}
 
 \begin{frame}
-  \frametitle{The Problem: Communication is good, but hard}
+  \frametitle{The Problem: Team communication is good, but hard!}
   \begin{minipage}{.49\textwidth}
     \textbf{The science:}
     \begin{shadequote}{}
@@ -156,8 +188,8 @@
       most need to do so.
     \end{shadequote}
     \vspace{-0.5cm}
-    \hspace{0.2cm}
-    {\scriptsize-- Information Sharing and Team Performance: A Meta-Analysis} \\
+    \hspace{-0.2cm}
+    {\scriptsize-- Information Sharing and Team Performance: A Meta-Analysis (2009)} \\
     \ \\
     \textbf{The anecdote:}
     \begin{shadequote}{}
@@ -166,7 +198,7 @@
     \end{shadequote}
     \vspace{-0.5cm}
     \hspace{0.2cm}
-    {\scriptsize-- Manager} \\
+    {\scriptsize-- Anonymous manager at Massive (2019)} \\
   \end{minipage}
   \begin{minipage}{.49\textwidth}
     \hspace{0.5cm}\includegraphics[width=\textwidth]{img/postits.jpg}
@@ -176,14 +208,15 @@
 \begin{frame}
   \frametitle{Roadblock: Not possible to do easy modifications}
   \begin{minipage}{.49\textwidth}
-    \textbf{Initial thought:}
+    \textbf{Initial idea:}
     Apply modifications to the currently used software, perform
     usability-testing in order to determine if the modifications impacted the
     ease of use or not. \\
 
     \textbf{Sad reality:}
-    Was not easy to do any modifications in regards to the user interface, time
-    for plan-B.
+    Making changes to the interface of the software was not supported at all.
+    It would be to cumbersome and would take to long time to get going
+    $\to$ plan-B.
   \end{minipage}
   \begin{minipage}{.49\textwidth}
     \hspace{1.5cm}\includegraphics[width=0.8\textwidth]{img/error.pdf}
@@ -194,7 +227,7 @@
   \frametitle{Pivot: Could we broaden the problem and do broader tests?}
   \begin{minipage}{.49\textwidth}
     \textbf{Pivot:}
-    Create a testing-platform where its possible to do remote tests and measure
+    Create a testing-platform where is is possible to do remote tests and measure
     performance of users executing interface-based tasks grounded in current
     perceived shortcomings.
     \vspace{0.5cm} \\
@@ -215,11 +248,12 @@
 \begin{frame}
   \frametitle{Keeping the design and development user centric and iterative}
   \begin{minipage}{.49\textwidth}
-    \textbf{Development process influence:} \\
-    The development took its main influence from user-centric design in
-    combination with the tight iteration loops in found in agile and other
-    iterative development methodologies. \\ \\
-    \textbf{Process Goal Summary:}
+    \textbf{Development process influence:}
+    \begin{itemize}
+      \item{User-centered design}
+      \item{Iteration-heavy methodologies e.g. Agile}
+    \end{itemize}
+    \textbf{Process Goals:}
     \begin{itemize}
       \item{Development based on actual users needs}
       \item{Keep momentum up, iterate, iterate!}
@@ -247,30 +281,203 @@
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    Prototype Interfaces.
-  \end{center}
+  \frametitle{Interviews and low-fidelity prototypes -- Part I}
+  \begin{minipage}{\textwidth}
+    \textbf{In-person interviews and iso-standard buzzword-sallad:}
+    Prototypes presented $\to$ initial ranking $\to$ iso-buzzwords sorting
+    $\to$ final ranking. \\
+
+  \end{minipage}
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.\textwidth]{../msccls/ui11.pdf}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+      \centering
+      \vspace{-0.22cm}
+      \hspace{-0.3cm}
+      \includegraphics[width=1.\textwidth]{../msccls/ui12.pdf}
+    \end{minipage}
+  \end{minipage}
+  The first two of four prototypes, both with a 'buttons-on-top' design.
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    Actual Implementation.
-  \end{center}
+  \frametitle{Interviews and low-fidelity prototypes -- Part II}
+  The remaining two prototypes with a 'buttons-on-the-side' design.
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.\textwidth]{../msccls/ui13.pdf}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+      \centering
+      \vspace{-0.11cm}
+      \hspace{-0.5cm}
+      \includegraphics[width=1.\textwidth]{../msccls/ui14.pdf}
+    \end{minipage}
+  \end{minipage}
+  \textbf{Goal:} Quick-and-dirty, iterate, iterate, iterate!
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    Results.
-  \end{center}
+  \frametitle{Realizing the high-fidelity prototype -- Part I}
+  \begin{minipage}{\textwidth}
+    \textbf{High-fidelity prototype:}
+    Based on winning prototype. Created using Python, Flask and SVG-markup
+    (\textbf{S}calable \textbf{V}ector \textbf{G}raphics).
+  \end{minipage} \\
+
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{\textwidth}
+      \begin{minipage}{0.48\textwidth}
+        \includegraphics[width=0.9\textwidth]{../msccls/ui14.pdf}
+      \end{minipage}
+      \begin{minipage}{0.02\textwidth}
+        \hspace{-0.8cm}
+        $\rightarrow$
+      \end{minipage}
+      \begin{minipage}{0.48\textwidth}
+        \hspace{-0.7cm}
+        \vspace{ 0.05cm}
+        \includegraphics[width=0.98\textwidth]{../msccls/figures/captures/webapp_main_statistics.pdf}
+      \end{minipage}
+    \end{minipage}
+  \end{minipage}
+  Capture done by printing it through Google Chrome.
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    Conclusion.
-  \end{center}
+  \frametitle{Realizing the high-fidelity prototype -- Part II}
+  \vspace{-1cm}
+  \begin{minipage}{\textwidth}
+    \textbf{Hardest Task:} Employee Hours, non-outlier group (\#r$\leq$15) slightly
+    above 50\% success-rate.
+  \end{minipage} \\
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{\textwidth}
+      \begin{minipage}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{../msccls/figures/captures/webapp_employee_hours_task.pdf}
+      \end{minipage}
+      \begin{minipage}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{../msccls/figures/captures/webapp_dependencies_task.pdf}
+      \end{minipage}
+    \end{minipage}
+  \end{minipage}
+  \vspace{0.1cm}\\ \textbf{Easiest:} Task dependencies, success-rate slightly above 90\% for same group.
 \end{frame}
 
 \begin{frame}
+  \frametitle{Interesting Results}
+  \vspace{-1.1cm}
+  Some if the basic data that was gathered during the test-period. \\
+  \vspace{0.3cm}
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{0.50\textwidth}
+      \vspace{-0.2cm}
+      \textit{Participants over time:} \\
+      \includegraphics[width=\textwidth]{../msccls/figures/participantsOverTime.pdf}
+    \end{minipage}
+    \begin{minipage}{0.50\textwidth}
+      \textit{Number of tests run:} \\
+      \includegraphics[width=\textwidth]{../msccls/figures/testsPerUser.pdf}
+    \end{minipage}
+  \end{minipage} \\
+  \begin{minipage}{\textwidth}
+    \begin{minipage}{0.50\textwidth}
+      \vspace{-0.3cm}
+      \textit{Test run order:} \\
+      \includegraphics[width=\textwidth]{../msccls/figures/testsRunOrder.pdf}
+    \end{minipage}
+    \begin{minipage}{0.50\textwidth}
+      \vspace{-0.1cm}
+      \textit{Completion times:} \\
+      \includegraphics[width=\textwidth]{../msccls/figures/testsTimeGroupingsTotal.pdf}
+    \end{minipage}
+  \end{minipage} \\
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conclusions and realizations}
+  \centering
+  \begin{minipage}{.7\textwidth}
+    \hspace{-0.3cm}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/plan.pdf}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/boxes.pdf}
+    \end{minipage}
+    \hspace{0.15cm}
+    --
+    \hspace{0.15cm}
+    \begin{minipage}{0.9\textwidth}
+      It was surprisingly easy to setup and gather real user-data with the
+      selected technology stack.
+    \end{minipage}
+  \end{minipage}
+
+  \vspace{0.8cm} \\
+
+  \begin{minipage}{0.7\textwidth}
+    \hspace{-0.3cm}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/iterationsmall.pdf}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/train.pdf}
+    \end{minipage}
+    \hspace{0.15cm}
+    --
+    \hspace{0.15cm}
+    \begin{minipage}{0.9\textwidth}
+      Keeping up iterative momentum is hard, especially with low domain
+      experience and a hands-off framework.
+    \end{minipage}
+  \end{minipage}
+
+  \vspace{0.8cm} \\
+
+  \begin{minipage}{.7\textwidth}
+    \hspace{-0.3cm}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/testing.pdf}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/globe.pdf}
+    \end{minipage}
+    \hspace{0.15cm}
+    --
+    \hspace{0.15cm}
+    \begin{minipage}{0.9\textwidth}
+      It is possible for a single developer to lay the groundwork for a
+      internet-based usability-testing platform.
+    \end{minipage}
+  \end{minipage}
+
+  \vspace{0.8cm} \\
+
+  \begin{minipage}{.7\textwidth}
+    \hspace{-0.3cm}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/connect.pdf}
+    \end{minipage}
+    \begin{minipage}{0.05\textwidth}
+      \includegraphics[width=\textwidth]{img/slice.pdf}
+    \end{minipage}
+    \hspace{0.15cm}
+    --
+    \hspace{0.15cm}
+    \begin{minipage}{0.9\textwidth}
+      Connect it end-to-end as fast as possible in order to get a
+      'vertical-slice' in front of users as soon as possible.
+    \end{minipage}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The End -- Questions}
   \begin{center}
     {\huge
     Thank you for listening! \\
