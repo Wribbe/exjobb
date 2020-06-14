@@ -61,3 +61,28 @@
 Links:
 https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=language+propularity+IEEE&btnG=
 
+
+Focus -> fixa (lyft ut och sätt som 'notis', 'diskussion').
+
+1.3 som utgångspunt istället -> enkelt sätt, testat koncept, med relavanta
+work-load etc stress.
+
+Modifiera om goal 2.
+
+1.4 -> Koncept
+
+2.1 -> Många citat -> mer egen text, lyft fram varför viktigt för mig.
+
+3.1 -> skippa första iden
+
+3.2 -> Lo-fi / Hi-fi -> Skiss / Refence-Implementation ??
+
+Varför ser de ut som de gör -> specificera varför första designen ser ut som de
+gör / en del av det som testas. färger påverkar etc.
+
+3.4 -> Hi-fi, mer test beskrivning -> mer test-principer, vad vill man se,
+vilka slutsatser? Varför tester och data?
+
+4.3.7 Hur kan det påverka nästa iteration? även om det inte är gjort.
+
+Lägg till i diskussion, större tester -> svars-frekvens påverkan?
