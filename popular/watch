@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import subprocess
+import time
+
+from pathlib import Path
+
+subprocess.call(['make'])
+subprocess.Popen(
+  ['zathura', 'presentation.pdf'],
+  stderr=None,
+  stdout=None,
+  stdin=None,
+)
+
+path = Path('.')
+
+last_seen = -1
+while True:
+  for file in path.iterdir():
+    if str(file).endswith('.tex'):
+      mtime = file.stat().st_mtime
+      if mtime > last_seen:
+        last_seen = mtime
+        subprocess.call(['make'])
+        break
+  time.sleep(1)
