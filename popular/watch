@@ -7,7 +7,7 @@ from pathlib import Path
 
 subprocess.call(['make'])
 subprocess.Popen(
-  ['zathura', 'presentation.pdf'],
+  ['zathura', 'popular.pdf'],
   stderr=None,
   stdout=None,
   stdin=None,
