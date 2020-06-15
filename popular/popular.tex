@@ -1,20 +1,58 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-
+\usepackage[swedish]{babel}
+\usepackage[a4paper, margin=1.5cm]{geometry}
+\usepackage{parskip}
 \usepackage{multicol}
+\usepackage{graphicx}
 \setlength{\columnsep}{1cm}
 
+%\usepackage[sfdefault]{roboto}  %% Option 'sfdefault' only if the base font of the document is to be sans serif
+
+\usepackage[T1]{fontenc}
+\usepackage{addfont}
+\addfont{OT1}{tap}{\tapir}
+
 \begin{document}
-\begin{multicols}{2}
-[
-\section{First Section}
-All human things are subject to decay. And when fate summons, Monarchs must obey.
-]
-Hello, here is some text without a meaning.  This text should show what
-a printed text will look like at this place.
-If you read this text, you will get no information.  Really?  Is there
-no information?  Is there...
-\end{multicols}
+
+  \thispagestyle{empty}
+
+  \resizebox{.9\linewidth}{!}{Bidra till spelutveckling}\\
+  \hspace*{1cm}\resizebox{.5\linewidth}{!}{via din webbläsare.}
+  {
+    \hspace{0.5cm}
+    \raisebox{0.15cm}{{\today} -- Stefan Eng}
+  }
+
+  \vspace{0.4cm}
+  {\large Typ den textens som sammanfattar allt i själva artikeln innan vi går in i
+  columner?}
+  \vspace{0.3cm}
+
+  \begin{multicols*}{2}[]
+
+
+  Hello, here is some text without a meaning.  This text should show what
+  a printed text will look like at this place. If you read this text, you
+  will get no information.  Really?  Is there no information?  Is there... a
+  printed text will look like at this place. If you read this text, you will
+
+
+  \subsection*{Massive Entertainment}
+  get no information.  Really?  Is there no information?  Is there... a
+  printed text will look like at this place. If you read this text, you will
+  get no information.  Really?  Is there no information?  Is there... a
+  printed text will look like at this place. If you read this text, you will
+  get no information.  Really?  Is there no information?  Is there...
+
+  \subsection*{TEST2}
+
+  get no information.  Really?  Is there no information?  Is there... a
+  printed text will look like at this place. If you read this text, you will
+  get no information.  Really?  Is there no information?  Is there... a
+  printed text will look like at this place. If you read this text, you will
+  get no information.  Really?  Is there no information?  Is there...
+
+  \end{multicols*}
 
 \end{document}
