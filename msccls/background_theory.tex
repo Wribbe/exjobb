@@ -14,31 +14,7 @@ In other words, for something to be usable, it has to help its user to
 reach a goal, not only in an effective and efficient way, but it should also be
 a satisfactory process to get there.
 
-%\begin{quote}
-%HCI draws on many disciplines, as we shall see, but it is in computer science and
-%systems design that it must be accepted as a central concern.
-%\dots
-%%For all the other discip-
-%%lines it can be a specialism, albeit one that provides crucial input;
-%for systems design it is an essential part of the design process. From this
-%perspective, HCI involves the design, implementation and evaluation of
-%interactive systems in the context of the user’s task and work.
-%\end{quote}
-%
-%Human Computer Interaction (HCI) is the
-%
-%How can you know if a design is usable or not?
-
-%Initially the idea was to streamline the currently used
-%production/communication tool and measure the usability impacts, however,
-%it was not possible to make direct changes to the tools appearance at the time.
-%Instead there was a pivot to figuring out how to construct a self-hosted system
-%for usability measurements.
-
 \section{User-centered design}
-
-\todo{Bra saker tas upp här men skriv mer med egna ord än genom att klippa ut
-citat. Det blir för mycket av det nu.}
 
 In 1986 Donald A. Norman contributed to the book
 \citetitle{citeUserCenteredNorman}\cite{citeUserCenteredNorman} with, among
@@ -60,23 +36,19 @@ quoted in part below:
   there are fundamental difficulties in
   understanding and using most complex devices. So the goal of Cognitive
   Engineering is to come to understand the issues, to show how to make better
-  choices when they exist, and to show what the tradeoffs are \ldots
+  choices when they exist, and to show what the trade-offs are \ldots
  % when, as is the
  % usual case, an improvement in one domain leads to deficits in another.
 \end{quote}
 
-He then continues\cite[p. 32]{citeUserCenteredNorman}:
-\begin{quote}
-  \ldots Overall, I have two major goals:
-  \begin{enumerate}
-    \item{To understand the fundamental principles behind human action and performance that are relevant for the
-    development of engineering principles of design.}
-    \item{To devise systems that
-    are pleasant to use--the goal is neither efficiency nor ease nor power, although
-    these are all to be desired, but rather systems that are pleasant, even fun
-    \ldots}
-  \end{enumerate}
-\end{quote}
+He then continues with
+specifying that he has two major goals. First, to understand the fundamental
+principles behind human performance and action, specifically how they can be
+used to further develop engineering-principles of design.
+Second, while efficiency, power and ease-of-use are all desirable traits for
+any system, they should not be used as the primary metric. Instead, he posits
+that what systems should strive for most of all is to be pleasant, possibly
+even fun to interact with.
 
 Making note of the second goal, which could just as well have been an expansion
 of the satisfactory aspect in the above mentioned usability definition. The
@@ -86,13 +58,13 @@ text then continues with
 \textit{Stages of User Activities}, to name a few topics, and ends with
 a section titled \textit{Prescriptions for Design Principles}.
 
-This last section expands on what purposed functions and
-accomplishments should come as an result of developing Cognitive Engineering
-further.
-Considering the time the text was written, due to the lack of available information on
-what fosters good interactions between people and machines, there are no
-guidance given for the specific details of the design. There are however,
-guiding prescriptions for how the design process might proceed\cite[p.
+In this final section he expands on the purposed functions and
+accomplishments that should come as an result of developing Cognitive
+Engineering further.
+Considering the time the text was written, due to the lack of available
+information on what fosters good interactions between people and machines,
+there is no guidance given for the specific details of the design. There are
+however, guiding prescriptions for how the design process might proceed\cite[p.
 59-61]{citeUserCenteredNorman}, each with its own heading and describing
 paragraph, headings replicated below:
 
@@ -103,134 +75,68 @@ paragraph, headings replicated below:
  \item{Do user-centered system design: Start with the needs of the user}
 \end{itemize}
 
-It is the last heading and accompanying paragraph that is of special interest
-in this context since it contains the following definition of what
-user-centered design should strive for\cite[p. 59-61]{citeUserCenteredNorman}:
-
-\begin{quote}
-  user-centered design emphasizes that
-  the purpose of the system is to serve the user, not to use a
-  specific technology, not to be an elegant piece of programming.
-  The needs of the users should dominate the design of the inter-
-  face, and the needs of the interface should dominate the design
-  of the rest of the system.
-\end{quote}
+Here, the last heading and its paragraph holds special interest since it lays
+out the fundamentals of user-centered design as follows. User-centered design
+should focus on serving the needs of the user above all else. While building a
+system, the users needs should be the main driver behind any interface design,
+and, in turn, the needs of said interface should then dictate the design and
+composition of the remaining system.
 
 A more recent touch-stone for user-centric design comes from the
 \citeyear{citeKeyPrinciplesUserCentric} paper titled
 \citetitle{citeKeyPrinciplesUserCentric}\cite{citeKeyPrinciplesUserCentric}.
-Here, the authors argue that user-centered system design (UCSD) lacks an
-agreed upon definition, and that the concept as a whole suffers for it.
-Building on earlier defined concepts from literature combined with their own
-research and software development experience, they present the following
-definition of UCSD\cite[p. 401]{citeKeyPrinciplesUserCentric}:
+Here, the authors argue that user-centered system design (UCSD) lacks an agreed
+upon definition, and that the concept as a whole suffers for it. Using earlier
+defined concepts from literature in combination with their own research and
+software development experience the authors posit that UCSD should be seen as a
+development process where the main goal is to focus on usability, not only
+during development but also during the subsequent life cycle of the system.
 
-\begin{quote}
-  User-centred system design (UCSD) is a process focusing on usability
-  throughout the entire development process and further throughout the system
-  life cycle. \ldots based on the following [12] key principles:
-\end{quote}
-
-Headings
-%and abbreviated descriptions
-of the key principles\cite{citeKeyPrinciplesUserCentric} are represented below:
-
-\begin{itemize}
-  \item{%
-      \textit{%
-        User focus -- the goals of the activity, the work domain or
-        context of use, the users' goals, tasks and  needs should early guide
-        the development%
-      }%cite{citeKeyPrinciplesUserCentric}
-%
-%      It is critical that all members of a team understand who the users are,
-%      what situation they are in and what goals they are trying to achieve.
-  }
-  \item{%
-      \textit{%
-        Active user involvement -- representative users should actively
-        participate, early and continuously throughout the entire development
-        process and throughout the system lifecycle%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Evolutionary systems development -- they systems development should be
-        both iterative and incremental%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Simple design representations -- the design must be represented in
-        such ways that it can be easily understood by users and all other
-        stakeholders%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Prototyping -- early and continuously, prototypes should be used to
-        visualize and evaluate ideas and design solutions in cooperation with
-        the end users%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Evaluate use in context -- baselined usability goals and design
-        criteria should control the development%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Explicit and conscious design activities -- the development process
-        should contain dedicated design activities%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        A professional attitude -- the development process should be performed
-        by effective multidisciplinary teams%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Usability champion -- usability expert should be involved early and
-        continuously throughout the development lifecycle%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Holistic design -- all aspects that influence the future use situation
-        should be developed in parallel%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        Process customization -- the UCSD process must be specified, adapted
-        and/or implemented locally in each organization%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-  \item{%
-      \textit{%
-        A user-centered attitude should always be established%
-      }%cite{citeKeyPrinciplesUserCentric}
-  }
-\end{itemize}
-%\todoMaybe{restructure, should this be used?}
+Further, the authors provide twelve guiding
+principles\cite[p. 401]{citeKeyPrinciplesUserCentric}
+for any project using this definition of UCSD, with the first six being
+especially relevant in the context of this report:
 
 
+\begin{description}
+  \item[User focus]{%
+    The goals of the activity, the work domain or
+    context of use, the users goals, tasks and  needs should early guide
+    the development.%
+  }
+  \item[Active user involvement]{%
+    Representative users should actively
+    participate, early and continuously throughout the entire development
+    process and throughout the system life cycle.%
+  }
+  \item[Evolutionary systems development]{The systems development should be
+  both iterative and incremental}
+  }
+  \item[Simple design representations]{%
+    The design must be represented in
+    such ways that it can be easily understood by users and all other
+    stakeholders.%
+  }
+  \item[Prototyping]{%
+    Early and continuously, prototypes should be used to
+    visualize and evaluate ideas and design solutions in cooperation with
+    the end users.%
+  }
+  \item[Evaluate use in context]{%
+    Baseline usability goals and design
+    criteria should control the development.%
+  }
+\end{description}
 
-%Here, the authors argue that since it was coined by Norman and Draper in 1986,
-%user-centered system design (UCSD)
-%since it was first coined by Norman and Draper in 1986, suffered from having
-%competing and differing . and is, in practice becoming a concept with no meaning.
+With the remaining six principles focusing more on how to approach UCSD in a
+corporate setting with larger teams by assigning usability team-roles and
+having explicit design activities, neither which is applicable in the current
+development situation.
+
+\todo{Reflect on how these were met in results}
 
 
 \section{Usability testing}
-
-%  Initially, the plan was to make interface changes to the
-%  organization-software itself, but a question remained, how do you prove
-%  that it actually makes a difference?
-%
 
   In \citeyear{citeHeuristicsNielsenUsabilityEngineering}, Jacob Nielsen wrote a
   book titled \citetitle{citeHeuristicsNielsenUsabilityEngineering}%
@@ -291,35 +197,3 @@ of the key principles\cite{citeKeyPrinciplesUserCentric} are represented below:
   any usability testing conducted as part of this report. Also, if not
   specified otherwise, any further mentions of \textit{usability testing}
   refer to this type of iterative approach.
-
-
-
-%  \todo{Describe why usability testing, add scaling problem.}
-
-  %\subsection{Introduction}
-
-  %  Usability is traditionally done in person with the \textit{over the
-  %  shoulder} method which gives a good insight of what a participant does
-  %  during a test. Further more, if the \textit{thinking out aloud -
-  %  method} is utilized correctly, the test-moderator should have a good
-  %  insight into the participant thought-process during the test.
-
-%  \subsection{Evolution and current use}
-%
-%    While effective\checkTruth this method scales poorly with a one to one
-%    ratio between moderator and test participant. This project investigates
-%    the possibility of alleviating this scale constraint by utilizing a
-%    internet based platform to conduct usability tests of user interfaces
-%    online.
-%
-%    \todo{Expand this section.}
-
-%  \subsection{Why bother with usability?}
-%
-%    Usability and the bottom line
-%    \cite{citeBottomLine}
-%
-%    Analysing the impact of usability on software design
-%    \cite{citeImpactSoftwareDesign}
-
-
