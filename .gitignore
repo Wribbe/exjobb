@@ -3,7 +3,6 @@ exjobb/out
 virt_py3
 *.pyc
 tags
-*.db
 blobby
 auth_hrtb.py
 *.aux
@@ -18,7 +17,16 @@ sync_db.json
 *-blx.bib
 *.bcf
 *.run.xml
-msccls/vars
+**/msccls/vars
 *.bacc
 *.nav
 *.snm
+
+!/**/msccls/figures/captures/*.pdf
+!/**/msccls/LU-logotyp-tryck-digitalt/**/*.pdf
+!/**/msccls/logos/**/*.pdf
+!/**/msccls/popsci/**/*.pdf
+!/**/pdfs/*.pdf
+!/**/presentationitmg/*.pdf
+!/**/exjobb/webapp/static/pdf/**/*.pdf
+!template_report.pdf
