@@ -17,10 +17,15 @@ pdflatex=pdflatex -interaction=nonstopmode
 deps_tex=$(filter-out %report.tex,$(wildcard msccls/*.tex))
 
 NOW := $(shell date '+%Y-%m-%d_%H:%M:%S')
+REPORT_TEMP := report.tex.temp
 
-all: \
-	msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard \
-	${figures} msccls/diff/diff.pdf
+DEPS_ALL := \
+	msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard ${figures} \
+	msccls/diff/diff.pdf
+
+all: ${DEPS_ALL}
+	[ ! -f "msccls/${REPORT_TEMP}" ] || mv msccls/${REPORT_TEMP} msccls/report.tex
+
 
 virt_py3: requirements.txt
 	rm -rf $@
@@ -40,7 +45,7 @@ msccls/toc.guard : msccls/report.tex
 	cat msccls/report.toc > msccls/toc.guard
 
 ${DIR_DIFF}/diff.tex : ${DIR_DIFF}/report_base.tex ${DIR_DIFF}/report.tex
-	latexdiff $^ > $@
+	latexdiff --enable-citation-markup $^ > $@
 
 ${DIR_DIFF}/diff.pdf : ${DIR_DIFF}/diff.tex
 	cp $^ msccls/ && cd msccls && ${pdflatex} diff.tex && cp diff.pdf ../${DIR_DIFF}
