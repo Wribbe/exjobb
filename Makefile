@@ -28,9 +28,9 @@ virt_py3: requirements.txt
 	$@/bin/python -m pip install --upgrade pip
 	$@/bin/python -m pip install -r $^
 
-${DIR_CLONE}:
-	git clone ${URL_GIT} $@
-	cd $@ && git checkout start-revision
+${DIR_CLONE}/%:
+	git clone ${URL_GIT} ${DIR_CLONE}
+	cd ${DIR_CLONE} && git checkout revision && make
 
 msccls/report.bbl : msccls/report.bib
 	cd msccls && ${pdflatex} report && biber report && ${pdflatex} report
@@ -39,18 +39,19 @@ msccls/toc.guard : msccls/report.tex
 	[ -z "$(shell diff -q $@ msccls/report.toc)" ] || { cd msccls && ${pdflatex} report.tex; }
 	cat msccls/report.toc > msccls/toc.guard
 
-${DIR_DIFF}/diff.tex : ${DIR_DIFF}/report_base.tex ${DIR_DIFF}/report.tex | ${DIR_DIFF}
+${DIR_DIFF}/diff.tex : ${DIR_DIFF}/report_base.tex ${DIR_DIFF}/report.tex
 	latexdiff $^ > $@
 
 ${DIR_DIFF}/diff.pdf : ${DIR_DIFF}/diff.tex
-	cd ${DIR_DIFF} && ${pdflatex} $^
+	cp $^ msccls/ && cd msccls && ${pdflatex} diff.tex && cp diff.pdf ../${DIR_DIFF}
+	rm msccls/diff.tex
 	cp $@ ${DIR_DIFF}/${NOW}_diff.pdf
 
-${DIR_DIFF}/report.tex : msccls/report.tex
-	latexpand $^ > $@
+${DIR_DIFF}/report.tex : msccls/report.tex | ${DIR_DIFF}
+	cd msccls && latexpand report.tex > ../$@
 
-${DIR_DIFF}/report_base.tex : ${DIR_CLONE}/msccls/report.tex
-	latexpand $^ > $@
+${DIR_DIFF}/report_base.tex : ${DIR_CLONE}/msccls/report.tex | ${DIR_DIFF}
+	cd ${DIR_CLONE}/msccls && latexpand report.tex > ../../$@
 
 ${DIR_STATIC}/report.pdf : msccls/report.tex ${figures} ${deps_tex} msccls/report.bbl | ${DIR_REPORTS}
 	cd msccls && ${pdflatex} report.tex && cp report.pdf ../$@
@@ -79,4 +80,8 @@ msccls/preface.pdf : msccls/preface.tex | virt_py3
 ${DIR_DIFF} :
 	mkdir $@
 
-.PHONY: all clean
+diff:
+	rm -rf ${DIR_DIFF}
+	$(MAKE)
+
+.PHONY: all clean diff
