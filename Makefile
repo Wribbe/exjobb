@@ -21,11 +21,12 @@ REPORT_TEMP := report.tex.temp
 
 DEPS_ALL := \
 	msccls/preface.pdf ${DIR_STATIC}/report.pdf msccls/toc.guard ${figures} \
-	msccls/diff/diff.pdf
+#	msccls/diff/diff.pdf
+
+#all: ${DEPS_ALL}
+#	[ ! -f "msccls/${REPORT_TEMP}" ] || mv msccls/${REPORT_TEMP} msccls/report.tex
 
 all: ${DEPS_ALL}
-	[ ! -f "msccls/${REPORT_TEMP}" ] || mv msccls/${REPORT_TEMP} msccls/report.tex
-
 
 virt_py3: requirements.txt
 	rm -rf $@
@@ -45,18 +46,24 @@ msccls/toc.guard : msccls/report.tex
 	cat msccls/report.toc > msccls/toc.guard
 
 ${DIR_DIFF}/diff.tex : ${DIR_DIFF}/report_base.tex ${DIR_DIFF}/report.tex
-	latexdiff --enable-citation-markup $^ > $@
-
-${DIR_DIFF}/diff.pdf : ${DIR_DIFF}/diff.tex
-	cp $^ msccls/ && cd msccls && ${pdflatex} diff.tex && cp diff.pdf ../${DIR_DIFF}
+	#latexdiff --enable-citation-markup --append-textcmd="enumerate" $^ > $@
+#	latexdiff --enable-citation-markup --append-safecmd="begin" $^ > $@
+	#latexdiff --enable-citation-markup --append-safecmd="begin" --exclude-safecmd="todo" --allow-spaces --append-mboxsafecmd="begin" --config="PICTUREENV=(?:picture|DIFnomarkup|description)[\w\d*@]*" $^ > $@
+#	latexdiff --exclude-safecmd="todo" --append-textcmd="begin" --allow-spaces --enable-citation-markup --config="PICTUREENV=(?:picture|DIFnomarkup|description|quote|enumerate)[\w\d*@]*" $^ > $@
+	latexdiff --append-safecmd="subsection,section" --exclude-safecmd='ldots' --config="PICTUREENV=(?:picture|DIFnomarkup|enumerate|itemize|quote)[\w\d*@]*" $^ > $@
+#	latexdiff --append-safecmd="subsection,section,begin\{quote\}" --exclude-safecmd='ldots' $^ > $@
+${DIR_DIFF}/diff.pdf : ${DIR_DIFF}/diff.tex msccls/diff.bbl msccls/diff.bcf msccls/diff.bib msccls/diff.blg
+	cp $(filter %.tex,$^) msccls/ && cd msccls && ${pdflatex} diff.tex && cp diff.pdf ../${DIR_DIFF}
 	rm msccls/diff.tex
 	cp $@ ${DIR_DIFF}/${NOW}_diff.pdf
 
 ${DIR_DIFF}/report.tex : msccls/report.tex | ${DIR_DIFF}
 	cd msccls && latexpand report.tex > ../$@
+	python tex_strip_unwanted.py $@
 
 ${DIR_DIFF}/report_base.tex : ${DIR_CLONE}/msccls/report.tex | ${DIR_DIFF}
 	cd ${DIR_CLONE}/msccls && latexpand report.tex > ../../$@
+	python tex_strip_unwanted.py $@
 
 ${DIR_STATIC}/report.pdf : msccls/report.tex ${figures} ${deps_tex} msccls/report.bbl | ${DIR_REPORTS}
 	cd msccls && ${pdflatex} report.tex && cp report.pdf ../$@
@@ -88,5 +95,8 @@ ${DIR_DIFF} :
 diff:
 	rm -rf ${DIR_DIFF}
 	$(MAKE)
+
+msccls/diff.% : msccls/report.%
+	cp $^ $@
 
 .PHONY: all clean diff
