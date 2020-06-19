@@ -21,6 +21,8 @@ sync_db.json
 *.bacc
 *.nav
 *.snm
+diff.*
+**/diff/**
 
 !/**/msccls/figures/captures/*.pdf
 !/**/msccls/LU-logotyp-tryck-digitalt/**/*.pdf
@@ -28,5 +30,4 @@ sync_db.json
 !/**/msccls/popsci/**/*.pdf
 !/**/pdfs/*.pdf
 !/**/presentationitmg/*.pdf
-!/**/exjobb/webapp/static/pdf/**/*.pdf
 !template_report.pdf
