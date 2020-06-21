@@ -110,8 +110,7 @@ suggestion included:
     \item{\ideaFour}
   \end{itemize}
 
-
-\section{Initial design sketches}
+\section{Design sketches}
 
 %  \todo{Bra att du knyter an till detta. Ge gärna något konkret exempel på hur
 %    detta påverkat din design.}
@@ -130,15 +129,21 @@ suggestion included:
 %  }
 %
 
-	The overarching main goal of the initial design sketches was to keep them as
-	simple as possible, while still being usable, in order to get testing started
-	as quickly as possible. For this purpose, there were two books that served as
-	inspiration, namely; \citeauthor{citeDonMakeMeThink}s
+	The overarching goal of the design sketches was to create simple yet
+	representative paper-mock-ups of possible platform-interfaces. These
+	representations  could then be quickly evaluated through a few in-person
+	interviews, and the winning concept would then be implemented as a basic
+	interactive web-application for further analysis and design-iteration.
+
+	For this purpose, there were two books that served as inspiration, namely;
+	\citeauthor{citeDonMakeMeThink}s
 	\citetitle{citeDonMakeMeThink}\cite{citeDonMakeMeThink} and Donald Normans,
 	oft-cited design classic,
 	\citetitle{citeTheDesignOfEverydayThings}\cite{citeTheDesignOfEverydayThings}.
 
-	Searching for ideas and pointers for the general layout design, a simple but
+	\subsection{Sketch elements, affordances and signifiers}
+
+	Searching for ideas and pointers for the general design, a simple but
 	actionable idea was lifted from Krug, ''Break up pages into clearly defined
 	areas'', witch in this particular example manifests as the boxy design with
 	clearly defined borders and wide gutters between all the elements.
@@ -153,15 +158,16 @@ suggestion included:
   interface elements, making it possible for participants to confuse what part
   of the interface that are buttons or not.
 
-  Looking to Norman for a solution, there are two terms that come to mind,
-  \textit{affordace} and \textit{signifiers}. In this context, affordaces
-  describe the possible interactions between people and the environment they
-  are in, or more precisely in this example, what type of actions can
-  the participants perform while visiting the web-application? As for the
-  second term, signifies, Norman describes them as design-elements that signals
-  things, in particular what actions are possible, and how they should be done.
+	Looking to Norman for a solution, there are two terms that come to mind,
+	\textit{affordace} and \textit{signifiers}. In the context of the book,
+	affordaces describe the possible interactions between people and the
+	environment they are in, or more precisely in this example, what type of
+	actions can the participants perform while visiting the web-application. As
+	for the second term, signifies, Norman describes them as design-elements that
+	signals things, in particular what actions are possible, and how they should
+	be done.
 
-  In regards to affordances, there is not that much that can be done in this
+  In regards to affordances, there is not much that can be done in this
   case. Since the testing-platform is web-based, it will automatically inherit
   the affordances one would typically associated with a web page or web
   application. Namely, a web-page will most likely have some information
@@ -169,69 +175,62 @@ suggestion included:
   buttons or links that when clicked, either takes us somewhere else or change
   the currently displayed information.
 
-  As for the second option, signifiers, they provides more possibilities for
-  design-decisions. Since the main purpose of a signifier is to signal what
-  action can be performed, the signifier attached to the buttons need to signal
-  that the buttons can be clicked. Looking at the available characteristics,
-  size and color are easy to manipulate,
+	Looking at the second option, signifiers, they provides more possibilities
+	for active design-decisions. Given that the main purpose of a signifier is to
+	signal what action can be performed, the signifier attached to the buttons
+	need to signal that the buttons can be clicked. Going back to Krug, there is
+	a second idea he presents in the book that dovetails nicely with Normans
+	signifiers discussion, namely ''Make it obvious what's clickable''. Here he
+	recommends that by simply having a distinct color for clickable elements and
+	never using that particular color on non-clickable elements should get you
+	most of the way there.
 
+	In summary, the different areas and elements of the interface should be given
+	a distinct border, and be separated by a gutter in order for them to be
+	easily differentiated. As for buttons, their design should include clear
+	signifiers about their 'clickability', this is achieved by following Krugs
+	advice and make each of the them share the same distinct set of restricted
+	colors that are not repeated anywhere else in the interface.
 
+	\newpage
+	\subsection{Layout and final design-sketches}
 
+	With the general design characteristics of the elements figured out, the
+	amount and type of elements making up the sketch needs to be defined. We know
+	we have four button elements that need to have their corresponding task-data
+	displayed somewhere when clicked. In order to facilitate the task-data
+	viewing a large portion of the interface will be assigned to the
+	\textit{View-Data} element.
 
+	While discussing possible task-designs, there were examples that would
+	benefit for secondary controls, such as date-ranges and personnel-selectors,
+	which, if needed would be placed in the \textit{View-Additional} element.
 
+	With all the components defined we can apply some different layouts in order
+	to create a few different versions, presented below, that can then be
+	evaluate by the interviewees.
 
- % The design sketches were created with the following pointers from
- % \citeauthor{citeDonMakeMeThink}s
- % \citetitle{citeDonMakeMeThink}\cite{citeDonMakeMeThink},
- % ``Break up pages into clearly defined areas'' and ``Make it obvious what's
- % clickable''. The second point also reflects the concept and importance of
- % `\textit{affordance}`, a term used by Donald Norman, in the oft-cited design classic
- % \citetitle{citeTheDesignOfEverydayThings}\cite{citeTheDesignOfEverydayThings}.
+	\begin{figure}[h!]
+		\center
+		\includegraphics[valign=t,trim={.15cm .10cm .35cm .22cm},clip,width=.49\linewidth]{ui11.pdf}
+		\includegraphics[valign=t,trim={.15cm .30cm .20cm .22cm},clip,width=.49\linewidth]{ui12.pdf}
+		\includegraphics[valign=t,trim={.45cm .55cm .65cm .35cm},clip,width=.49\linewidth]{ui13.pdf}
+		\includegraphics[valign=t,trim={.25cm .35cm .30cm .25cm},clip,width=.49\linewidth]{ui14.pdf}
+		\caption{Design sketches 1.1, 1.2, 1.3 and 1.4}
+		\label{label_mockupInterfaces}
+	\end{figure}
 
- % In the context of the book, affordance refers to
- % \textit{%
- % ``the relationship between a physical object
- % and a person (or for that matter, any interacting agent, whether animal or
- % human, or even machines and robots). An affordance is a relationship
- % between the properties of an object and the capabilities of the agent that
- % determine just how the object could possibly be used''
- % }\cite[p. 11]{citeTheDesignOfEverydayThings}
- % And while the book focuses on design in the physical reality, the concepts
- % are still easily adaptable to a web-environment by identifying digital objects and
- % try to figure out how to promote the right affordances, or as Krug puts it, making
- % it obvious what it should be used for.
+	Since the task buttons represent our navigation, they were arranged either
+	according to Krugs advice, either across the top or down the left side of a
+	page. The placement of the \textit{View-Additional} was used as an additional
+	permutation in order to create four design-sketches.
 
+	Astute readers will undoubtedly notice that the presented designs do not
+	feature colored buttons. Since the functionality of the design is explained
+	to each interviewee at the start, it was decided that printing without colored
+	buttons would be less distracting.
 
-
- % The premise of this
-
- % Keeping these principles in mind, together with suggestions
- % gathered from the manager-interviews, four simple paper prototypes were
- % created, shown below. The main difference being the placement of the main
- % interface elements. The first group having them on top and the second one the
- % left side. Lager versions of interface prototypes can be found as figures
- % 8.2-8.4 the appendices section.
-
-    \begin{figure}[h!]
-      \center
-      \includegraphics[valign=t,trim={.10cm .10cm .35cm .25cm},clip,width=.49\linewidth]{ui11.pdf}
-      \includegraphics[valign=t,trim={.15cm .30cm .20cm .20cm},clip,width=.49\linewidth]{ui12.pdf}
-      \includegraphics[valign=t,trim={.45cm .55cm .65cm .35cm},clip,width=.49\linewidth]{ui13.pdf}
-      \includegraphics[valign=t,trim={.25cm .35cm .30cm .25cm},clip,width=.49\linewidth]{ui14.pdf}
-      \caption{Interface drafts 1.1, 1.2, 1.3 and 1.4}
-      \label{label_mockupInterfaces}
-    \end{figure}
-
-  In order to determine which one should be used as the
-  basis for the high-fidelity prototype, they were all printed and made ready
-  for evaluation, described below.
-
-  \subsection{Interview structure for prototype selection}
-
-  \todo{Jag tycker att det är ett snyggt testupplägg men att det som testas är
-  lite tunt, och kanske finns inte tillräckligt med info där för att testaren
-  skall kunna göra denna rätt avanserade testning. Detta behöver du inte ändra
-  något kring här men kan beröras i diskussionen när du diskuterar din metod.}
+	\subsection{Interview-structure and sketch selection}
 
     The specific purpose of these interviews was to determine which of the
     presented ui-mockups was perceived to be the most usable.
