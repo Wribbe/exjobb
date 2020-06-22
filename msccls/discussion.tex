@@ -5,24 +5,25 @@ during its execution and completion.
 
 \section{The design process}
 
-  Having the paper prototypes as an initial lo-fi starting point and conducting
-  the interviews to determine which to use worked very well, and is an element
-  that should be repeated if a similar process would be done in the future.
+  Having the paper prototypes as an initial starting point and conducting
+  the interviews to determine which to use worked very well. However looking
+	back at the different design-sketches that were evaluated, the differences in
+	their designs should have been larger.
 
-  That being said, it is regrettable that the iterative design process did not
-  have a chance to get into gear and display its full potential over multiple
-  design runs. Only managing to get through one
-  design-implement-release-and-test-cycle really hamstrung the possibility of
-  experience positive effect of the process of dynamically evolving the
-  platform over time in response to user feedback.
+	It is also important to note that one should avoid choices between designs
+	where one of the presented designs is clearly better than then other.
+	That is probably what happed between the 1.3 and 1.4 sketch, where the
+	\textit{View-additional} in the 1.4 sketch utilized the given space much
+	better than the 1.3 sketch.
 
-  \todo{Jag tycker att det är ett snyggt testupplägg men att det som testas är
-  lite tunt, och kanske finns inte tillräckligt med info där för att testaren
-  skall kunna göra denna rätt avanserade testning. Detta behöver du inte ändra
-  något kring här men kan beröras i diskussionen när du diskuterar din metod.}
+	Additionally, it is regrettable that the iterative design process did not
+	have a chance to get into gear and display its full potential over multiple
+	design runs. Only managing to get through one
+	design-implement-release-and-test-cycle really hamstrung the possibility of
+	experience positive effect of the process of dynamically evolving the
+	platform over time in response to user feedback.
 
-  \subsection{Adherence to the key principles of UCSD}
-
+\newpage
 \section{The development process}
 
   It was very easy to set up and get starting working on creating the platform
@@ -67,57 +68,24 @@ during its execution and completion.
   determine some interesting characteristics about the different represented
   cases and how users interacted with them.
 
-  \todo{Diskutera gärna hur du tror att testning av fler saker skulle påverka
-  svarsfrekvens, och hur testupplägget skulle kunna utvecklas för att undvika
-  att folk inte orkar svara.}
-
   Given more time and resources it would be trivial to expand the system to
   perform more multi-faceted data gathering together with more intricately
   design tasks in order to test specific usability target beyond
-  time-to-completion.
+	time-to-completion.
+
+	It is worth noting however that experience shows that introducing more
+	complex test could lead to diminishing response-rates, which is something one
+	would like to avoid. What is interesting in this particular project, is that
+	there were a few participants that admitted they thought that the current
+	testing-setup was fun enough for them to come back and do additional runs.
+	Maybe subsequent iterations could slide even closer to game-development and
+	use insights from their field in order to keep participation high even if
+	tasks become more complex.
 
   Overall, the size of the response, and how easy it was to run large batches
   of remote test and extract data from them with little to no experience was
   surprising. Especially since the data was only collected during five days
   before focus was shifted to processing said collected data.
-
-%\section{Initial idea and pivot}
-%
-%  \todo{Re-write for this section} \\
-%  It has been established that the output of a team benefits from information
-%  sharing\cite{%
-%  citeInformationSharingTeamPerformanceMeta,%
-%  citeContextualizedRelationshipBetweenKnowledgeSharingandPerformanceinSoftwareDevelopment%
-%  }
-%  , and that such vital sharing tends to break down when it is needed
-%  the most\cite{citeInformationSharingTeamPerformanceMeta}.
-%
-%  This effect is something that has been observed first hand by one of the
-%  managers at Massive. Working with a team under pressure, nearing a deadline,
-%  the software used for planing and information distribution was abandoned, in
-%  favor for post-it-notes on a whiteboard. While acknowledging that it is a
-%  method that works for smaller teams, the manager observed that it put a big
-%  damper on the bandwidth available for information sharing among the
-%  team-members.
-%
-%  Asking some of the employees why they opted to not use the software in the scenario
-%  mentioned above, they answered that they felt it got in their way, hindering
-%  them from doing their work, a clear usability issue.
-%
-%  One item that got a lot of attention in both sessions was the tendency of
-%  information-sharing breaking down when it is needed the most. On the team
-%  side, the discussions centered on the negative impact on team performance and
-%  general well-being of the team members. The academic part of the discussion
-%  revolved mainly around how this negative impact could be mitigated or
-%  eliminated by improving the design and usability of the underlying
-%  communication systems.
-%
-%  Initially the idea was to incrementally perform alterations to the existing
-%  design of the communication system used, and then perform usability testing in
-%  order to determine which, if any of the alterations would reduce the friction
-%  of use during high-stress situation. But after an initial investigation
-%  revealed that doing these kind of alteration on the current system would be
-%  very hard, the idea was scrapped.
 
 
 \section{Possible improvements}
@@ -125,6 +93,13 @@ during its execution and completion.
   Even though the deployed platform impressed with the ease it collected
   response data, there are some considerations that should be taken into
   account if this process, or similar was to be repeated.
+
+  \subsection{No default values in forms}\label{label_validity_default_age}
+
+  Analyzing the returned data from the test pre-questionnaire, the most common
+  age was twenty-five, which coincidentally was the precise value of the only
+  pre-filled input field in any of the questions. Going forth, non of the
+  fields should have a default value in order to avoid this kind of bias.
 
   \subsection{Let go early, fit multiple design iterations}
 
@@ -187,15 +162,6 @@ during its execution and completion.
   mitigate the effect of connection-influence, having access to this type data
   would make it possible to at least generate a confidence interval in regards
   to the registered values.
-
-  \subsection{Default age value}\label{label_validity_default_age}
-
-  \todo{Skulle kunna ligga under 5.5 istället eller?}
-
-  Analyzing the returned data from the test pre-questionnaire, the most common
-  age was twenty-five, which coincidentally was the precise value of the only
-  pre-filled input field in any of the questions. Going forth, non of the
-  fields should have a default value in order to avoid this kind of bias.
 
   \subsection{Users participating multiple times}
 
