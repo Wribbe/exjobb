@@ -1,0 +1,42 @@
+Introduction
+------------
+
+  * Introduction changed.
+
+Background theory
+-----------------
+
+  * Removed most of the quotes, rewritten.
+  * Condense the itemized key-principles.
+
+Development process and technology stack
+----------------------------------------
+
+  * Brainstorming Section re-written, additional focus on platform.
+  * Lo-fi prototypes -> Design sketches
+  * New sections:
+      Sketch elements, affordances and signifiers.
+      Layout and final design-sketches.
+      Potential primary users
+  * Hi-fi -> Sketch implementation
+    * More condensed information about the application.
+    * Test and task flows moved after implementation.
+    * Test-task receive own section, receive less attention, superfluous content
+      removed.
+
+Evaluation:
+-----------
+
+  * Suggestion on what could be done in following iterations added to
+    presented test-results.
+  * Added section reflecting over test results as a whole and general ideas for
+    subsequent iterations (Current results and subsequent iterations)
+
+Discussion:
+-----------
+
+  * Discusses limited differentiation between design-choices presented during
+    the interviews.
+  * Discuss how more complex results could lead to dropoff in participation.
+  * Added sections: "Reflection on the stated goals" and "Possible avenues of
+    expansion".
